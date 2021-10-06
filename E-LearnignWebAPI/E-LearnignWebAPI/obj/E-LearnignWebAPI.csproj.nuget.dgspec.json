@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thang\\source\\repos\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj": {}
+    "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thang\\source\\repos\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj": {
+    "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thang\\source\\repos\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj",
         "projectName": "E-LearnignWebAPI",
-        "projectPath": "C:\\Users\\thang\\source\\repos\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj",
+        "projectPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj",
         "packagesPath": "C:\\Users\\thang\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thang\\source\\repos\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\obj\\",
+        "outputPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\thang\\AppData\\Roaming\\NuGet\\NuGet.Config",

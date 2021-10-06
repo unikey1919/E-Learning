@@ -16,7 +16,12 @@ export class ELearningFormComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
+    this.service.postPaymentDetails().subscribe(
+      res =>{
 
+      },
+      err => {console.log(err);}
+      );
   }
 
 }

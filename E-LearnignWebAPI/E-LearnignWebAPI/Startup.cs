@@ -1,4 +1,4 @@
-using E_LearnignWebAPI.Models;
+﻿using E_LearnignWebAPI.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,11 +35,18 @@ namespace E_LearnignWebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "E_LearnignWebAPI", Version = "v1" });
             });
             services.AddDbContext<PaymentDetailContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //Cấu hình Cors cho API
+            app.UseCors(option => option.WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

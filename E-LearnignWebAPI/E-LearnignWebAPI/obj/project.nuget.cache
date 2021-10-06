@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "n96pgQ86n48+3a8YsmRBAFYuSNh6i2rBcBtwQQ5ZpNGRa6A9cRxciI5DyVlaCQE6Khk8GkGarw8/3pyWmmDWmA==",
+  "dgSpecHash": "36rs85AJqaG1C48L7jYQCkgz/CPovkkdiU60ySXqprS+rzsVasqzt9MRj95Uq1eOuEmDoXnQnBF28L23OQaMzg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\thang\\source\\repos\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj",
+  "projectFilePath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\thang\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\thang\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
