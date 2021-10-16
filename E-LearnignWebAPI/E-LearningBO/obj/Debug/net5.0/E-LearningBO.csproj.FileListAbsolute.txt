@@ -1,0 +1,5 @@
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearningBO\obj\Debug\net5.0\E-LearningBO.csproj.AssemblyReference.cache
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearningBO\obj\Debug\net5.0\E-LearningBO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearningBO\obj\Debug\net5.0\E-LearningBO.AssemblyInfoInputs.cache
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearningBO\obj\Debug\net5.0\E-LearningBO.AssemblyInfo.cs
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearningBO\obj\Debug\net5.0\E-LearningBO.csproj.CoreCompileInputs.cache

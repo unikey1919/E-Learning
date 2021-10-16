@@ -2155,6 +2155,20 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "ElearningBO/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.11",
+          "Microsoft.EntityFrameworkCore": "5.0.11"
+        },
+        "compile": {
+          "bin/placeholder/ElearningBO.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ElearningBO.dll": {}
+        }
       }
     }
   },
@@ -7480,10 +7494,16 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "ElearningBO/1.0.0": {
+      "type": "project",
+      "path": "../ElearningBO/ElearningBO.csproj",
+      "msbuildProject": "../ElearningBO/ElearningBO.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "ElearningBO >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.11",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 5.0.11",
       "Microsoft.EntityFrameworkCore >= 5.0.11",
@@ -7522,7 +7542,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj": {
+              "projectPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -1,5 +1,6 @@
-﻿using E_LearnignWebAPI.Models;
-using E_LearnignWebAPI.Models.Authenication;
+﻿
+using ElearningBO;
+using ElearningBO.UserAuthentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -30,12 +31,12 @@ namespace E_LearnignWebAPI.Controllers
             {
                 string userId = User.Claims.First(c => c.Type == "UserID").Value;
                 var user = await _userManager.FindByIdAsync(userId);
-                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(user), MessageDetail = { } };
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(user), MessageDetail = "" };
             }
             catch (Exception ex)
             {
 
-                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace.ToArray() };
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
 

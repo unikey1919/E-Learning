@@ -1,5 +1,7 @@
-﻿using E_LearnignWebAPI.Models;
-using E_LearnignWebAPI.Models.Authenication;
+﻿
+using ElearningBO;
+using ElearningBO.AppSettings;
+using ElearningBO.UserAuthentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -46,14 +48,14 @@ namespace E_LearnignWebAPI.Controllers
                 await _userManager.AddToRoleAsync(applicationUser, model.Role);
                 if (result.Succeeded)
                 {
-                    return new ApiResultMessage { IsError = false, Message = "", MessageDetail = { } };
+                    return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
                 }
-                return new ApiResultMessage { IsError = true, Message = "Tạo user thất bại", MessageDetail = result.Errors.Select(x => x.Description).ToArray() };
+                return new ApiResultMessage { IsError = true, Message = "Tạo user thất bại", MessageDetail = result.ToString() };
                 //return await Task.FromResult(result.Errors.Select(x => x.Description));
             }
             catch (Exception ex)
             {
-                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace.ToArray() };
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
 
@@ -83,7 +85,7 @@ namespace E_LearnignWebAPI.Controllers
                 var token = tokenHandler.WriteToken(securityToken);
                 return Ok(new { token });
             }
-            else return BadRequest(new ApiResultMessage { IsError = true, Message = "Username of password is incorrect", MessageDetail = { } });
+            else return BadRequest(new ApiResultMessage { IsError = true, Message = "Username of password is incorrect", MessageDetail = "" });
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using E_LearnignWebAPI.Models;
-using E_LearnignWebAPI.Models.Authenication;
+﻿
+using ElearningBO;
+using ElearningBO.AppSettings;
+using ElearningBO.UserAuthentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,10 +42,10 @@ namespace E_LearnignWebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "E_LearnignWebAPI", Version = "v1" });
             });
-            services.AddDbContext<PaymentDetailContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+            services.AddDbContext<ELearningDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<PaymentDetailContext>();
+                .AddEntityFrameworkStores<ELearningDbContext>();
 
             services.Configure<IdentityOptions>(options =>
             {
