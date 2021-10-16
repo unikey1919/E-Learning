@@ -16,7 +16,7 @@ namespace E_LearnignWebAPI.Controllers
     {
         private readonly ELearningDbContext _context;
 
-        public EnrollmentsController(ELearningDbContext context)
+        public EnrollmentsController(ELearningDbContext context) 
         {
             _context = context;
         }
