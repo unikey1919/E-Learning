@@ -23,7 +23,7 @@ namespace E_LearnignWebAPI.Controllers
         //avc
         // GET: api/Enrollments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Enrollment>>> GetEnrollments() 
+        public async Task<ActionResult<IEnumerable<Enrollment>>> GetEnrollments()  
         {
             return await _context.Enrollments.ToListAsync();
         }
