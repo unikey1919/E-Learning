@@ -49,7 +49,7 @@ namespace E_LearnignWebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Instructor ")]
+        [Authorize(Roles = "Instructor")]
         [Route("ForInstructor")]
         public string GetForInstructor()
         {

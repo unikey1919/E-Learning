@@ -86,7 +86,8 @@ namespace E_LearnignWebAPI
             //Cấu hình Cors cho API
             app.UseCors(option => option.WithOrigins(Configuration["ApplicationSettings:Client_URL"].ToString())
             .AllowAnyMethod()
-            .AllowAnyHeader());
+            .AllowAnyHeader()
+            .AllowAnyOrigin());
 
             if (env.IsDevelopment())
             {

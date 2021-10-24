@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentDetailService } from '../shared/payment-detail.service';
+import { PaymentDetailService } from '../shared/Services/payment-detail.service';
 
 @Component({
   selector: 'app-e-learning',

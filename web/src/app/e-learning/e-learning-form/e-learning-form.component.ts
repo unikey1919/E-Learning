@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentDetailService } from 'src/app/shared/payment-detail.service';
+import { PaymentDetailService } from 'src/app/shared/Services/payment-detail.service';
 import { NgForm }   from '@angular/forms';
 
 @Component({

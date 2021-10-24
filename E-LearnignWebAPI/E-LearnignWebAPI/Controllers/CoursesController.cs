@@ -69,7 +69,6 @@ namespace E_LearnignWebAPI.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 

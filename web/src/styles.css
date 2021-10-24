@@ -1,26 +1,49 @@
-.form-group label {
-    color: grey;
+/* You can add global styles to this file, and also import other style files */
+body{
+    background-color: white;
 }
 
-.form-group input {
-    font-weight: 500;
+input.form-control,input.form-control:focus{
+    background-color: white;
+    color: black;
+    border-color: black;
+    border-radius: 0px;
+    border-width: 2px;
 }
 
-.form-group input:placeholder{
-    color: #c0bdbd;
-    font-weight:300;
+input.form-control:focus{
+    box-shadow: none;
+    border-bottom-color: black;
 }
 
-thead th{
-    font-weight: 400;
+button[type=submit].btn{
+    border-radius: 20px;
+    background-color: #000;
+    color: #fff;
 }
 
-table tbody t:hover {
-    background-color: #fffbf2;
-    cursor: pointer;
+div.form-group label{
+    color: black;
+    font-weight: bold;
 }
 
-/* for invalid form control */
-input.invalid {
-    border-color: red
+div.form-group.required>label:first-child:after{
+    content:'*';
+    color: #dc3545;
+	padding-left: 5px;
 }
+
+#toast-container > div {
+    opacity:1;
+}
+
+form{
+    margin: 0px 16px;
+}
+
+div.side-header{
+    border:3px solid black;
+}
+
+.content {
+    padding: 7rem 0; }

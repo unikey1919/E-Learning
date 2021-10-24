@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace E_LearnignWebAPI.Controllers
 {
-    [Route("api/user")]
+    [Route("api/User")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -45,7 +45,6 @@ namespace E_LearnignWebAPI.Controllers
             try
             {
                 var result = await _userManager.CreateAsync(applicationUser, model.Password);
-                await _userManager.AddToRoleAsync(applicationUser, model.Role);
                 if (result.Succeeded)
                 {
                     return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
