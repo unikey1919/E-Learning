@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/shared/Services/user.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { Validators } from '@angular/forms';
   styles: [],
 })
 export class RegisterComponent implements OnInit {
-  constructor(public service: UserService, private fb: FormBuilder) {}
+  constructor(public service: UserService, private fb: FormBuilder, private toastr: ToastrService) {}
 
   //Log error message
   isSuccessful = false;
@@ -45,14 +46,26 @@ export class RegisterComponent implements OnInit {
     let fullName = this.formModel.value.FullName;
 
     this.service.register(userName, email, passWord, fullName).subscribe(
-      data => {
-        console.log(data);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
+      (res: any) => {
+        if (res.succeeded) {
+          this.formModel.reset();
+          this.toastr.success('New user created!', 'Registration successful.');
+        } else {
+          res.errors.forEach((element: { code: any; description: string | undefined; }) => {
+            switch (element.code) {
+              case 'DuplicateUserName':
+                this.toastr.error('Username is already taken','Registration failed.');
+                break;
+
+              default:
+              this.toastr.error(element.description,'Registration failed.');
+                break;
+            }
+          });
+        }
       },
       err => {
-        this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
+        console.log(err);
       }
     );
   }

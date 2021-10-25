@@ -45,16 +45,12 @@ namespace E_LearnignWebAPI.Controllers
             try
             {
                 var result = await _userManager.CreateAsync(applicationUser, model.Password);
-                if (result.Succeeded)
-                {
-                    return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
-                }
-                return new ApiResultMessage { IsError = true, Message = "Tạo user thất bại", MessageDetail = result.ToString() };
+                return Ok(result);
                 //return await Task.FromResult(result.Errors.Select(x => x.Description));
             }
             catch (Exception ex)
             {
-                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+                throw new Exception("UserController > Register Error: " + ex.Message);
             }
         }
 
