@@ -5,6 +5,8 @@ import { RegisterComponent } from './user/register/register.component';
 import { LoginComponent } from './user/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 const routes: Routes = [
   {path: '',redirectTo: 'user/login',pathMatch:'full'},
@@ -15,8 +17,11 @@ const routes: Routes = [
       { path: 'registration', component: RegisterComponent },
       { path: 'login', component: LoginComponent }
     ],
+
   },
-  {path:'home', component: HomeComponent, canActivate:[AuthGuard]}
+  {path:'home', component: HomeComponent, canActivate:[AuthGuard]},
+  {path:'forbidden', component: ForbiddenComponent},
+  {path:'admin', component: AdminPanelComponent, canActivate:[AuthGuard], data: {permittedRoles:['Admin']}}
 ];
 
 @NgModule({
