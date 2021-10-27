@@ -80,7 +80,7 @@ namespace E_LearnignWebAPI.Controllers
                 var token = tokenHandler.WriteToken(securityToken);
                 return Ok(new { token });
             }
-            else return BadRequest(new ApiResultMessage { IsError = true, Message = "Username of password is incorrect", MessageDetail = "" });
+            else return BadRequest(new { message = "Username or password is incorrect." });
         }
     }
 }

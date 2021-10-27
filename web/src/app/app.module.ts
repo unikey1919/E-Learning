@@ -5,13 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ELearningComponent } from './e-learning/e-learning.component';
 import { ELearningFormComponent } from './e-learning/e-learning-form/e-learning-form.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './user/register/register.component';
 import { ReactiveFormsModule} from '@angular/forms'
-import { UserService } from './shared/Services/user.service';
-import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { LoginComponent } from './user/login/login.component';
+import { HomeComponent } from './home/home.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { UserProfileService } from './shared/Services/user-profile.service';
+
 
 @NgModule({
   declarations: [
@@ -20,6 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ELearningFormComponent,
     UserComponent,
     RegisterComponent,
+    LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +38,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       progressBar: true
     })
   ],
-  providers: [UserService],
+  providers: [UserProfileService,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

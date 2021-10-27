@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../Models/user.model';
+import { Login, User } from '../Models/user.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,8 +9,9 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   constructor(private httpClient: HttpClient) { }
-  readonly baseURL = 'https://localhost:44395/api/User'
+  readonly baseURL = 'https://localhost:44395/api/User';
   formData: User = new User();
+  formDataLogin: Login = new Login();
 
   register(userName: string, email: string, passWord: string, fullName:string) : Observable<any>{
     this.formData.userName = userName;
@@ -19,4 +20,11 @@ export class UserService {
     this.formData.email = email;
     return this.httpClient.post(this.baseURL + '/Register', this.formData);
   }
+
+  login(userName: string, passWord: string): Observable<any> {
+    this.formDataLogin.userName = userName;
+    this.formDataLogin.password = passWord;
+    return this.httpClient.post(this.baseURL + '/Login', this.formDataLogin);
+  }
+
 }

@@ -27,17 +27,14 @@ namespace E_LearnignWebAPI.Controllers
         //GET: /api/UserProfile
         public async Task<Object> GetUserProfile()
         {
-            try
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            return new
             {
-                string userId = User.Claims.First(c => c.Type == "UserID").Value;
-                var user = await _userManager.FindByIdAsync(userId);
-                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(user), MessageDetail = "" };
-            }
-            catch (Exception ex)
-            {
-
-                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
-            }
+                user.FullName,
+                user.Email,
+                user.UserName
+            };
         }
 
         [HttpGet]

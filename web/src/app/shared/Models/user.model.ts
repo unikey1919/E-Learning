@@ -4,3 +4,7 @@ export class User {
     fullName: string='';
     password: string='';
 }
+export class Login {
+    userName: string='';
+    password: string='';
+}
