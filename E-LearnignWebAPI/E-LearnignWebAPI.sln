@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-LearnignWebAPI", "E-LearnignWebAPI\E-LearnignWebAPI.csproj", "{0363BB84-E4FC-4880-8E52-57135735DF69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElearningBO", "ElearningBO\ElearningBO.csproj", "{F6996529-9A77-454D-AAA8-6FA1DA7C3D65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElearningBO", "ElearningBO\ElearningBO.csproj", "{F6996529-9A77-454D-AAA8-6FA1DA7C3D65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElearningDAO", "ElearningDAO\ElearningDAO.csproj", "{142654DD-3A8B-4ED0-81A4-F38C9EB81B34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElearningBLL", "ElearningBLL\ElearningBLL.csproj", "{BCCA0CC7-AC22-439B-902A-E6DF83EAF7DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{F6996529-9A77-454D-AAA8-6FA1DA7C3D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6996529-9A77-454D-AAA8-6FA1DA7C3D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6996529-9A77-454D-AAA8-6FA1DA7C3D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{142654DD-3A8B-4ED0-81A4-F38C9EB81B34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{142654DD-3A8B-4ED0-81A4-F38C9EB81B34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{142654DD-3A8B-4ED0-81A4-F38C9EB81B34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{142654DD-3A8B-4ED0-81A4-F38C9EB81B34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCCA0CC7-AC22-439B-902A-E6DF83EAF7DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCCA0CC7-AC22-439B-902A-E6DF83EAF7DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCCA0CC7-AC22-439B-902A-E6DF83EAF7DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCCA0CC7-AC22-439B-902A-E6DF83EAF7DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

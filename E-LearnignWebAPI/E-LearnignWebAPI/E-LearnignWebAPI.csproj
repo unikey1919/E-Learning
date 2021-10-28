@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ElearningBLL\ElearningBLL.csproj" />
     <ProjectReference Include="..\ElearningBO\ElearningBO.csproj" />
   </ItemGroup>
 

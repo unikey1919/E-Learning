@@ -1,0 +1,11 @@
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\bin\Debug\net5.0\ElearningDAO.deps.json
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\bin\Debug\net5.0\ElearningDAO.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\bin\Debug\net5.0\ref\ElearningDAO.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\bin\Debug\net5.0\ElearningDAO.pdb
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\obj\Debug\net5.0\ElearningDAO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\obj\Debug\net5.0\ElearningDAO.AssemblyInfoInputs.cache
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\obj\Debug\net5.0\ElearningDAO.AssemblyInfo.cs
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\obj\Debug\net5.0\ElearningDAO.csproj.CoreCompileInputs.cache
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\obj\Debug\net5.0\ElearningDAO.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\obj\Debug\net5.0\ref\ElearningDAO.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\obj\Debug\net5.0\ElearningDAO.pdb
