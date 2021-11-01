@@ -28,5 +28,19 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > GetAllStudent Error: " + ex.Message);
             }
         }
+        #region Khóa học
+        public DataTable GetAllCourse()
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetAllCourse();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetAllCourse Error: " + ex.Message);
+            }
+        }
+        #endregion
     }
 }

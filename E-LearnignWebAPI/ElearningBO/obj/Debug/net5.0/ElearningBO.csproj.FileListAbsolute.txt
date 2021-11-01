@@ -9,3 +9,4 @@ C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ref\ElearningBO.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.pdb
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.csproj.AssemblyReference.cache

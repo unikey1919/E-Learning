@@ -27,6 +27,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { CourseComponent } from './admin-panel/course/course.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { MatMenuModule } from '@angular/material/menu';
     AdminPanelComponent,
     ForbiddenComponent,
     NavigationComponent,
+    CourseComponent,
   ],
   imports: [
     BrowserModule,

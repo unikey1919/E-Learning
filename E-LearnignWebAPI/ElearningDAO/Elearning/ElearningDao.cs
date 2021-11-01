@@ -18,7 +18,7 @@ namespace ElearningDAO.Elearning
         }
         public DataTable GetAllStudent()
         {
-            DataTable dtAllStudent = new DataTable();
+            DataTable dt = new DataTable();
             try
             {
                 string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
@@ -26,14 +26,35 @@ namespace ElearningDAO.Elearning
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetAllStudent()", conn);
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(dtAllStudent);
+                adapter.Fill(dt);
             }
             catch(Exception ex)
             {
                 throw new Exception("ElearningDao > GetAllStudent Error: " + ex.Message);
             }
             
-            return dtAllStudent;
+            return dt;
         }
+        #region Khóa học
+        public DataTable GetAllCourse()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetAllCourse()", conn);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetAllCourse Error: " + ex.Message);
+            }
+
+            return dt;
+        }
+        #endregion
     }
 }
