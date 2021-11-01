@@ -200,3 +200,5 @@ body {
   .control--checkbox input:disabled:checked ~ .control__indicator {
     background-color: #7e0cf5;
     opacity: .2; }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
