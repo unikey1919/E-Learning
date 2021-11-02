@@ -1,1 +1,46 @@
-<p>course works!</p>
+
+<mat-form-field appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+</mat-form-field>
+  
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+    <ng-container matColumnDef="course">
+      <th mat-header-cell *matHeaderCellDef>Course</th>
+      <td mat-cell *matCellDef="let element">{{element.coursename}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef>Course</th>
+        <td mat-cell *matCellDef="let element">{{element.code}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="instructorId">
+        <th mat-header-cell *matHeaderCellDef>Instructor Id</th>
+        <td mat-cell *matCellDef="let element">{{element.instructorid}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="instructor">
+        <th mat-header-cell *matHeaderCellDef>Instructor name</th>
+        <td mat-cell *matCellDef="let element">{{element.instructionname}}</td>
+      </ng-container>
+
+    <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{element.description}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef>Details</th>
+        <td mat-cell *matCellDef="let element">{{element.details}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>

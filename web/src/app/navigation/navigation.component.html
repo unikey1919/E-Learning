@@ -6,8 +6,9 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item routerLinkActive="list-item-activate" routerLink="test">Link 2</a>
+      <a mat-list-item routerLinkActive="list-item-activate" routerLink="course">Instructor</a>
       <a mat-list-item href="#">Link 3</a>
+      <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Logout</button>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -22,7 +23,8 @@
       </button>
       <span>E-learningWeb</span>
     </mat-toolbar>
-    <h2>Hello</h2>
-    <router-outlet></router-outlet>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

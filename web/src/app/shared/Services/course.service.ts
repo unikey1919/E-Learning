@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class CourseService {
 
   constructor(private httpClient: HttpClient) { }
-  readonly baseURL = 'https://localhost:44395/api/Course';
+  readonly baseURL = 'https://localhost:44395/api/Courses';
   
   GetAllCourse(): Observable<any> {
     return this.httpClient.get(this.baseURL + '/GetAllCourse');

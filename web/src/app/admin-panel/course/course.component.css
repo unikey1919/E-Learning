@@ -1,0 +1,15 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 2em;
+  }
+  .mat-table
+  {
+    background-color:transparent!important;  
+  }
+  table tr:last-child td /*To remove the last border*/
+  {
+    border-bottom:0 solid
+  }
+
+  

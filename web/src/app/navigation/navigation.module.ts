@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserComponent } from '../user/user.component';
 import { RouterModule } from '@angular/router';
 import { TestComponent } from '../test/test.component';
-
-
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -12,7 +11,8 @@ import { TestComponent } from '../test/test.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MatSidenavModule
   ]
 })
 export class NavigationModule { }
