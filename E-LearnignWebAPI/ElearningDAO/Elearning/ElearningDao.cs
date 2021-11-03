@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using ElearningBO.E_Learning;
 
 namespace ElearningDAO.Elearning
 {
@@ -54,6 +55,53 @@ namespace ElearningDAO.Elearning
             }
 
             return dt;
+        }
+
+        public void AddCourse(CourseModel model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddCourse", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_instructorid", model.InstructorId);
+                cmd.Parameters.AddWithValue("@p_code", model.Code);
+                cmd.Parameters.AddWithValue("@p_coursename", model.FullName);
+                cmd.Parameters.AddWithValue("@p_descripton", model.Description);
+                cmd.Parameters.AddWithValue("@p_details", model.Details);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddCourse Error: " + ex.Message);
+            }
+
+        }
+        public void DelCourse(CourseModel model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DelCourse", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_instructorid", model.InstructorId);
+                cmd.Parameters.AddWithValue("@p_code", model.Code);
+                cmd.Parameters.AddWithValue("@p_coursename", model.FullName);
+                cmd.Parameters.AddWithValue("@p_descripton", model.Description);
+                cmd.Parameters.AddWithValue("@p_details", model.Details);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddCourse Error: " + ex.Message);
+            }
+
         }
         #endregion
     }

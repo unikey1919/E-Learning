@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ElearningBO\ElearningBO.csproj" />
     <ProjectReference Include="..\ElearningDAO\ElearningDAO.csproj" />
   </ItemGroup>
 

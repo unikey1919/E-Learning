@@ -3,17 +3,17 @@
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
 </mat-form-field>
-  
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <th mat-header-cell *matHeaderCellDef>No.</th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
+    </ng-container>
 
     <ng-container matColumnDef="course">
-      <th mat-header-cell *matHeaderCellDef>Course</th>
-      <td mat-cell *matCellDef="let element">{{element.coursename}}</td>
+        <th mat-header-cell *matHeaderCellDef>Course</th>
+        <td mat-cell *matCellDef="let element">{{element.coursename}}</td>
     </ng-container>
 
     <ng-container matColumnDef="code">
@@ -29,7 +29,7 @@
     <ng-container matColumnDef="instructor">
         <th mat-header-cell *matHeaderCellDef>Instructor name</th>
         <td mat-cell *matCellDef="let element">{{element.instructionname}}</td>
-      </ng-container>
+    </ng-container>
 
     <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef>Description</th>
@@ -41,6 +41,22 @@
         <td mat-cell *matCellDef="let element">{{element.details}}</td>
     </ng-container>
 
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>
+            <button style="background: rgb(173, 224, 173)"  mat-raised-button>
+                <mat-icon >add</mat-icon>
+            </button>
+        </th>
+        <td mat-cell *matCellDef="let row">
+            <button mat-icon-button>
+                <mat-icon>launch</mat-icon>
+            </button>
+            <button mat-icon-button color="warn">
+                <mat-icon>delete_outline</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+</table>

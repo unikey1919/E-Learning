@@ -13,8 +13,9 @@ const lstCourse: Course[] = [];
 
 
 export class CourseComponent implements OnInit {
+  showMe: boolean = true;
   formData: Course = new Course();
-  displayedColumns: string[] = ['position','course', 'code', 'instructorId', 'instructor', 'description', 'details'];
+  displayedColumns: string[] = ['position','course', 'code', 'instructorId', 'instructor', 'description', 'details','actions'];
   public dataSource = new MatTableDataSource<Course>();
   
   applyFilter(event: Event) {
@@ -34,7 +35,6 @@ export class CourseComponent implements OnInit {
         this.dataSource.data = JSON.parse(res.message) as Course[];
       },
       error =>{
-
       }
     );
   }

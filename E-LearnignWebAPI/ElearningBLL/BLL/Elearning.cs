@@ -1,4 +1,5 @@
-﻿using ElearningDAO.Elearning;
+﻿using ElearningBO.E_Learning;
+using ElearningDAO.Elearning;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -39,6 +40,28 @@ namespace ElearningBLL.BLL
             catch (Exception ex)
             {
                 throw new Exception("Elearning > GetAllCourse Error: " + ex.Message);
+            }
+        }
+        public void AddCourse(CourseModel model)
+        {
+            try
+            {
+                objElDAO.AddCourse(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddCourse Error: " + ex.Message);
+            }
+        }
+        public void DelCourse(CourseModel model)
+        {
+            try
+            {
+                objElDAO.DelCourse(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelCourse Error: " + ex.Message);
             }
         }
         #endregion
