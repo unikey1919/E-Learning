@@ -13,3 +13,5 @@ C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\ne
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ref\ElearningBLL.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.pdb
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\bin\Debug\net5.0\ElearningBO.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\bin\Debug\net5.0\ElearningBO.pdb

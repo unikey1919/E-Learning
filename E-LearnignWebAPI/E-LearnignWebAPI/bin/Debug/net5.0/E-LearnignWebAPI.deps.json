@@ -2035,6 +2035,7 @@
       },
       "ElearningBLL/1.0.0": {
         "dependencies": {
+          "ElearningBO": "1.0.0",
           "ElearningDAO": "1.0.0"
         },
         "runtime": {
@@ -2058,6 +2059,7 @@
       },
       "ElearningDAO/1.0.0": {
         "dependencies": {
+          "ElearningBO": "1.0.0",
           "Microsoft.Extensions.Configuration": "5.0.0",
           "System.Configuration.ConfigurationManager": "5.0.0",
           "System.Data.SqlClient": "4.8.3"

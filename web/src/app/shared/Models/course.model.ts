@@ -2,8 +2,8 @@ export class Course {
     id: number = 0;
     instructorid: number = 0;
     code: string='';
-    coursename: string='';
+    fullName: string='';
     instructionname: string='';
-    decription: string='';
+    description: string='';
     details: string='';
 }

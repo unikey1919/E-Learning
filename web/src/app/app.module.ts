@@ -31,6 +31,7 @@ import { CourseComponent } from './admin-panel/course/course.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import {MatInputModule} from '@angular/material/input';
     AdminPanelComponent,
     ForbiddenComponent,
     NavigationComponent,
-    CourseComponent,
+    CourseComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +68,8 @@ import {MatInputModule} from '@angular/material/input';
     MatMenuModule,
     MatTableModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule,
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,
