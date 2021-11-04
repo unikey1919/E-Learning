@@ -19,6 +19,7 @@ namespace ElearningBO.E_Learning
         public string FullName { get; set; }
         public string Description { get; set; }
         public string Details { get; set; }
+        public bool isDelete  { get; set; } 
         public virtual Instructor Instructor { get; set; }
         public ICollection<Enrollment> Enrollments { get; set; }
     }

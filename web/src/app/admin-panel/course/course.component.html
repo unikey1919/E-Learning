@@ -36,6 +36,10 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
+                    <th>
+                        <input type="checkbox" class="checkAll" id="checkAll1"/>
+                    </th>
+                    <th>No.</th>
                     <th>Course</th>
                     <th>Course Code</th>
                     <th>Instructor Id</th>
@@ -51,6 +55,16 @@
             </ng-template>
             <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
                 <tr [pEditableRow]="item">
+                    <td>
+                        <input type="checkbox" class="checkItem"/>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{ri}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
                     <td>
                         <p-cellEditor>
                             <ng-template pTemplate="input">

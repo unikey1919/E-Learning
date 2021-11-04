@@ -16,6 +16,7 @@ namespace ElearningBO.E_Learning
 
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
+        public bool isDelete { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
         public ICollection<Course> Course { get; set; }
     }

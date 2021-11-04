@@ -16,6 +16,7 @@ namespace ElearningBO.E_Learning
         public string DateEnrollment { get; set; }
         public string DateCompletion { get; set; }
         public string Details { get; set; }
+        public bool isDelete { get; set; }
         public virtual Student Student { get; set; }
         public virtual Course Course { get; set; }
     }
