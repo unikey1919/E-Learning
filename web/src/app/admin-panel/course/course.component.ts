@@ -1,59 +1,65 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Course } from 'src/app/shared/Models/course.model';
 import { CourseService } from 'src/app/shared/Services/course.service';
+import { SelectItem } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 const lstCourse: Course[] = [];
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
-  styleUrls: ['./course.component.css']
+  styleUrls: ['./course.component.css'],
+  styles: [],
+  providers: [MessageService]
 })
-
-
 export class CourseComponent implements OnInit {
   showMe: boolean = false;
   formData: Course = new Course();
-  displayedColumns: string[] = ['position','course', 'code', 'instructorId', 'instructor', 'description', 'details','actions'];
-  public dataSource = new MatTableDataSource<Course>();
-  
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  lstCourse: Course[];
+  statuses: SelectItem[];
+  clonedItem: { [s: string]: Course } = {};
 
-  constructor(private router: Router, private courseService: CourseService, private toastr: ToastrService) { }
+  constructor(
+    private router: Router,
+    private courseService: CourseService,
+    private toastr: ToastrService,
+    private messageService: MessageService
+  ) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.getListCourse();
   }
 
-  getListCourse(){
+  getListCourse() {
     this.courseService.GetAllCourse().subscribe(
-      res => {
-        this.dataSource.data = JSON.parse(res.message) as Course[];
+      (res) => {
+        this.lstCourse = JSON.parse(res.message) as Course[];
       },
-      error =>{
-      }
+      (error) => {}
     );
   }
 
   onSubmit() {
     this.courseService.AddCourse(this.formData).subscribe(
       (res: any) => {
-        if(res.isError == true){
-          this.toastr.success('New course created!', 'Create successful.');
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to create course',
+          });
+        } else {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Course is created',
+          });
         }
-        else 
-        {  this.toastr.success('New course created!', 'alo successful.');}
-       
         this.getListCourse();
       },
-      err => {
-        this.toastr.error('Create course fail!');
-      }
+      (err) => {}
     );
   }
 
@@ -61,19 +67,22 @@ export class CourseComponent implements OnInit {
     this.showMe = !this.showMe;
   }
 
-  showSpinner(time?) {
-    console.log(time);
-    this.spinner.show();
-    if (time !== null) {
-      this.loadingText = 'Spin for 5 seconds';
-      setTimeout(() => {
-        this.spinner.hide();
-      }
-        , 2000)
-    } else{
-      this.loadingText = 'Spin for unlimited times';
-      
-    }
+  onRowEditInit(course: Course) {
+    this.clonedItem[course.id] = { ...course };
+  }
+
+  onRowEditCancel(course: Course, index: number) {
+    this.lstCourse[index] = this.clonedItem[course.id];
+    delete this.clonedItem[course.id];
+  }
+
+  onRowEditSave(course: Course) {
+    delete this.clonedItem[course.id];
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Product is updated',
+    });
   }
 
 }

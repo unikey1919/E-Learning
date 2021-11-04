@@ -1,66 +1,5 @@
 
-<mat-form-field appearance="standard">
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-</mat-form-field>
-
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-    <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef>No.</th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="course">
-        <th mat-header-cell *matHeaderCellDef>Course</th>
-        <td mat-cell *matCellDef="let element">{{element.coursename}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="code">
-        <th mat-header-cell *matHeaderCellDef>Course Code</th>
-        <td mat-cell *matCellDef="let element">{{element.code}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="instructorId">
-        <th mat-header-cell *matHeaderCellDef>Instructor Id</th>
-        <td mat-cell *matCellDef="let element">{{element.instructorid}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="instructor">
-        <th mat-header-cell *matHeaderCellDef>Instructor name</th>
-        <td mat-cell *matCellDef="let element">{{element.instructionname}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element">{{element.description}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="details">
-        <th mat-header-cell *matHeaderCellDef>Details</th>
-        <td mat-cell *matCellDef="let element">{{element.details}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>
-            <button (click)="showHide()" style="background: rgb(173, 224, 173)"  mat-raised-button>
-                <mat-icon >add</mat-icon>
-            </button>
-        </th>
-        <td mat-cell *matCellDef="let row">
-            <button mat-icon-button>
-                <mat-icon>launch</mat-icon>
-            </button>
-            <button mat-icon-button color="warn">
-                <mat-icon>delete_outline</mat-icon>
-            </button>
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
+<p-toast></p-toast>
 
 <div class="row" *ngIf="showMe">
     <div class="col-lg-2">
@@ -85,6 +24,108 @@
     
 </div>
 
-    
+<div class="card">
+        <p-table #dt1 [value]="lstCourse" dataKey="id" editMode="row" responsiveLayout="scroll"
+         [globalFilterFields]="['coursename', 'code', 'instructorid', 'instructionname', 'decription', 'details']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <span class="p-input-icon-left p-ml-auto">
+                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Course</th>
+                    <th>Course Code</th>
+                    <th>Instructor Id</th>
+                    <th>Instructor name</th>
+                    <th>Description</th>
+                    <th>Details</th>
+                    <th style="width:8rem">
+                        <button (click)="showHide()" style="background: rgb(173, 224, 173)"  mat-raised-button>
+                            <mat-icon >add</mat-icon>
+                        </button>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="item">
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="item.coursename">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.coursename}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" required [(ngModel)]="item.code">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.code}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input" >
+                                <input pInputText type="text" required [(ngModel)]="item.instructorid">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.instructorid}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{item.instructionname}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input" >
+                                <input pInputText type="text" [(ngModel)]="item.decription">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.decription}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input" >
+                                <input pInputText type="text" [(ngModel)]="item.details">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.details}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td >
+                        <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onRowEditInit(item)">
+                            <mat-icon>launch</mat-icon>
+                        </button>
+                        <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onRowEditInit(item)" color="warn">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button pSaveEditableRow *ngIf="editing" mat-icon-button color="primary" (click)="onRowEditSave(item)" >
+                            <mat-icon>done</mat-icon>
+                        </button>
+                        <button pCancelEditableRow (click)="onRowEditCancel(item, ri)" *ngIf="editing" mat-icon-button color="warn" >
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
 
+    
 

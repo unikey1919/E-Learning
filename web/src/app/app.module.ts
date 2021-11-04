@@ -32,7 +32,11 @@ import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import {TableModule} from 'primeng/table';
+import {DropdownModule} from 'primeng/dropdown';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {ToastModule} from 'primeng/toast';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +74,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    TableModule,
+    DropdownModule,
+    MessagesModule,
+    MessageModule,
+    ToastModule
+
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,
