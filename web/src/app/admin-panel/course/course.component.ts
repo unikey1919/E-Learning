@@ -12,7 +12,7 @@ const lstCourse: Course[] = [];
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.css'],
   styles: [],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class CourseComponent implements OnInit {
   showMe: boolean = false;
@@ -51,6 +51,7 @@ export class CourseComponent implements OnInit {
             detail: 'Fail to create course',
           });
         } else {
+          this.showHide();
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
@@ -77,12 +78,49 @@ export class CourseComponent implements OnInit {
   }
 
   onRowEditSave(course: Course) {
-    delete this.clonedItem[course.id];
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Product is updated',
-    });
+    this.courseService.UpdateCourse(course).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to update course',
+          });
+        }
+        else{
+          delete this.clonedItem[course.id];
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Course is updated',
+          });
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  onDelete(course: Course) {
+    this.courseService.DelCourse(course).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to delete course',
+          });
+        }
+        else{
+          this.getListCourse();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Course is deleted',
+          });
+        }
+      },
+      (error) => {}
+    );
   }
 
 }

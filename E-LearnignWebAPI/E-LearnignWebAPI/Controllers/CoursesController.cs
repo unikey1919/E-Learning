@@ -41,6 +41,7 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+
         [HttpPost]
         [Route("AddCourse")]
         public ApiResultMessage AddCourse(CourseModel model)
@@ -55,6 +56,22 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+
+        [HttpPost]
+        [Route("UpdateCourse")]
+        public ApiResultMessage UpdateCourse(CourseModel model)
+        {
+            try
+            {
+                elearningBll.UpdateCourse(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
         [HttpPost]
         [Route("DelCourse")]
         public ApiResultMessage DelCourse(CourseModel model)

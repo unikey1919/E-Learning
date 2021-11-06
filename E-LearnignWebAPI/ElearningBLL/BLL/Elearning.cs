@@ -53,6 +53,19 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > AddCourse Error: " + ex.Message);
             }
         }
+
+        public void UpdateCourse(CourseModel model)
+        {
+            try
+            {
+                objElDAO.UpdateCourse(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateCourse Error: " + ex.Message);
+            }
+        }
+
         public void DelCourse(CourseModel model)
         {
             try

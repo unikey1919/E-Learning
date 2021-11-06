@@ -67,7 +67,7 @@ namespace ElearningDAO.Elearning
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@p_instructorid", model.InstructorId);
                 cmd.Parameters.AddWithValue("@p_code", model.Code);
-                cmd.Parameters.AddWithValue("@p_coursename", model.FullName);
+                cmd.Parameters.AddWithValue("@p_coursename", model.Coursename);
                 cmd.Parameters.AddWithValue("@p_descripton", model.Description);
                 cmd.Parameters.AddWithValue("@p_details", model.Details);
                 conn.Open();
@@ -80,17 +80,19 @@ namespace ElearningDAO.Elearning
             }
 
         }
-        public void DelCourse(CourseModel model)
+
+        public void UpdateCourse(CourseModel model)
         {
             try
             {
                 string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
-                SqlCommand cmd = new SqlCommand("EL_DelCourse", conn);
+                SqlCommand cmd = new SqlCommand("EL_UpdateCourse", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_courseid", model.Id);
                 cmd.Parameters.AddWithValue("@p_instructorid", model.InstructorId);
                 cmd.Parameters.AddWithValue("@p_code", model.Code);
-                cmd.Parameters.AddWithValue("@p_coursename", model.FullName);
+                cmd.Parameters.AddWithValue("@p_coursename", model.Coursename);
                 cmd.Parameters.AddWithValue("@p_descripton", model.Description);
                 cmd.Parameters.AddWithValue("@p_details", model.Details);
                 conn.Open();
@@ -99,7 +101,27 @@ namespace ElearningDAO.Elearning
             }
             catch (Exception ex)
             {
-                throw new Exception("ElearningDao > AddCourse Error: " + ex.Message);
+                throw new Exception("ElearningDao > UpdateCourse Error: " + ex.Message);
+            }
+
+        }
+
+        public void DelCourse(CourseModel model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DeleteCourse", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_courseid", model.Id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelCourse Error: " + ex.Message);
             }
 
         }

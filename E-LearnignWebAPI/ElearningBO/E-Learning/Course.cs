@@ -29,7 +29,7 @@ namespace ElearningBO.E_Learning
         public int Id { get; set; }
         public int InstructorId { get; set; }
         public string Code { get; set; }
-        public string FullName { get; set; }
+        public string Coursename { get; set; }
         public string Description { get; set; }
         public string Details { get; set; }
     }

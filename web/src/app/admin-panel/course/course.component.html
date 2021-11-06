@@ -3,7 +3,7 @@
 
 <div class="row" *ngIf="showMe">
     <div class="col-lg-2">
-        <input type="text" class="form-control" placeholder="Course" #coursename="ngModel" name="coursename" [(ngModel)]="formData.fullName" required/>
+        <input type="text" class="form-control" placeholder="Course" #coursename="ngModel" name="coursename" [(ngModel)]="formData.coursename" required/>
     </div>
     <div  class="col-lg-2">
         <input type="text" class="form-control" placeholder="Course Code" #code="ngModel" name="code" [(ngModel)]="formData.code" required/>
@@ -12,7 +12,7 @@
         <input type="text" class="form-control" placeholder="Instructor Id" #instructorid="ngModel" name="instructorid" [(ngModel)]="formData.instructorid" required/>
     </div>
     <div  class="col-lg-2">
-        <input type="text" class="form-control" placeholder="Description" #decription="ngModel" name="decription" [(ngModel)]="formData.description" required/>
+        <input type="text" class="form-control" placeholder="Description" #description="ngModel" name="description" [(ngModel)]="formData.description" required/>
     </div>
     <div class="col-lg-2">
         <input type="text" class="form-control" placeholder="Details" #details="ngModel" name="details" [(ngModel)]="formData.details" required/>
@@ -26,7 +26,7 @@
 
 <div class="card">
         <p-table #dt1 [value]="lstCourse" dataKey="id" editMode="row" responsiveLayout="scroll"
-         [globalFilterFields]="['coursename', 'code', 'instructorid', 'instructionname', 'decription', 'details']">
+         [globalFilterFields]="['coursename', 'code', 'instructorid', 'instructionname', 'description', 'details']">
             <ng-template pTemplate="caption">
                 <div class="p-d-flex">
                     <span class="p-input-icon-left p-ml-auto">
@@ -105,10 +105,10 @@
                     <td>
                         <p-cellEditor>
                             <ng-template pTemplate="input" >
-                                <input pInputText type="text" [(ngModel)]="item.decription">
+                                <input pInputText type="text" [(ngModel)]="item.description">
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{item.decription}}
+                                {{item.description}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -126,7 +126,7 @@
                         <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onRowEditInit(item)">
                             <mat-icon>launch</mat-icon>
                         </button>
-                        <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onRowEditInit(item)" color="warn">
+                        <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onDelete(item)" color="warn">
                             <mat-icon>delete</mat-icon>
                         </button>
                         <button pSaveEditableRow *ngIf="editing" mat-icon-button color="primary" (click)="onRowEditSave(item)" >

@@ -421,3 +421,4 @@ C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debu
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\ElearningDAO.pdb
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\app.config
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\E-LearnignWebAPI.dll.config
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\obj\Debug\net5.0\E-LearnignWebAPI.csproj.CopyComplete

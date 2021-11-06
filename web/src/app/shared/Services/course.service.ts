@@ -18,4 +18,12 @@ export class CourseService {
   AddCourse(objectModel): Observable<any>{
     return this.httpClient.post(this.baseURL + '/AddCourse', objectModel);
   }
+
+  UpdateCourse(objectModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/UpdateCourse', objectModel);
+  }
+
+  DelCourse(objectModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/DelCourse', objectModel);
+  }
 }
