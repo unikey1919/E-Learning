@@ -13,8 +13,8 @@ namespace ElearningBO.E_Learning
         public int Id { get; set; }
         public int StudentId { get; set; }
         public int CourseId { get; set; }
-        public string DateEnrollment { get; set; }
-        public string DateCompletion { get; set; }
+        public DateTime DateEnrollment { get; set; }
+        public DateTime DateCompletion { get; set; }
         public string Details { get; set; }
         public bool isDelete { get; set; }
         public virtual Student Student { get; set; }

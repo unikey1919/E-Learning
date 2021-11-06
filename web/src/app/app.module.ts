@@ -37,6 +37,8 @@ import {DropdownModule} from 'primeng/dropdown';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {ToastModule} from 'primeng/toast';
+import { EnrollmentComponent } from './admin-panel/enrollment/enrollment.component';
+import { TestComponent } from './admin-panel/course/test/test.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +51,9 @@ import {ToastModule} from 'primeng/toast';
     AdminPanelComponent,
     ForbiddenComponent,
     NavigationComponent,
-    CourseComponent
+    CourseComponent,
+    EnrollmentComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

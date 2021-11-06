@@ -7,8 +7,9 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
-import { TestComponent } from './test/test.component';
 import { CourseComponent } from './admin-panel/course/course.component';
+import { EnrollmentComponent } from './admin-panel/enrollment/enrollment.component';
+import { TestComponent } from './admin-panel/course/test/test.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user/login', pathMatch: 'full' },
@@ -31,8 +32,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { permittedRoles: ['Admin'] },
     children: [
-      { path: 'test', component: TestComponent },
       { path: 'course', component: CourseComponent },
+      { path: 'enrollment', component: EnrollmentComponent },
+      { path: 'test', component: TestComponent },
     ],
   },
 ];

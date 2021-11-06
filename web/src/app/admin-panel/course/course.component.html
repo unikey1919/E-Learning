@@ -1,6 +1,8 @@
 
 <p-toast></p-toast>
 
+<a routerLink="/admin/test">Continue</a>
+
 <div class="row" *ngIf="showMe">
     <div class="col-lg-2">
         <input type="text" class="form-control" placeholder="Course" #coursename="ngModel" name="coursename" [(ngModel)]="formData.coursename" required/>
@@ -126,7 +128,7 @@
                         <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onRowEditInit(item)">
                             <mat-icon>launch</mat-icon>
                         </button>
-                        <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onDelete(item)" color="warn">
+                        <button *ngIf="!editing" mat-icon-button (click)="onDelete(item)" color="warn">
                             <mat-icon>delete</mat-icon>
                         </button>
                         <button pSaveEditableRow *ngIf="editing" mat-icon-button color="primary" (click)="onRowEditSave(item)" >

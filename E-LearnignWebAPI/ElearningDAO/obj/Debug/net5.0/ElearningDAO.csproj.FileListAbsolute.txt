@@ -12,3 +12,4 @@ C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\obj\Debug\ne
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\bin\Debug\net5.0\ElearningBO.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\bin\Debug\net5.0\ElearningBO.pdb
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\obj\Debug\net5.0\ElearningDAO.csproj.AssemblyReference.cache
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningDAO\obj\Debug\net5.0\ElearningDAO.csproj.CopyComplete
