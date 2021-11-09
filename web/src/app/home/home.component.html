@@ -1,17 +1,23 @@
-<nav class="navbar navbar-dark bg-dark">
-  <a class="navbar-brand text-white">JWT Auth System</a>
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/admin">Admin Panel</a>
-    </li>
-  </ul>
-  <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Logout</button>
-</nav>
 
-<div class="card m-5" style="width:18rem" *ngIf="formData">
-  <ul class="list-group">
-    <li class="list-group-item"><strong>Username : </strong>{{formData.userName}}</li>
-    <li class="list-group-item"><strong>FullName : </strong>{{formData.fullName}}</li>
-    <li class="list-group-item"><strong>Email : </strong>{{formData.email}}</li>
-  </ul>
-</div>
+
+ <div class="container" *ngIf="formData">
+  <nav class="navbar">
+    <a class="navbar-brand" style="margin-left: 10px">Home</a>
+    <button class="btn btn-danger my-2 my-sm-0" style="margin-right: 10px" (click)="onLogout()">Logout</button>
+  </nav>
+  
+  <div class="row" style="display:flex; flex-direction: row">
+    <mat-card class="course-card" *ngFor="let item of lstCourse" style=" margin: 10px">
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <h3>{{item.coursename}}</h3>
+        <p>CourseCode</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+      </mat-card-actions>
+    </mat-card>
+   </div>
+  </div>
+  

@@ -77,6 +77,19 @@ namespace ElearningBLL.BLL
                 throw new Exception("DeliveryLoad > DelCourse Error: " + ex.Message);
             }
         }
+
+        public DataTable GetCourseByStudent(string username)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetCourseByStudent(username);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetCourseByStudent Error: " + ex.Message);
+            }
+        }
         #endregion
     }
 }

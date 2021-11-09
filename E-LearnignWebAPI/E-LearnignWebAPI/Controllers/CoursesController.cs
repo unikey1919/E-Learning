@@ -10,6 +10,7 @@ using ElearningBO.E_Learning;
 using System.Data;
 using ElearningBLL.BLL;
 using Newtonsoft.Json;
+using ElearningBO.UserAuthentication;
 
 namespace E_LearnignWebAPI.Controllers
 {
@@ -86,10 +87,6 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
-
-
-
-
         // GET: api/Courses/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourse(int id)
@@ -106,6 +103,21 @@ namespace E_LearnignWebAPI.Controllers
         private bool CourseExists(int id)
         {
             return _context.Courses.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        [Route("GetCourseByStudent")]
+        public ApiResultMessage GetCourseByStudent(ApplicationUserModel user)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetCourseByStudent(user.UserName);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
         }
     }
 }

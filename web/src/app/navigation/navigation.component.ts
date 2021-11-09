@@ -14,7 +14,8 @@ import { Router } from '@angular/router';
 
 
 export class NavigationComponent {
-
+  events: string[] = [];
+  opened: boolean;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
