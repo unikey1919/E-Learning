@@ -53,7 +53,7 @@ import { TestComponent } from './admin-panel/course/test/test.component';
     NavigationComponent,
     CourseComponent,
     EnrollmentComponent,
-    TestComponent
+    TestComponent,
   ],
   imports: [
     BrowserModule,

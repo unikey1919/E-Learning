@@ -9,7 +9,6 @@ C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\ne
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.AssemblyInfoInputs.cache
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.AssemblyInfo.cs
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.csproj.CoreCompileInputs.cache
-C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.csproj.CopyComplete
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ref\ElearningBLL.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.pdb

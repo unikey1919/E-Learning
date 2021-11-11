@@ -4,14 +4,16 @@ using ElearningBO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_LearnignWebAPI.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211110153218_Init5")]
+    partial class Init5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,35 +87,6 @@ namespace E_LearnignWebAPI.Migrations
                     b.ToTable("Enrollments");
                 });
 
-            modelBuilder.Entity("ElearningBO.E_Learning.File", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isDelete")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("File");
-                });
-
             modelBuilder.Entity("ElearningBO.E_Learning.Instructor", b =>
                 {
                     b.Property<int>("Id")
@@ -152,35 +125,6 @@ namespace E_LearnignWebAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("ElearningBO.E_Learning.Subject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Details")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SubjectName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isDelete")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("Subject");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -425,17 +369,6 @@ namespace E_LearnignWebAPI.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("ElearningBO.E_Learning.File", b =>
-                {
-                    b.HasOne("ElearningBO.E_Learning.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subject");
-                });
-
             modelBuilder.Entity("ElearningBO.E_Learning.Instructor", b =>
                 {
                     b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", "ApplicationUser")
@@ -452,17 +385,6 @@ namespace E_LearnignWebAPI.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("ElearningBO.E_Learning.Subject", b =>
-                {
-                    b.HasOne("ElearningBO.E_Learning.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
