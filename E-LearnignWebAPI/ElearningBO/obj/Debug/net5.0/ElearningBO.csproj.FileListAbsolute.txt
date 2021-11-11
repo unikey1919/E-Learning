@@ -9,3 +9,14 @@ C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ref\ElearningBO.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.pdb
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\bin\Debug\net5.0\ElearningBO.deps.json
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\bin\Debug\net5.0\ElearningBO.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\bin\Debug\net5.0\ref\ElearningBO.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\bin\Debug\net5.0\ElearningBO.pdb
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.AssemblyInfoInputs.cache
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.AssemblyInfo.cs
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ref\ElearningBO.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBO\obj\Debug\net5.0\ElearningBO.pdb

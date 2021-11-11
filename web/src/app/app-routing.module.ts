@@ -10,6 +10,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { CourseComponent } from './admin-panel/course/course.component';
 import { EnrollmentComponent } from './admin-panel/enrollment/enrollment.component';
 import { TestComponent } from './admin-panel/course/test/test.component';
+import { InstructorComponent } from './admin-panel/instructor/instructor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user/login', pathMatch: 'full' },
@@ -35,6 +36,7 @@ const routes: Routes = [
       { path: 'course', component: CourseComponent },
       { path: 'enrollment', component: EnrollmentComponent },
       { path: 'course/test', component: TestComponent },
+      { path: 'instructor', component: InstructorComponent },
     ],
   },
 ];
