@@ -91,5 +91,20 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
+
+        #region Instructor
+        public DataTable GetAllInstructor()
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetAllInstructor();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetAllInstructor Error: " + ex.Message);
+            }
+        }
+        #endregion
     }
 }

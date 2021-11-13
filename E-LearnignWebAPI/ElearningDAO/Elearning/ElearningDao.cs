@@ -80,7 +80,6 @@ namespace ElearningDAO.Elearning
             }
 
         }
-
         public void UpdateCourse(CourseModel model)
         {
             try
@@ -142,6 +141,27 @@ namespace ElearningDAO.Elearning
             catch (Exception ex)
             {
                 throw new Exception("ElearningDao > GetCourseByStudent Error: " + ex.Message);
+            }
+
+            return dt;
+        }
+        #endregion
+        #region Instructor
+        public DataTable GetAllInstructor()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetAllInstructor()", conn);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetAllInstructor Error: " + ex.Message);
             }
 
             return dt;

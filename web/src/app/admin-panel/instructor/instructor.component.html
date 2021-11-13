@@ -1,1 +1,122 @@
-<p>instructor works!</p>
+
+<p-toast></p-toast>
+
+<a routerLink="test">Continue</a>
+
+
+
+<div class="card">
+        <p-table #dt1 [value]="lstInstructor" dataKey="id" editMode="row" responsiveLayout="scroll"
+         [globalFilterFields]="['instructionname', 'email', 'phonenumber']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <span class="p-input-icon-left p-ml-auto">
+                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>No.</th>
+                    <th>Instructor name</th>
+                    <th>Email</th>
+                    <th>Phone number</th>
+                   <!-- <th style="width:8rem">
+                        <button (click)="showHide()" style="background: rgb(173, 224, 173)"  mat-raised-button>
+                            <mat-icon >add</mat-icon>
+                        </button>
+                    </th>-->
+                    
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="item">
+                    <td>
+                        <input type="checkbox" class="checkItem"/>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{ri}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="item.coursename">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.coursename}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" required [(ngModel)]="item.code">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.code}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input" >
+                                <input pInputText type="text" required [(ngModel)]="item.instructorid">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.instructorid}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{item.instructionname}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input" >
+                                <input pInputText type="text" [(ngModel)]="item.description">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.description}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input" >
+                                <input pInputText type="text" [(ngModel)]="item.details">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.details}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <!-- <td >
+                        <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onRowEditInit(item)">
+                            <mat-icon>launch</mat-icon>
+                        </button>
+                        <button *ngIf="!editing" mat-icon-button (click)="onDelete(item)" color="warn">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button pSaveEditableRow *ngIf="editing" mat-icon-button color="primary" (click)="onRowEditSave(item)" >
+                            <mat-icon>done</mat-icon>
+                        </button>
+                        <button pCancelEditableRow (click)="onRowEditCancel(item, ri)" *ngIf="editing" mat-icon-button color="warn" >
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </td> -->
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    
+

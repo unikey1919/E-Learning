@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ElearningBO;
 using ElearningBO.E_Learning;
+using ElearningBLL.BLL;
+using System.Data;
+using Newtonsoft.Json;
 
 namespace E_LearnignWebAPI.Controllers
 {
@@ -15,17 +18,27 @@ namespace E_LearnignWebAPI.Controllers
     public class InstructorsController : ControllerBase
     {
         private readonly ELearningDbContext _context;
-
+        private Elearning elearningBll = null;
         public InstructorsController(ELearningDbContext context)
         {
             _context = context;
+            elearningBll = new Elearning();
         }
 
         // GET: api/Instructors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Instructor>>> GetInstructors()
+        [Route("GetAllInstructor")]
+        public ApiResultMessage GetAllInstructor()
         {
-            return await _context.Instructors.ToListAsync();
+            try
+            {
+                DataTable dt = elearningBll.GetAllInstructor();
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
         }
 
         // GET: api/Instructors/5
