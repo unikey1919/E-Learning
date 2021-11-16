@@ -96,7 +96,7 @@
 <ng-template #template>  
   <div class="modal-header">  
     <h2 class="modal-title pull-left" style="color: red;">Danh sách người dùng chưa được phân công</h2>  
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">  
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef1()">  
       <span aria-hidden="true">×</span>  
     </button>  
   </div>  
@@ -156,6 +156,6 @@
   </div>   
   <div class="modal-footer">  
     <i (click)="submitForm()" class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green"></i>
-    <i (click)="modalRef.hide()" class="far fa-times-circle fa-2x" style="color:red"></i>
+    <i (click)="modalRef1()" class="far fa-times-circle fa-2x" style="color:red"></i>
   </div>  
 </ng-template>  

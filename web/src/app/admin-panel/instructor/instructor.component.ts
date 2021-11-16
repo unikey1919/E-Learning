@@ -43,6 +43,8 @@ export class InstructorComponent implements OnInit {
     this.getListUser();
   }
 
+  
+
   onCheckboxChange(e) {
     if (e.target.checked) {
       this.list1.push(new FormControl(e.target.value));
@@ -58,6 +60,10 @@ export class InstructorComponent implements OnInit {
     }
   }
 
+  modalRef1(){
+    this.list1.clear()
+    this.modalRef.hide()
+  }
   submitForm() {
     if (this.list1.value.length == 0) {
       this.messageService.add({
@@ -65,7 +71,7 @@ export class InstructorComponent implements OnInit {
         summary: 'error',
         detail: 'Vui lòng chọn người dùng cần thêm',
       });
-      this.modalRef.hide();
+      this.modalRef.hide()
     }
     else {
       console.log(this.list1.value)
@@ -84,7 +90,7 @@ export class InstructorComponent implements OnInit {
               detail: 'Add success',
             });
           }
-          this.list1.clear;
+          this.list1.clear();
           this.modalRef.hide();
           this.getListInstructor();
         },
@@ -98,7 +104,7 @@ export class InstructorComponent implements OnInit {
   openModalWithClass(template: TemplateRef<any>) {  
     this.modalRef = this.modalService.show(  
       template,  
-      Object.assign({}, { class: 'gray modal-lg' })  
+      Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
     );  
   }  
 
