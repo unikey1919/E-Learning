@@ -31,3 +31,8 @@ p-table {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
+  
+  .center {
+    width: 50%;
+    height: 50%;
+}

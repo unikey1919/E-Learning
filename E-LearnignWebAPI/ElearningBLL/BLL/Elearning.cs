@@ -105,6 +105,55 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > GetAllInstructor Error: " + ex.Message);
             }
         }
+
+        public void AddInstructor(List<Object> listInstructor)
+        {
+            try
+            {
+                objElDAO.AddInstructor(listInstructor);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddInstructor Error: " + ex.Message);
+            }
+        }
+
+        public void UpdateInstructor(InstructorModel model)
+        {
+            try
+            {
+                objElDAO.UpdateInstructor(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateInstructor Error: " + ex.Message);
+            }
+        }
+
+        public void DelInstructor(InstructorModel model)
+        {
+            try
+            {
+                objElDAO.DelInstructor(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelInstructor Error: " + ex.Message);
+            }
+        }
+
+        public DataTable GetListUser()
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetListUser();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetListUser Error: " + ex.Message);
+            }
+        }
         #endregion
     }
 }

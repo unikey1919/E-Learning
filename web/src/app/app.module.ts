@@ -40,6 +40,9 @@ import {ToastModule} from 'primeng/toast';
 import { EnrollmentComponent } from './admin-panel/enrollment/enrollment.component';
 import { TestComponent } from './admin-panel/course/test/test.component';
 import {InstructorComponent} from './admin-panel/instructor/instructor.component';
+import { ModalModule } from 'ngx-bootstrap/modal'; 
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,12 +58,15 @@ import {InstructorComponent} from './admin-panel/instructor/instructor.component
     CourseComponent,
     EnrollmentComponent,
     TestComponent,
-    InstructorComponent
+    InstructorComponent,
   ],
   imports: [
+    MatCheckboxModule,
+    ModalModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    MatDialogModule,
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

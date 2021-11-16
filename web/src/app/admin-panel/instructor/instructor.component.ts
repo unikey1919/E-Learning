@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Instructor } from 'src/app/shared/Models/instructor.model';
+import { Instructor, User } from 'src/app/shared/Models/instructor.model';
 import { InstructorService } from 'src/app/shared/Services/instructor.service';
 import { SelectItem } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';  
+import { FormBuilder, FormGroup, FormArray, FormControl,AbstractControl } from '@angular/forms';
 
 const lstInstructor: Instructor[] = [];
 @Component({
@@ -15,22 +18,89 @@ const lstInstructor: Instructor[] = [];
   providers: [MessageService],
 })
 export class InstructorComponent implements OnInit {
-  showMe: boolean = false;
-  formData: Instructor = new Instructor();
+  allComplete: boolean = false;
+  modalRef: BsModalRef; 
   lstInstructor: Instructor[];
+  listUser: User[];
   statuses: SelectItem[];
   clonedItem: { [s: string]: Instructor } = {};
+  list1 = new FormArray([]);
 
   constructor(
     private router: Router,
     private instructorService: InstructorService,
     private toastr: ToastrService,
-    private messageService: MessageService
-  ) {}
+    private messageService: MessageService,
+    private dialog: MatDialog,
+    private modalService: BsModalService,
+    private fb: FormBuilder
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.getListInstructor();
+    this.getListUser();
   }
+
+  onCheckboxChange(e) {
+    if (e.target.checked) {
+      this.list1.push(new FormControl(e.target.value));
+    } else {
+      let i: number = 0;
+      this.list1.controls.forEach((item: AbstractControl) => {
+        if (item.value == e.target.value) {
+          this.list1.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
+
+  submitForm() {
+    if (this.list1.value.length == 0) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'error',
+        detail: 'Vui lòng chọn người dùng cần thêm',
+      });
+      this.modalRef.hide();
+    }
+    else {
+      console.log(this.list1.value)
+      this.instructorService.AddInstructor(this.list1.value).subscribe(
+        (res: any) => {
+          if (res.isError == true) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'error',
+              detail: 'Fail to add instructor',
+            });
+          } else {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Add success',
+            });
+          }
+          this.list1.clear;
+          this.modalRef.hide();
+          this.getListInstructor();
+        },
+        (err) => {}
+      );
+      
+    }
+    
+  }
+
+  openModalWithClass(template: TemplateRef<any>) {  
+    this.modalRef = this.modalService.show(  
+      template,  
+      Object.assign({}, { class: 'gray modal-lg' })  
+    );  
+  }  
 
   getListInstructor() {
     this.instructorService.GetAllInstructor().subscribe(
@@ -41,8 +111,17 @@ export class InstructorComponent implements OnInit {
     );
   }
 
+  getListUser() {
+    this.instructorService.GetListUser().subscribe(
+      (res) => {
+        this.listUser = JSON.parse(res.message) as User[];
+      },
+      (error) => {}
+    );
+  }
+
   /*onSubmit() {
-    this.instructorService.AddCourse(this.formData).subscribe(
+    this.instructorService.AddInstructor(this.).subscribe(
       (res: any) => {
         if (res.isError == true) {
           this.messageService.add({
@@ -51,76 +130,72 @@ export class InstructorComponent implements OnInit {
             detail: 'Fail to create course',
           });
         } else {
-          this.showHide();
+          this.modalRef.hide();
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
             detail: 'Course is created',
           });
         }
-        this.getListCourse();
+        this.getListInstructor();
       },
       (err) => {}
     );
-  }
-
-  showHide() {
-    this.showMe = !this.showMe;
-  }
-
-  onRowEditInit(course: Course) {
-    this.clonedItem[course.id] = { ...course };
-  }
-
-  onRowEditCancel(course: Course, index: number) {
-    this.lstCourse[index] = this.clonedItem[course.id];
-    delete this.clonedItem[course.id];
-  }
-
-  onRowEditSave(course: Course) {
-    this.courseService.UpdateCourse(course).subscribe(
-      (res: any) => {
-        if (res.isError == true) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'error',
-            detail: 'Fail to update course',
-          });
-        }
-        else{
-          delete this.clonedItem[course.id];
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Course is updated',
-          });
-        }
-      },
-      (error) => {}
-    );
-  }
-
-  onDelete(course: Course) {
-    this.courseService.DelCourse(course).subscribe(
-      (res: any) => {
-        if (res.isError == true) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'error',
-            detail: 'Fail to delete course',
-          });
-        }
-        else{
-          this.getListCourse();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Course is deleted',
-          });
-        }
-      },
-      (error) => {}
-    );
   }*/
 
+  onRowEditInit(instructor: Instructor) {
+    this.clonedItem[instructor.id] = { ...instructor };
+  }
+
+  onRowEditCancel(instructor: Instructor, index: number) {
+    this.lstInstructor[index] = this.clonedItem[instructor.id];
+    delete this.clonedItem[instructor.id];
+  }
+
+  onRowEditSave(instructor: Instructor) {
+    this.instructorService.UpdateInstructor(instructor).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to update instructor',
+          });
+        }
+        else{
+          delete this.clonedItem[instructor.id];
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Instructor is updated',
+          });
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  onDelete(instructor: Instructor) {
+    this.instructorService.DelInstructor(instructor).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to delete instructor',
+          });
+        }
+        else{
+          this.getListInstructor();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Instructor is deleted',
+          });
+        }
+      },
+      (error) => {}
+    );
+  }
 }
+

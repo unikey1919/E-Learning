@@ -166,6 +166,92 @@ namespace ElearningDAO.Elearning
 
             return dt;
         }
+
+        public void AddInstructor(List<Object> listInstructor)
+        {
+            try
+            {
+                for (int i = 0; i < listInstructor.Count; i++)
+                {
+                    string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                    SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                    SqlCommand cmd = new SqlCommand("EL_AddInstructor", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@p_userid", Convert.ToString(listInstructor[i]));
+                    //cmd.Parameters.AddWithValue("@p_instructorid", model.InstructorId);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddInstructor Error: " + ex.Message);
+            }
+
+        }
+
+        public void UpdateInstructor(InstructorModel model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_UpdateInstructor", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_instructionname", model.InstructionName);
+                cmd.Parameters.AddWithValue("@p_email", model.Email);
+                cmd.Parameters.AddWithValue("@p_phonenumber", model.PhoneNumber);
+                cmd.Parameters.AddWithValue("@p_intructoruserid", model.UserId);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > UpdateInstructor Error: " + ex.Message);
+            }
+
+        }
+
+        public void DelInstructor(InstructorModel model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DeleteInstructor", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_instructorid", model.Id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelInstructor Error: " + ex.Message);
+            }
+
+        }
+        public DataTable GetListUser()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetListUser()", conn);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetListUser Error: " + ex.Message);
+            }
+
+            return dt;
+        }
         #endregion
     }
 }

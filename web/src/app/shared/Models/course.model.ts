@@ -3,7 +3,7 @@ export class Course {
     instructorid: number = 0;
     code: string='';
     coursename: string='';
-    instructionname: string='';
+    instructionName: string='';
     description: string='';
     details: string='';
 }

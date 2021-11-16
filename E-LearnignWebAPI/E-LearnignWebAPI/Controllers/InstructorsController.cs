@@ -10,6 +10,7 @@ using ElearningBO.E_Learning;
 using ElearningBLL.BLL;
 using System.Data;
 using Newtonsoft.Json;
+using ElearningBO.UserAuthentication;
 
 namespace E_LearnignWebAPI.Controllers
 {
@@ -40,6 +41,52 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+
+        [HttpPost]
+        [Route("AddInstructor")]
+        public ApiResultMessage AddInstructor(List<Object> listInstructor)
+        {
+            try
+            {
+                elearningBll.AddInstructor(listInstructor);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("UpdateInstructor")]
+        public ApiResultMessage UpdateInstructor(InstructorModel model)
+        {
+            try
+            {
+                elearningBll.UpdateInstructor(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("DelInstructor")]
+        public ApiResultMessage DelInstructor(InstructorModel model)
+        {
+            try
+            {
+                elearningBll.DelInstructor(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
 
         // GET: api/Instructors/5
         [HttpGet("{id}")]
@@ -116,6 +163,21 @@ namespace E_LearnignWebAPI.Controllers
         private bool InstructorExists(int id)
         {
             return _context.Instructors.Any(e => e.Id == id);
+        }
+
+        [HttpGet]
+        [Route("GetListUser")]
+        public ApiResultMessage GetListUser()
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetListUser();
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
         }
     }
 }

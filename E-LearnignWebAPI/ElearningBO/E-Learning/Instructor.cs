@@ -20,4 +20,14 @@ namespace ElearningBO.E_Learning
         public virtual ApplicationUser ApplicationUser { get; set; }
         public ICollection<Course> Course { get; set; }
     }
+
+    public class InstructorModel
+    {
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string InstructionName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+    }
+
 }
