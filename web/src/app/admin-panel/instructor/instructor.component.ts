@@ -126,29 +126,6 @@ export class InstructorComponent implements OnInit {
     );
   }
 
-  /*onSubmit() {
-    this.instructorService.AddInstructor(this.).subscribe(
-      (res: any) => {
-        if (res.isError == true) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'error',
-            detail: 'Fail to create course',
-          });
-        } else {
-          this.modalRef.hide();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Course is created',
-          });
-        }
-        this.getListInstructor();
-      },
-      (err) => {}
-    );
-  }*/
-
   onRowEditInit(instructor: Instructor) {
     this.clonedItem[instructor.id] = { ...instructor };
   }
