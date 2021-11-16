@@ -253,5 +253,93 @@ namespace ElearningDAO.Elearning
             return dt;
         }
         #endregion
+
+        #region Student
+        public DataTable GetAllStudent1()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetAllStudent1()", conn);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetAllStudent Error: " + ex.Message);
+            }
+
+            return dt;
+        }
+
+        public void AddStudent(List<Object> listStudent)
+        {
+            try
+            {
+                for (int i = 0; i < listStudent.Count; i++)
+                {
+                    string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                    SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                    SqlCommand cmd = new SqlCommand("EL_AddStudent", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@p_userid", Convert.ToString(listStudent[i]));
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddStudent Error: " + ex.Message);
+            }
+
+        }
+
+        public void UpdateStudent(StudentModel model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_UpdateStudent", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_studentname", model.StudentName);
+                cmd.Parameters.AddWithValue("@p_email", model.Email);
+                cmd.Parameters.AddWithValue("@p_phonenumber", model.PhoneNumber);
+                cmd.Parameters.AddWithValue("@p_studentuserid", model.UserId);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > UpdateStudent Error: " + ex.Message);
+            }
+
+        }
+
+        public void DelStudent(StudentModel model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DeleteStudent", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_studentid", model.Id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelStudent Error: " + ex.Message);
+            }
+
+        }
+        #endregion
     }
 }

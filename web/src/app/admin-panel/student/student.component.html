@@ -1,0 +1,160 @@
+<p-toast></p-toast>
+
+<a routerLink="test">Continue</a>
+
+
+<div class="card">
+        <p-table #dt1 [value]="lstStudent" dataKey="id" editMode="row" responsiveLayout="scroll"
+         [globalFilterFields]="['studentname', 'email', 'phonenumber']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <span class="p-input-icon-left p-ml-auto">
+                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search" />
+                    </span>
+                </div>
+            </ng-template>
+            
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        <input type="checkbox" class="checkAll" id="checkAll1"/>
+                    </th>
+                    <th>No.</th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th style="width:8rem">
+                        <button (click)="openModalWithClass(template)" style="background: rgb(173, 224, 173)"  mat-raised-button>
+                            <mat-icon >add</mat-icon>
+                        </button>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="item">
+                    <td>
+                        <input type="checkbox" class="checkItem"/>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{ri}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="item.studentname">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.studentname}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" required [(ngModel)]="item.email">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.email}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input" >
+                                <input pInputText type="text" required [(ngModel)]="item.phonenumber">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.phonenumber}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    
+                    <td >
+                        <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onRowEditInit(item)">
+                            <mat-icon>launch</mat-icon>
+                        </button>
+                        <button *ngIf="!editing" mat-icon-button (click)="onDelete(item)" color="warn">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button pSaveEditableRow *ngIf="editing" mat-icon-button color="primary" (click)="onRowEditSave(item)" >
+                            <mat-icon>done</mat-icon>
+                        </button>
+                        <button pCancelEditableRow (click)="onRowEditCancel(item, ri)" *ngIf="editing" mat-icon-button color="warn" >
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+<ng-template #template>  
+  <div class="modal-header">  
+    <h2 class="modal-title pull-left" style="color: red;">Danh sách người dùng chưa được phân công</h2>  
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef1()">  
+      <span aria-hidden="true">×</span>  
+    </button>  
+  </div>  
+  <div class="modal-body">  
+    <div class="card">
+        <p-table #dt1 [value]="listUser" dataKey="id" editMode="row" responsiveLayout="scroll"
+         [globalFilterFields]="['fullname','email', 'phonenumber']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <span class="p-input-icon-left p-ml-auto">
+                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search" />
+                    </span>
+                </div>
+            </ng-template>
+            
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Phone Number</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="item">
+                    <td>
+                        <input type="checkbox" [value]="item.id" (change)="onCheckboxChange($event)" />
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{item.fullname}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>       
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{item.email}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>   
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{item.phonenumber}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>   
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+  </div>   
+  <div class="modal-footer">  
+    <i (click)="submitForm()" class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green"></i>
+    <i (click)="modalRef1()" class="far fa-times-circle fa-2x" style="color:red"></i>
+  </div>  
+</ng-template>  

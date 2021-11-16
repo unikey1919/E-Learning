@@ -21,4 +21,12 @@ namespace ElearningBO.E_Learning
         public ICollection<Enrollment> Enrollments { get; set; }
 
     }
+    public class StudentModel
+    {
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string StudentName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+    }
 }

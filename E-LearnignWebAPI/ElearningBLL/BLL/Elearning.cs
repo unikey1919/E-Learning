@@ -155,5 +155,56 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
+
+        #region Student
+        public DataTable GetAllStudent1()
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetAllStudent1();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetAllStudent Error: " + ex.Message);
+            }
+        }
+
+        public void AddStudent(List<Object> listStudent)
+        {
+            try
+            {
+                objElDAO.AddStudent(listStudent);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddStudent Error: " + ex.Message);
+            }
+        }
+
+        public void UpdateStudent(StudentModel model)
+        {
+            try
+            {
+                objElDAO.UpdateStudent(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateStudent Error: " + ex.Message);
+            }
+        }
+
+        public void DelStudent(StudentModel model)
+        {
+            try
+            {
+                objElDAO.DelStudent(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelStudent Error: " + ex.Message);
+            }
+        }
+        #endregion
     }
 }

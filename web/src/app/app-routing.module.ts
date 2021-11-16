@@ -11,6 +11,7 @@ import { CourseComponent } from './admin-panel/course/course.component';
 import { EnrollmentComponent } from './admin-panel/enrollment/enrollment.component';
 import { TestComponent } from './admin-panel/course/test/test.component';
 import { InstructorComponent } from './admin-panel/instructor/instructor.component';
+import { StudentComponent } from './admin-panel/student/student.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user/login', pathMatch: 'full' },
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'enrollment', component: EnrollmentComponent },
       { path: 'course/test', component: TestComponent },
       { path: 'instructor', component: InstructorComponent},
+      { path: 'student', component: StudentComponent},
     ],
   },
 ];

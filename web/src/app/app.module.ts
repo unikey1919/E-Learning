@@ -42,6 +42,7 @@ import { TestComponent } from './admin-panel/course/test/test.component';
 import {InstructorComponent} from './admin-panel/instructor/instructor.component';
 import { ModalModule } from 'ngx-bootstrap/modal'; 
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { StudentComponent } from './admin-panel/student/student.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     EnrollmentComponent,
     TestComponent,
     InstructorComponent,
+    StudentComponent,
   ],
   imports: [
     MatCheckboxModule,

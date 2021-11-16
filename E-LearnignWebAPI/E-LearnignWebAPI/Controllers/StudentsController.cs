@@ -42,6 +42,81 @@ namespace E_LearnignWebAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetAllStudent1")]
+        public ApiResultMessage GetAllStudent1()
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetAllStudent1();
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("AddStudent")]
+        public ApiResultMessage AddStudent(List<Object> listStudent)
+        {
+            try
+            {
+                elearningBll.AddStudent(listStudent);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("UpdateStudent")]
+        public ApiResultMessage UpdateStudent(StudentModel model)
+        {
+            try
+            {
+                elearningBll.UpdateStudent(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("DelStudent")]
+        public ApiResultMessage DelStudent(StudentModel model)
+        {
+            try
+            {
+                elearningBll.DelStudent(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpGet]
+        [Route("GetListUser")]
+        public ApiResultMessage GetListUser()
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetListUser();
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
         // GET: api/Students/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
