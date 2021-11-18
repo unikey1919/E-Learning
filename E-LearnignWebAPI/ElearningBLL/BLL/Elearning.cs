@@ -206,5 +206,20 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
+
+        #region CourseContent
+        public DataTable GetContentByCourse(SubjectContent model)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetContentByCourse(model);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetContentByCourse Error: " + ex.Message);
+            }
+        }
+        #endregion
     }
 }

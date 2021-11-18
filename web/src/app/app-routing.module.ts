@@ -12,6 +12,7 @@ import { EnrollmentComponent } from './admin-panel/enrollment/enrollment.compone
 import { TestComponent } from './admin-panel/course/test/test.component';
 import { InstructorComponent } from './admin-panel/instructor/instructor.component';
 import { StudentComponent } from './admin-panel/student/student.component';
+import { ContentComponent } from './e-learning/content/content.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user/login', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
 
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenComponent },
+  { path: 'course/content/:id', component: ContentComponent },
 
   {
     path: 'admin',
@@ -37,8 +39,8 @@ const routes: Routes = [
       { path: 'course', component: CourseComponent },
       { path: 'enrollment', component: EnrollmentComponent },
       { path: 'course/test', component: TestComponent },
-      { path: 'instructor', component: InstructorComponent},
-      { path: 'student', component: StudentComponent},
+      { path: 'instructor', component: InstructorComponent },
+      { path: 'student', component: StudentComponent },
     ],
   },
 ];

@@ -253,7 +253,6 @@ namespace ElearningDAO.Elearning
             return dt;
         }
         #endregion
-
         #region Student
         public DataTable GetAllStudent1()
         {
@@ -339,6 +338,27 @@ namespace ElearningDAO.Elearning
                 throw new Exception("ElearningDao > DelStudent Error: " + ex.Message);
             }
 
+        }
+        #endregion
+        #region CourseContent
+        public DataTable GetContentByCourse(SubjectContent model)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetContentByCourse(@p_courseId)", conn);
+                cmd.Parameters.AddWithValue("@p_courseId", model.CourseId);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetContentByCourse Error: " + ex.Message);
+            }
+            return dt;
         }
         #endregion
     }

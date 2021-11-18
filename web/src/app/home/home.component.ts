@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Course } from '../shared/Models/course.model';
 import { User } from '../shared/Models/user.model';
 import { CourseService } from '../shared/Services/course.service';
-import { UserProfileService } from '../shared/Services/user-profile.service';let userName : string ='';
+import { UserProfileService } from '../shared/Services/user-profile.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

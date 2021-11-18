@@ -1,20 +1,20 @@
 
 
- <div class="container" *ngIf="formData">
+ <div class="container-fluid" *ngIf="formData">
   <nav class="navbar">
     <a class="navbar-brand" style="margin-left: 10px">Home</a>
     <button class="btn btn-danger my-2 my-sm-0" style="margin-right: 10px" (click)="onLogout()">Logout</button>
   </nav>
   
   <div class="row" style="display:flex; flex-direction: row">
-    <mat-card class="course-card" *ngFor="let item of lstCourse" style=" margin: 10px">
+    <mat-card class="course-card" *ngFor="let item of lstCourse" style=" margin: 40px">
       <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
       <mat-card-content>
         <h3>{{item.coursename}}</h3>
         <p>CourseCode</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>LIKE</button>
+        <button mat-button  [routerLink]="'/course/content/1'">LIKE</button>
       <button mat-button>SHARE</button>
       </mat-card-actions>
     </mat-card>
