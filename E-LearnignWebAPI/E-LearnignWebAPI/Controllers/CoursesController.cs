@@ -119,5 +119,19 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+        [HttpPost]
+        [Route("GetCourseByTeacher")]
+        public ApiResultMessage GetCourseByTeacher(ApplicationUserModel user)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetCourseByTeacher(user.UserName);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
     }
 }

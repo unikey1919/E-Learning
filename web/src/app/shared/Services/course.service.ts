@@ -37,4 +37,7 @@ export class CourseService {
     // let body = urlSearchParams.toString();
     return this.httpClient.post(this.baseURL + '/GetCourseByStudent', objectUserModel);
   }
+  GetCourseByTeacher(objectUserModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/GetCourseByTeacher', objectUserModel);
+  }
 }

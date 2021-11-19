@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res.token);
         var payLoad = JSON.parse(window.atob(localStorage.getItem('token')!.split('.')[1]));
         var userRole = payLoad.role;
-        if (userRole == 'Student'){
+        if (userRole == 'Student' || userRole == 'Instructor'){
           this.router.navigateByUrl('/home');
         } 
         if (userRole == 'Admin') {

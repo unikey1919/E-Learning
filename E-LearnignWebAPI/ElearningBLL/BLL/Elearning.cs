@@ -90,6 +90,18 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > GetCourseByStudent Error: " + ex.Message);
             }
         }
+        public DataTable GetCourseByTeacher(string username)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetCourseByTeacher(username);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetCourseByTeacher Error: " + ex.Message);
+            }
+        }
         #endregion
 
         #region Instructor

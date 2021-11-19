@@ -12,7 +12,6 @@ import { UserProfileService } from '../shared/Services/user-profile.service';
 
 export class HomeComponent implements OnInit {
   lstCourse: Course[];
-
   formData: User = new User();
   constructor(private router: Router, private courseService: CourseService, private userProfileService: UserProfileService) { }
 
@@ -23,12 +22,14 @@ export class HomeComponent implements OnInit {
         this.formData.fullName = res.fullName;
         this.formData.email = res.email;
         this.getListCourseByStudent(res);
+        var payLoad = JSON.parse(window.atob(localStorage.getItem('token')!.split('.')[1]));
+        localStorage.setItem('username', res.userName);
+        localStorage.setItem('userRole', payLoad.role);
       },
       err => {
         console.log(err);
       },
-    );
-    
+    ); 
   }
 
   onLogout() {
@@ -37,12 +38,22 @@ export class HomeComponent implements OnInit {
   }
 
   getListCourseByStudent(formData) {
-    this.courseService.GetCourseByStudent(formData).subscribe(
-      (res) => {
-        this.lstCourse = JSON.parse(res.message) as Course[];
-      },
-      (error) => {}
-    );
+    if(localStorage.getItem('userRole') == "Instructor"){
+      this.courseService.GetCourseByTeacher(formData).subscribe(
+        (res) => {
+          this.lstCourse = JSON.parse(res.message) as Course[];
+        },
+        (error) => {}
+      );
+    }
+    else{
+      this.courseService.GetCourseByStudent(formData).subscribe(
+        (res) => {
+          this.lstCourse = JSON.parse(res.message) as Course[];
+        },
+        (error) => {}
+      );
+    }
   }
 
 }

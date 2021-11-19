@@ -104,7 +104,6 @@ namespace ElearningDAO.Elearning
             }
 
         }
-
         public void DelCourse(CourseModel model)
         {
             try
@@ -122,9 +121,7 @@ namespace ElearningDAO.Elearning
             {
                 throw new Exception("ElearningDao > DelCourse Error: " + ex.Message);
             }
-
         }
-
         public DataTable GetCourseByStudent(string username)
         {
             DataTable dt = new DataTable();
@@ -142,7 +139,25 @@ namespace ElearningDAO.Elearning
             {
                 throw new Exception("ElearningDao > GetCourseByStudent Error: " + ex.Message);
             }
-
+            return dt;
+        }
+        public DataTable GetCourseByTeacher(string username)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetCourseByTeacher(@p_username)", conn);
+                cmd.Parameters.AddWithValue("@p_username", username);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetCourseByTeacher Error: " + ex.Message);
+            }
             return dt;
         }
         #endregion
