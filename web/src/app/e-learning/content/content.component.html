@@ -5,10 +5,10 @@
       <button class="btn btn-danger my-2 my-sm-0" style="margin-right: 10px" (click)="onLogout()">Logout</button>
     </nav>
     
-   <mat-card style=" margin-top: 20px">
-       <mat-card-title>Card title</mat-card-title>
+   <mat-card style=" margin-top: 20px" *ngFor="let item of lstContent">
+       <mat-card-title>{{item.subjectName}}</mat-card-title>
        <mat-card-content>
-        This is card content.
+        {{item.details}}
     </mat-card-content>
    </mat-card>
    
