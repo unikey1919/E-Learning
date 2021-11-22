@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CourseContent } from 'src/app/shared/Models/course-content';
+import { CourseContent, FileModel } from 'src/app/shared/Models/course-content';
 import { ContentService } from 'src/app/shared/Services/content.service';
 import {ActivatedRoute} from '@angular/router';
 @Component({
@@ -10,13 +10,14 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ContentComponent implements OnInit {
   lstContent: CourseContent[];
+  lstFile: FileModel[];
   formData: CourseContent = new CourseContent();
   constructor(private router: Router, 
     private contentService: ContentService,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.formData.courseId =this.activatedRoute.snapshot.params.id; 
+    this.formData.CourseId =this.activatedRoute.snapshot.params.id; 
     this.getContentByCourse(this.formData)
   }
 
@@ -29,6 +30,7 @@ export class ContentComponent implements OnInit {
     this.contentService.GetContentByCourse(this.formData).subscribe(
       (res) => {
         this.lstContent = JSON.parse(res.message) as CourseContent[];
+        console.log(this.lstContent);
       },
       (error) => {}
     )

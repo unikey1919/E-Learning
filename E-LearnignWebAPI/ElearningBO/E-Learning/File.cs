@@ -21,4 +21,9 @@ namespace ElearningBO.E_Learning
         public bool isDelete { get; set; }
         public virtual Subject Subject { get; set; }
     }
+
+    public class FileModel
+    {
+        public string FileName { get; set; }
+    }
 }

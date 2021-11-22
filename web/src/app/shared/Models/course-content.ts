@@ -1,6 +1,11 @@
 export class CourseContent {
-    id: number = 0;
-    courseId: number = 0;
-    subjectName: string = '';
-    details: string = '';
+    Id: number = 0;
+    CourseId: number = 0;
+    SubjectName: string = '';
+    Details: string = '';
+    LstFile: FileModel[];
+}
+
+export class FileModel {
+   FileName: string = '';
 }

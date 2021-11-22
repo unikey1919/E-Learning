@@ -6,9 +6,9 @@
     </nav>
     
    <mat-card style=" margin-top: 20px" *ngFor="let item of lstContent">
-       <mat-card-title>{{item.subjectName}}</mat-card-title>
-       <mat-card-content>
-        {{item.details}}
+       <mat-card-title>{{item.SubjectName}}</mat-card-title>
+       <mat-card-content *ngFor="let file of item.LstFile">
+      {{file.FileName}}
     </mat-card-content>
    </mat-card>
    
