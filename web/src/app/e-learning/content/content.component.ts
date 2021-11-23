@@ -36,4 +36,15 @@ export class ContentComponent implements OnInit {
     )
   }
 
+  getBackgroundColor(type) {
+    let color = 'orange';
+    if(type == "word"){
+      color = 'blue'
+    }
+    else if(type == "excel"){
+      color = 'green'
+    }
+    return color;
+  }
+
 }

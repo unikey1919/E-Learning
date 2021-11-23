@@ -35,14 +35,20 @@ namespace E_LearnignWebAPI.Controllers
                 for(int i = 0; i< dt.Rows.Count; i++)
                 {
                     SubjectContent obj = new SubjectContent();
-                    obj.CourseId = Convert.ToInt32(dt.Rows[i]["id"]);
+                    obj.Id = Convert.ToInt32(dt.Rows[i]["id"]);
                     obj.CourseId = Convert.ToInt32(dt.Rows[i]["courseId"]);
                     obj.SubjectName = (dt.Rows[i]["subjectName"]).ToString();
+                    DataTable fileData = elearningBll.GetFileBySubject(obj);
                     obj.LstFile = new List<FileModel>();
-                    for (int j = 0; j < 3; j++)
+                    for (int j = 0; j < fileData.Rows.Count; j++)
                     {
                         FileModel objFile = new FileModel();
-                        objFile.FileName = j.ToString();
+                        objFile.Id = Convert.ToInt32(fileData.Rows[j]["Id"]);
+                        objFile.SubjectId = Convert.ToInt32(fileData.Rows[j]["SubjectId"]);
+                        objFile.FileName = (fileData.Rows[j]["FileName"]).ToString();
+                        objFile.FilePath = (fileData.Rows[j]["FilePath"]).ToString();
+                        objFile.FileType = (fileData.Rows[j]["FileType"]).ToString();
+                        objFile.FileExtension = (fileData.Rows[j]["FileExtention"]).ToString();
                         obj.LstFile.Add(objFile);
                     }
                     obj.Details = (dt.Rows[i]["details"]).ToString();

@@ -22,6 +22,6 @@ namespace ElearningBO
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Subject> Subject { get; set; }
-        public DbSet<File> File { get; set; }
+        public DbSet<FileContent> FileContent { get; set; }
     }
 }

@@ -7,7 +7,7 @@
     
    <mat-card style=" margin-top: 20px" *ngFor="let item of lstContent">
        <mat-card-title>{{item.SubjectName}}</mat-card-title>
-       <mat-card-content *ngFor="let file of item.LstFile">
+       <mat-card-content *ngFor="let file of item.LstFile"><i class="fas fa-file-{{file.FileType}}" [style.color]="getBackgroundColor(file.FileType)"></i>
       {{file.FileName}}
     </mat-card-content>
    </mat-card>

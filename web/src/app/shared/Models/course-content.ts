@@ -7,5 +7,10 @@ export class CourseContent {
 }
 
 export class FileModel {
+   Id: number = 0;
+   SubjectId: number = 0;
    FileName: string = '';
+   FileExtension: string = '';
+   FilePath: string = '';
+   FileType: string = '';
 }

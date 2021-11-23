@@ -4,14 +4,16 @@ using ElearningBO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_LearnignWebAPI.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211123152500_init2311")]
+    partial class init2311
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +87,7 @@ namespace E_LearnignWebAPI.Migrations
                     b.ToTable("Enrollments");
                 });
 
-            modelBuilder.Entity("ElearningBO.E_Learning.FileContent", b =>
+            modelBuilder.Entity("ElearningBO.E_Learning.File", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,7 +116,7 @@ namespace E_LearnignWebAPI.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("FileContent");
+                    b.ToTable("File");
                 });
 
             modelBuilder.Entity("ElearningBO.E_Learning.Instructor", b =>
@@ -428,7 +430,7 @@ namespace E_LearnignWebAPI.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("ElearningBO.E_Learning.FileContent", b =>
+            modelBuilder.Entity("ElearningBO.E_Learning.File", b =>
                 {
                     b.HasOne("ElearningBO.E_Learning.Subject", "Subject")
                         .WithMany()
