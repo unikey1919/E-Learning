@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CourseContent, FileModel } from 'src/app/shared/Models/course-content';
 import { ContentService } from 'src/app/shared/Services/content.service';
 import {ActivatedRoute} from '@angular/router';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
@@ -44,7 +45,49 @@ export class ContentComponent implements OnInit {
     else if(type == "excel"){
       color = 'green'
     }
+    switch (type) {
+      case 'application/msword':
+        color = 'blue';
+        break;
+      case 'application/vnd.ms-excel':
+        color = 'green';
+        break;
+      case 'image/png':
+        color = 'gray';
+        break;
+      default:
+        break;
+    }
     return color;
+  }
+
+  getIcon(type){
+    let icon = 'fa-file';
+    switch (type) {
+      case 'application/msword':
+        icon = 'fas fa-file-word';
+        break;
+      case 'application/vnd.ms-excel':
+        icon = 'fas fa-file-excel';
+        break;
+      case 'image/png':
+        icon = 'fas fa-file-image';
+        break;
+      default:
+        break;
+    }
+    return icon;
+  }
+  downLoadFileContent(id: number, contentType: string){
+    this.contentService.DownLoadFileContent(id,contentType).subscribe(
+      (res:Blob) => {
+        const blob = new Blob([res], { type: contentType }); // you can change the type
+        const url= window.URL.createObjectURL(blob);
+        window.open(url);
+        console.log("Success")
+      },
+      (error) => {"Error"}
+      )
   }
 
 }

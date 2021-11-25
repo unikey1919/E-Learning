@@ -3,10 +3,12 @@ using ElearningBO;
 using ElearningBO.E_Learning;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,10 +19,12 @@ namespace E_LearnignWebAPI.Controllers
     public class CourseContentController : ControllerBase
     {
         private Elearning elearningBll = null;
-
-        public CourseContentController()
+        private readonly string AppDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Content");
+        private readonly ELearningDbContext _context;
+        public CourseContentController(ELearningDbContext context)
         {
             elearningBll = new Elearning();
+            _context = context;
         }
 
         // POST: api/CourseContent
@@ -60,6 +64,31 @@ namespace E_LearnignWebAPI.Controllers
             {
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> DownloadFile(int id)
+        {
+            if (!Directory.Exists(AppDirectory))
+                Directory.CreateDirectory(AppDirectory);
+
+            //getting file from inmemory obj
+            //var file = fileDB?.Where(n => n.Id == id).FirstOrDefault();
+            //getting file from DB
+            var file = _context.FileContent.Where(n => n.Id == id).FirstOrDefault();
+
+            var path = Path.Combine(AppDirectory, file?.FilePath);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            var contentType = "APPLICATION/octet-stream";
+            var fileName = Path.GetFileName(path);
+
+            return File(memory, contentType, fileName);
         }
     }
 }

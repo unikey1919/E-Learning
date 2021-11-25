@@ -5,9 +5,9 @@
       <button class="btn btn-danger my-2 my-sm-0" style="margin-right: 10px" (click)="onLogout()">Logout</button>
     </nav>
     
-   <mat-card style=" margin-top: 20px" *ngFor="let item of lstContent">
+   <mat-card style=" margin-top: 20px" *ngFor="let item of lstContent" appMaterialElevation>
        <mat-card-title>{{item.SubjectName}}</mat-card-title>
-       <mat-card-content *ngFor="let file of item.LstFile"><i class="fas fa-file-{{file.FileType}}" [style.color]="getBackgroundColor(file.FileType)"></i>
+       <mat-card-content (click) ="downLoadFileContent(file.Id, file.FileType)" *ngFor="let file of item.LstFile"><i [class]="getIcon(file.FileType)" [style.color]="getBackgroundColor(file.FileType)"></i>
       {{file.FileName}}
     </mat-card-content>
    </mat-card>

@@ -15,4 +15,8 @@ export class ContentService {
   GetContentByCourse(objectModel): Observable<any>{
     return this.httpClient.post(this.baseURL + '/GetContentByCourse', objectModel);
   }
+
+  DownLoadFileContent(id: number, contentType: string){
+    return this.httpClient.get(this.baseURL+`/${id}`, {responseType: 'blob'});
+  }
 }
