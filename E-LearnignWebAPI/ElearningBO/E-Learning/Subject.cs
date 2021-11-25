@@ -29,6 +29,7 @@ namespace ElearningBO.E_Learning
         public int Id { get; set; }
         public int CourseId { get; set; }
         public string SubjectName { get; set; }
+        public List<FileModel> LstFile { get; set; }
         public string Details { get; set; }
         public bool isDelete { get; set; }
     }

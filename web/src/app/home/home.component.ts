@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
       this.courseService.GetCourseByTeacher(formData).subscribe(
         (res) => {
           this.lstCourse = JSON.parse(res.message) as Course[];
+          console.log(this.lstCourse);
         },
         (error) => {}
       );

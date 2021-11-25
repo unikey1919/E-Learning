@@ -232,6 +232,18 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > GetContentByCourse Error: " + ex.Message);
             }
         }
+        public DataTable GetFileBySubject(SubjectContent model)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetFileBySubject(model);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetFileBySubject Error: " + ex.Message);
+            }
+        }
         #endregion
     }
 }
