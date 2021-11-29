@@ -76,14 +76,14 @@ namespace E_LearnignWebAPI.Controllers
             //var file = fileDB?.Where(n => n.Id == id).FirstOrDefault();
             //getting file from DB
             var file = _context.FileContent.Where(n => n.Id == id).FirstOrDefault();
-
             var path = Path.Combine(AppDirectory, file?.FilePath);
-
             var memory = new MemoryStream();
+
             using (var stream = new FileStream(path, FileMode.Open))
             {
                 await stream.CopyToAsync(memory);
             }
+
             memory.Position = 0;
             var contentType = "APPLICATION/octet-stream";
             var fileName = Path.GetFileName(path);

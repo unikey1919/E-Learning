@@ -78,6 +78,7 @@ export class ContentComponent implements OnInit {
     }
     return icon;
   }
+  
   downLoadFileContent(id: number, contentType: string){
     this.contentService.DownLoadFileContent(id,contentType).subscribe(
       (res:Blob) => {
