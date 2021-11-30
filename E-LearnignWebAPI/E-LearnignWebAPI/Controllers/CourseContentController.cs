@@ -90,5 +90,22 @@ namespace E_LearnignWebAPI.Controllers
 
             return File(memory, contentType, fileName);
         }
+
+        #region Assingment
+        [HttpPost]
+        [Route("AddAssignmentBySubject")]
+        public ApiResultMessage AddAssignmentBySubject(Assignment model)
+        {
+            try
+            {
+                elearningBll.AddAssignmentBySubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        #endregion
     }
 }

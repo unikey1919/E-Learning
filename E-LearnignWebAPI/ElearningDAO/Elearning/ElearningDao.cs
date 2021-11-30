@@ -402,5 +402,30 @@ namespace ElearningDAO.Elearning
             return dt;
         }
         #endregion
+        #region Assignment
+        public void AddAssignmentBySubject(Assignment model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddAssignment", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_subjectid", model.SubjectId);
+                cmd.Parameters.AddWithValue("@p_assignmentname", model.AssignmentName);
+                cmd.Parameters.AddWithValue("@p_details", model.Details);
+                cmd.Parameters.AddWithValue("@p_open", model.Opened);
+                cmd.Parameters.AddWithValue("@p_due", model.Due);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > UpdateCourse Error: " + ex.Message);
+            }
+
+        }
+        #endregion
     }
 }

@@ -245,5 +245,19 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
+
+        #region Assignment
+        public void AddAssignmentBySubject(Assignment model)
+        {
+            try
+            {
+                objElDAO.AddAssignmentBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddAssignmentBySubject Error: " + ex.Message);
+            }
+        }
+        #endregion
     }
 }

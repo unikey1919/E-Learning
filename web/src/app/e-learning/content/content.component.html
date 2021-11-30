@@ -12,7 +12,7 @@
          <mat-card>
           <i class="fas fa-briefcase" style="margin-right:10px"></i>
           <span (click) = "getAssignmentContent(3)">Nộp bài tập chương 1</span>
-          <mat-icon style="float:right" (click) ="openModalWithClass(template)">add_circle</mat-icon>
+          <mat-icon style="float:right" (click) ="openModalWithClass(template, item.Id)">add_circle</mat-icon>
          </mat-card>
       </mat-card-content>
        <!-- Danh sách file -->
@@ -29,7 +29,7 @@
 <ng-template #template>  
   <div class="modal-header">
     <div class="form">
-      <div class="col-lg 2" style="margin-left:-80px"> <mat-icon style="float:right; color:green; margin-left:200px" (click) ="openModalWithClass(template)">add_circle_outline</mat-icon></div>
+      <div class="col-lg 2" style="margin-left:-80px"> <mat-icon style="float:right; color:green; margin-left:200px">add_circle_outline</mat-icon></div>
       <h1 style="margin-left:250px">Add new assignment</h1>
     </div>
     
@@ -57,7 +57,7 @@
         <span style="font-weight: bold; position: absolute; top:25%">Assignment Name</span>
       </div>
       <div class="col-lg-4">
-       <input type ="text" class="form-control">
+       <input type ="text" class="form-control" #AssignmentName = "ngModel" name= "AssignmentName" [(ngModel)] = "formAddData.AssignmentName">
       </div>
     </div>
     <div class="form-group" style ="margin-top:20px">

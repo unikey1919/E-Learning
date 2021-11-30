@@ -6,10 +6,13 @@ import { ContentService } from 'src/app/shared/Services/content.service';
 import {ActivatedRoute} from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'; 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { MessageService } from 'primeng/api';
+import * as moment from 'moment';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css']
+  styleUrls: ['./content.component.css'],
+  providers: [MessageService]
 })
 export class ContentComponent implements OnInit {
   public Editor = ClassicEditor;
@@ -20,7 +23,8 @@ export class ContentComponent implements OnInit {
   formAddData: Assignment = new Assignment();
   constructor(private router: Router, 
     private contentService: ContentService,
-    private activatedRoute: ActivatedRoute, private modalService: BsModalService) { }
+    private activatedRoute: ActivatedRoute, private modalService: BsModalService, 
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.formData.CourseId =this.activatedRoute.snapshot.params.id; 
@@ -100,23 +104,39 @@ export class ContentComponent implements OnInit {
     this.router.navigate([ `/course/assignment/${id}` ])
   }
 
-  openModalWithClass(template: TemplateRef<any>) {  
+  openModalWithClass(template: TemplateRef<any>, subjectId: number) {  
     this.modalRef = this.modalService.show(  
       template,  
       Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
     );  
+    this.formAddData.SubjectId =  subjectId;
   } 
 
   closeAddModel(){
-      this.modalRef.hide()
+      this.modalRef.hide();
   }
 
   onSubmit(){
-    if(this.formAddData.Opened = new Date()){
-      console.log(this.formAddData.Opened.toISOString());
-    }
-    else
-      console.log(this.formAddData.Opened);
-    console.log(this.formAddData.Details);
+    this.formAddData.Opened = new Date(this.formAddData.Opened);
+    this.formAddData.Due = new Date(this.formAddData.Due);
+    this.contentService.AddAssignmentBySubject(this.formAddData).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to create course',
+          });
+        } else {
+          this.closeAddModel();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Course is created',
+          });
+        }
+      },
+      (err) => {}
+    );
   }
 }
