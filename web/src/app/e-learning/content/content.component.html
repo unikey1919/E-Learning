@@ -7,12 +7,67 @@
     
    <mat-card style=" margin-top: 20px" *ngFor="let item of lstContent" appMaterialElevation>
        <mat-card-title>{{item.SubjectName}}</mat-card-title>
+       <!-- Danh sách bài tập -->
+       <mat-card-content style="margin-bottom: 20px" >
+         <mat-card>
+          <i class="fas fa-briefcase" style="margin-right:10px"></i>
+          <span (click) = "getAssignmentContent(3)">Nộp bài tập chương 1</span>
+          <mat-icon style="float:right" (click) ="openModalWithClass(template)">add_circle</mat-icon>
+         </mat-card>
+      </mat-card-content>
+       <!-- Danh sách file -->
        <mat-card-content (click) ="downLoadFileContent(file.Id, file.FileType)" *ngFor="let file of item.LstFile">
         <mat-card>
-           <i [class]="getIcon(file.FileType)" [style.color]="getBackgroundColor(file.FileType)"></i>
+           <i style="margin-right:10px" [class]="getIcon(file.FileType)" [style.color]="getBackgroundColor(file.FileType)"></i>
           {{file.FileName}}
         </mat-card>       
     </mat-card-content>
    </mat-card>
    
 </div>
+
+<ng-template #template>  
+  <div class="modal-header">
+    <div class="form">
+      <div class="col-lg 2" style="margin-left:-80px"> <mat-icon style="float:right; color:green; margin-left:200px" (click) ="openModalWithClass(template)">add_circle_outline</mat-icon></div>
+      <h1 style="margin-left:250px">Add new assignment</h1>
+    </div>
+    
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeAddModel()">  
+      <span aria-hidden="true">×</span>  
+    </button>  
+  </div>  
+  <div class="modal-body">  
+    <div class="row">
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Open</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" #Opened = "ngModel" name="Opened" class="form-control" [ngModel]="formAddData.Opened | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formAddData.Opened = $event">
+      </div>
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Close</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" class="form-control" #Due = "ngModel" name="Due" [ngModel]="formAddData.Due | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formAddData.Due = $event">
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Assignment Name</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="text" class="form-control">
+      </div>
+    </div>
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formAddData.Details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmit()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red"></i>
+  </div>  
+</ng-template>  

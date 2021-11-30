@@ -1,0 +1,20 @@
+.container {
+    margin-top: 20px;  
+  }
+
+.navbar {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+    border-radius: 5px;
+}
+
+.course-card {
+    width: 400px;
+}
+
+mat-card-title {
+    margin-bottom: 1rem;
+}
+
+mat-card-content:hover{
+    text-decoration: underline;
+}

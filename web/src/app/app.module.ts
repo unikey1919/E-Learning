@@ -44,7 +44,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { StudentComponent } from './admin-panel/student/student.component';
 import { ContentComponent } from './e-learning/content/content.component';
-
+import { AssignmentComponent } from './e-learning/assignment/assignment.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +64,7 @@ import { ContentComponent } from './e-learning/content/content.component';
     InstructorComponent,
     StudentComponent,
     ContentComponent,
+    AssignmentComponent,
   ],
   imports: [
     MatCheckboxModule,
@@ -94,8 +96,8 @@ import { ContentComponent } from './e-learning/content/content.component';
     DropdownModule,
     MessagesModule,
     MessageModule,
-    ToastModule
-
+    ToastModule,
+    CKEditorModule
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,

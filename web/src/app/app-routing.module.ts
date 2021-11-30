@@ -13,6 +13,7 @@ import { TestComponent } from './admin-panel/course/test/test.component';
 import { InstructorComponent } from './admin-panel/instructor/instructor.component';
 import { StudentComponent } from './admin-panel/student/student.component';
 import { ContentComponent } from './e-learning/content/content.component';
+import { AssignmentComponent } from './e-learning/assignment/assignment.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user/login', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'course/content/:id', component: ContentComponent },
+  { path: 'course/assignment/:id', component: AssignmentComponent },
 
   {
     path: 'admin',

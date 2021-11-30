@@ -1,21 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Assignment } from './../../shared/Models/assignment';
+import { Component, OnInit, TemplateRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { CourseContent, FileModel } from 'src/app/shared/Models/course-content';
 import { ContentService } from 'src/app/shared/Services/content.service';
 import {ActivatedRoute} from '@angular/router';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'; 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.css']
 })
 export class ContentComponent implements OnInit {
+  public Editor = ClassicEditor;
   lstContent: CourseContent[];
   lstFile: FileModel[];
   formData: CourseContent = new CourseContent();
+  modalRef: BsModalRef;
+  formAddData: Assignment = new Assignment();
   constructor(private router: Router, 
     private contentService: ContentService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute, private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.formData.CourseId =this.activatedRoute.snapshot.params.id; 
@@ -78,7 +83,7 @@ export class ContentComponent implements OnInit {
     }
     return icon;
   }
-  
+
   downLoadFileContent(id: number, contentType: string){
     this.contentService.DownLoadFileContent(id,contentType).subscribe(
       (res:Blob) => {
@@ -91,4 +96,27 @@ export class ContentComponent implements OnInit {
       )
   }
 
+  getAssignmentContent(id: number){
+    this.router.navigate([ `/course/assignment/${id}` ])
+  }
+
+  openModalWithClass(template: TemplateRef<any>) {  
+    this.modalRef = this.modalService.show(  
+      template,  
+      Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
+    );  
+  } 
+
+  closeAddModel(){
+      this.modalRef.hide()
+  }
+
+  onSubmit(){
+    if(this.formAddData.Opened = new Date()){
+      console.log(this.formAddData.Opened.toISOString());
+    }
+    else
+      console.log(this.formAddData.Opened);
+    console.log(this.formAddData.Details);
+  }
 }
