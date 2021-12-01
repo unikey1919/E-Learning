@@ -33,9 +33,53 @@ const routes: Routes = [
     component: ELearningComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: 'home', component: HomeComponent, canActivate: [AuthGuard] }, 
-      { path: 'course/content/:id',  component: ContentComponent },
-      { path: 'course/assignment/:id', component: AssignmentComponent },
+      {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AuthGuard],
+        data: {
+          title: 'content',
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/e-learning/home',
+            }
+          ],
+        },
+      },
+
+      {
+        path: 'course/content/:id',
+        component: ContentComponent,
+        data: {
+          title: 'content',
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/e-learning/home',
+            },
+            {
+              label: 'Content',
+              url: '/e-learning/course/content',
+            },
+          ],
+        },
+      },
+      
+      { path: 'course/assignment/:id', component: AssignmentComponent,
+      data: {
+        title: 'content',
+        breadcrumb: [
+          {
+            label: 'Home',
+            url: '/e-learning/home'
+          },
+          {
+            label: 'Assignment',
+            url: '/e-learning/course/assignment'
+          },
+        ]
+      }, },
     ],
   },
 
