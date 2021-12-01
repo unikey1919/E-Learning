@@ -43,7 +43,11 @@ namespace E_LearnignWebAPI.Controllers
                     obj.CourseId = Convert.ToInt32(dt.Rows[i]["courseId"]);
                     obj.SubjectName = (dt.Rows[i]["subjectName"]).ToString();
                     DataTable fileData = elearningBll.GetFileBySubject(obj);
+                    //Lấy danh sách bài tập thuộc chương
+                    var assignment = _context.Assignment.Where(n=>n.SubjectId == obj.Id).ToList();
+                    obj.LstAssignment = assignment;
                     obj.LstFile = new List<FileModel>();
+                    //Lấy danh sách file đính kèm thuộc chương
                     for (int j = 0; j < fileData.Rows.Count; j++)
                     {
                         FileModel objFile = new FileModel();
@@ -105,6 +109,14 @@ namespace E_LearnignWebAPI.Controllers
             {
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
+        }
+
+        [HttpGet]
+        [Route("GetAssignmentBySubject/{id}")]
+        public async Task<ActionResult<Assignment>> GetAssignmentBySubject(int id)
+        {
+            var assignment =  await _context.Assignment.FindAsync(id);
+            return Ok(assignment);
         }
         #endregion
     }

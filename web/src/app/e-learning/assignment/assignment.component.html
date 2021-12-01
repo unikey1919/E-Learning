@@ -1,17 +1,39 @@
-<div class="container-fluid">
-    <nav class="navbar">
-      <a class="navbar-brand" style="margin-left: 10px">Home</a>
-      <a class="navbar-brand" style="position: absolute; margin-left: 65px; color:blue">/Assignment</a>
-      <button class="btn btn-danger my-2 my-sm-0" style="margin-right: 10px" (click)="onLogout()">Logout</button>
-    </nav>
-    
+ 
+   <app-e-learning>
+    <nav class="navbar">ALO</nav>
+   </app-e-learning>
    <mat-card style=" margin-top: 20px" appMaterialElevation>
-       <mat-card-title>Nộp bài tập chương 1</mat-card-title>
+       <mat-card-title>{{formData.assignmentName}}</mat-card-title>
        <mat-card-content style="margin-bottom: 20px">
-        Hello
-        <input type ="datetime-local">
+         <mat-card style="background: lightgreen">
+           <div>
+             <strong>Opened:  </strong>
+             <span>&nbsp;{{formData.opened | date: 'full'}}</span>
+           </div>
+           <div>
+            <strong>Closed:  </strong>
+            <span>&nbsp;{{formData.due | date: 'full'}}</span>
+          </div>
+         </mat-card>
+      </mat-card-content>
+       <mat-card-content style="margin-bottom: 20px">
+        <div [innerHTML]="formData.details"></div>
       </mat-card-content>
    </mat-card>
-   
-</div>
+
+   <mat-card style=" margin-top: 20px" appMaterialElevation>
+    <mat-card-title>Nộp tập tin</mat-card-title>
+    <mat-card-content style="margin-bottom: 20px">
+      <ngx-dropzone (change)="onSelect($event)">
+        <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+          <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+        </ngx-dropzone-preview>
+      </ngx-dropzone>
+   </mat-card-content>
+   <mat-card-actions>
+    <button mat-raised-button>Nộp bài tập</button>
+   </mat-card-actions>
+</mat-card>
+
 

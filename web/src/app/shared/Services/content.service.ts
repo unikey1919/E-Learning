@@ -25,4 +25,8 @@ export class ContentService {
   AddAssignmentBySubject(assignmentObjModel): Observable<any>{
     return this.httpClient.post(this.baseURL + '/AddAssignmentBySubject', assignmentObjModel);
   }
+
+  GetAssignmentBySubject(id: number){
+    return this.httpClient.get(this.baseURL + `/GetAssignmentBySubject/${id}`);
+  }
 }

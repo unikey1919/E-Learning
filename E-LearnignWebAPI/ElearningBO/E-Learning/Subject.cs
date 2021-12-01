@@ -32,5 +32,6 @@ namespace ElearningBO.E_Learning
         public List<FileModel> LstFile { get; set; }
         public string Details { get; set; }
         public bool isDelete { get; set; }
+        public List<Assignment> LstAssignment { get; set; }
     }
 }

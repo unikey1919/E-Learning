@@ -7,7 +7,7 @@ import {ActivatedRoute} from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'; 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MessageService } from 'primeng/api';
-import * as moment from 'moment';
+
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
@@ -21,6 +21,8 @@ export class ContentComponent implements OnInit {
   formData: CourseContent = new CourseContent();
   modalRef: BsModalRef;
   formAddData: Assignment = new Assignment();
+  role: string='';
+  
   constructor(private router: Router, 
     private contentService: ContentService,
     private activatedRoute: ActivatedRoute, private modalService: BsModalService, 
@@ -29,10 +31,14 @@ export class ContentComponent implements OnInit {
   ngOnInit(): void {
     this.formData.CourseId =this.activatedRoute.snapshot.params.id; 
     this.getContentByCourse(this.formData)
+    localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
+
   }
 
   onLogout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userRole');
     this.router.navigate(['/user/login']);
   }
 
@@ -101,7 +107,7 @@ export class ContentComponent implements OnInit {
   }
 
   getAssignmentContent(id: number){
-    this.router.navigate([ `/course/assignment/${id}` ])
+    this.router.navigate([ `/e-learning/course/assignment/${id}` ])
   }
 
   openModalWithClass(template: TemplateRef<any>, subjectId: number) {  
@@ -119,6 +125,7 @@ export class ContentComponent implements OnInit {
   onSubmit(){
     this.formAddData.Opened = new Date(this.formAddData.Opened);
     this.formAddData.Due = new Date(this.formAddData.Due);
+    this.formAddData.AssignmentName = this.formAddData.AssignmentName.trim();
     this.contentService.AddAssignmentBySubject(this.formAddData).subscribe(
       (res: any) => {
         if (res.isError == true) {

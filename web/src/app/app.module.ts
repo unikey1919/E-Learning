@@ -46,6 +46,7 @@ import { StudentComponent } from './admin-panel/student/student.component';
 import { ContentComponent } from './e-learning/content/content.component';
 import { AssignmentComponent } from './e-learning/assignment/assignment.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,7 +98,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     MessagesModule,
     MessageModule,
     ToastModule,
-    CKEditorModule
+    CKEditorModule,
+    NgxDropzoneModule
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,

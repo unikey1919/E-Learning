@@ -14,6 +14,7 @@ import { InstructorComponent } from './admin-panel/instructor/instructor.compone
 import { StudentComponent } from './admin-panel/student/student.component';
 import { ContentComponent } from './e-learning/content/content.component';
 import { AssignmentComponent } from './e-learning/assignment/assignment.component';
+import { ELearningComponent } from './e-learning/e-learning.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user/login', pathMatch: 'full' },
@@ -27,11 +28,18 @@ const routes: Routes = [
     ],
   },
 
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'forbidden', component: ForbiddenComponent },
-  { path: 'course/content/:id', component: ContentComponent },
-  { path: 'course/assignment/:id', component: AssignmentComponent },
+  {
+    path: 'e-learning',
+    component: ELearningComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'home', component: HomeComponent, canActivate: [AuthGuard] }, 
+      { path: 'course/content/:id',  component: ContentComponent },
+      { path: 'course/assignment/:id', component: AssignmentComponent },
+    ],
+  },
 
+  { path: 'forbidden', component: ForbiddenComponent },
   {
     path: 'admin',
     component: AdminPanelComponent,
