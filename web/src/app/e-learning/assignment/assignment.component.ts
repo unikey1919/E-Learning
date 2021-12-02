@@ -15,7 +15,8 @@ import { FileModel } from 'src/app/shared/Models/course-content';
 export class AssignmentComponent implements OnInit {
   formData: AssignmentModel = new AssignmentModel();
   Opened: Date =  new Date();
-  files: File[] = [];
+  files: any[] = [];
+  fileModel: FileModel[] = [];
 
   constructor(private router: Router, 
     private contentService: ContentService,
@@ -47,11 +48,21 @@ export class AssignmentComponent implements OnInit {
   onSelect(event) {
 		console.log(event);
 		this.files.push(...event.addedFiles);
+    console.log(this.files);
 	}
 
 	onRemove(event) {
 		console.log(event);
 		this.files.splice(this.files.indexOf(event), 1);
 	}
+
+  onSubmit(){
+    console.log(this.files);
+    this.contentService.UploadFile(this.files).subscribe(
+      (res) => {
+      },
+      (error) => {}
+    )
+  }
 
 }

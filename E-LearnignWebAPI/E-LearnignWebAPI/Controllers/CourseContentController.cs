@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace E_LearnignWebAPI.Controllers
@@ -21,6 +23,7 @@ namespace E_LearnignWebAPI.Controllers
         private Elearning elearningBll = null;
         private readonly string AppDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Content");
         private readonly ELearningDbContext _context;
+        private static List<FileRecord> fileDB = new List<FileRecord>();
         public CourseContentController(ELearningDbContext context)
         {
             elearningBll = new Elearning();
@@ -94,7 +97,79 @@ namespace E_LearnignWebAPI.Controllers
 
             return File(memory, contentType, fileName);
         }
+        private void SaveToDB(FileRecord record)
+        {
+            if (record == null)
+                throw new ArgumentNullException($"{nameof(record)}");
 
+            FileContent fileData = new FileContent();
+            fileData.FilePath = record.FilePath;
+            fileData.FileName = record.FileName;
+            fileData.FileExtention = record.FileFormat;
+            fileData.FileType = record.ContentType;
+
+            _context.FileContent.Add(fileData);
+            _context.SaveChanges();
+        }
+        private async Task<FileRecord> SaveFileAsync(IFormFile myFile)
+        {
+            FileRecord file = new FileRecord();
+            if (myFile != null)
+            {
+                if (!Directory.Exists(AppDirectory))
+                    Directory.CreateDirectory(AppDirectory);
+
+                var fileName = DateTime.Now.Ticks.ToString() + Path.GetExtension(myFile.FileName);
+                var path = Path.Combine(AppDirectory, fileName);
+
+                file.Id = fileDB.Count() + 1;
+                file.FilePath = path;
+                file.FileName = fileName;
+                file.FileFormat = Path.GetExtension(myFile.FileName);
+                file.ContentType = myFile.ContentType;
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await myFile.CopyToAsync(stream);
+                }
+
+                return file;
+            }
+            return file;
+        }
+        [HttpPost]
+        public async Task<HttpResponseMessage> PostAsync([FromForm] IFormFile[] files)
+        {
+            try
+            {
+                //for(int i=0; i< model.Count; i++)
+                //{
+                //    //FileRecord file = await SaveFileAsync(model[i].File);
+
+                //    //if (!string.IsNullOrEmpty(file.FilePath))
+                //    //{
+                //    //    file.AltText = model[i].AltText;
+                //    //    file.Description = model[i].Description;
+                //    //    //Save to Inmemory object
+                //    //    //fileDB.Add(file);
+                //    //    //Save to SQL Server DB
+                //    //    SaveToDB(file);
+                //    //    return new HttpResponseMessage(HttpStatusCode.OK);
+                //    //}
+                //    //else
+                //    //    return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                //}
+                return new HttpResponseMessage(HttpStatusCode.OK);
+
+            }
+            catch (Exception ex)
+            {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent(ex.Message),
+                };
+            }
+        }
         #region Assingment
         [HttpPost]
         [Route("AddAssignmentBySubject")]

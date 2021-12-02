@@ -24,12 +24,12 @@
       <ngx-dropzone (change)="onSelect($event)">
         <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
         <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-          <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+          <ngx-dropzone-label>{{ f.name}}</ngx-dropzone-label>
         </ngx-dropzone-preview>
       </ngx-dropzone>
    </mat-card-content>
    <mat-card-actions>
-    <button mat-raised-button>Nộp bài tập</button>
+    <button mat-raised-button (click) = "onSubmit()">Nộp bài tập</button>
    </mat-card-actions>
 </mat-card>
 
