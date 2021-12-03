@@ -67,7 +67,7 @@ export class ContentComponent implements OnInit {
       case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
         color = 'blue';
         break;
-      case 'application/officedocument.spreadsheetml.sheet':
+      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
         color = 'green';
         break;
       case 'application/vnd.ms-excel':
@@ -94,7 +94,7 @@ export class ContentComponent implements OnInit {
       case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
         icon = 'fas fa-file-word';
         break;
-      case 'application/officedocument.spreadsheetml.sheet':
+      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
         icon = 'fas fa-file-excel';
         break;
       case 'image/png':

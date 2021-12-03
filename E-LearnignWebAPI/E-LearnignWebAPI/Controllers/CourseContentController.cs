@@ -112,6 +112,22 @@ namespace E_LearnignWebAPI.Controllers
             _context.FileContent.Add(fileData);
             _context.SaveChanges();
         }
+        private void SaveToAssignmentDB(FileRecord record, string userSubmit, string assignmentId)
+        {
+            if (record == null)
+                throw new ArgumentNullException($"{nameof(record)}");
+
+            FileAssignment fileData = new FileAssignment();
+            fileData.AssignmentId = Convert.ToInt32(assignmentId);
+            fileData.FilePath = record.FilePath;
+            fileData.FileName = record.FileName;
+            fileData.FileExtention = record.FileFormat;
+            fileData.FileType = record.ContentType;
+            fileData.UserSubmit = userSubmit;
+            fileData.SubmitDate = DateTime.Now;
+            _context.FileAssignment.Add(fileData);
+            _context.SaveChanges();
+        }
         private async Task<FileRecord> SaveFileAsync(IFormFile myFile)
         {
             FileRecord file = new FileRecord();
@@ -146,7 +162,7 @@ namespace E_LearnignWebAPI.Controllers
                 foreach (var file in files.files)
                 {
                     FileRecord filerc = await SaveFileAsync(file);
-                    SaveToDB(filerc,files.subjectId);
+                    SaveToAssignmentDB(filerc, files.submitUser, files.assignmentId);
                 }
                 return new HttpResponseMessage(HttpStatusCode.OK);
 

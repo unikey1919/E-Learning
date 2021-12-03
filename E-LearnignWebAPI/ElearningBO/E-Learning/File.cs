@@ -45,17 +45,27 @@ namespace ElearningBO.E_Learning
         public string AltText { get; set; }
         public string Description { get; set; }
     }
-    public class FileDropZone
-    {
-        public int lastModified { get; set; }
-        public string name { get; set; }
-        public int size { get; set; }
-        public string type { get; set; }
-        public string webkitRelativePath { get; set; }
-    }
     public class FileObject
     {
         public IFormFile[] files { get; set; }
         public string subjectId { get; set; }
+        public string assignmentId { get; set; }
+        public string submitUser { get; set; }
+    }
+    public class FileAssignment
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey("Subject")]
+        public int AssignmentId { get; set; }
+        public string FileName { get; set; }
+        public string FilePath { get; set; }
+        public string FileType { get; set; }
+        public string FileExtention { get; set; }
+        public bool isDelete { get; set; }
+        public string UserSubmit { get; set; }
+        public DateTime SubmitDate { get; set; }
+        public virtual Assignment Assignment { get; set; }
     }
 }

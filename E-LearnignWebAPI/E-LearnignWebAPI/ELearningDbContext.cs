@@ -24,5 +24,6 @@ namespace ElearningBO
         public DbSet<Subject> Subject { get; set; }
         public DbSet<FileContent> FileContent { get; set; }
         public DbSet<Assignment> Assignment { get; set; }
+        public DbSet<FileAssignment> FileAssignment { get; set; }
     }
 }
