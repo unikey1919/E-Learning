@@ -97,12 +97,13 @@ namespace E_LearnignWebAPI.Controllers
 
             return File(memory, contentType, fileName);
         }
-        private void SaveToDB(FileRecord record)
+        private void SaveToDB(FileRecord record,string subjectId)
         {
             if (record == null)
                 throw new ArgumentNullException($"{nameof(record)}");
 
             FileContent fileData = new FileContent();
+            fileData.SubjectId = Convert.ToInt32(subjectId);
             fileData.FilePath = record.FilePath;
             fileData.FileName = record.FileName;
             fileData.FileExtention = record.FileFormat;
@@ -119,7 +120,7 @@ namespace E_LearnignWebAPI.Controllers
                 if (!Directory.Exists(AppDirectory))
                     Directory.CreateDirectory(AppDirectory);
 
-                var fileName = DateTime.Now.Ticks.ToString() + Path.GetExtension(myFile.FileName);
+                var fileName = myFile.FileName.Trim();
                 var path = Path.Combine(AppDirectory, fileName);
 
                 file.Id = fileDB.Count() + 1;
@@ -138,27 +139,15 @@ namespace E_LearnignWebAPI.Controllers
             return file;
         }
         [HttpPost]
-        public async Task<HttpResponseMessage> PostAsync([FromForm] IFormFile[] files)
+        public async Task<HttpResponseMessage> PostAsync([FromForm] FileObject files)
         {
             try
             {
-                //for(int i=0; i< model.Count; i++)
-                //{
-                //    //FileRecord file = await SaveFileAsync(model[i].File);
-
-                //    //if (!string.IsNullOrEmpty(file.FilePath))
-                //    //{
-                //    //    file.AltText = model[i].AltText;
-                //    //    file.Description = model[i].Description;
-                //    //    //Save to Inmemory object
-                //    //    //fileDB.Add(file);
-                //    //    //Save to SQL Server DB
-                //    //    SaveToDB(file);
-                //    //    return new HttpResponseMessage(HttpStatusCode.OK);
-                //    //}
-                //    //else
-                //    //    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                //}
+                foreach (var file in files.files)
+                {
+                    FileRecord filerc = await SaveFileAsync(file);
+                    SaveToDB(filerc,files.subjectId);
+                }
                 return new HttpResponseMessage(HttpStatusCode.OK);
 
             }

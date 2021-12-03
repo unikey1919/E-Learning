@@ -66,7 +66,7 @@ const routes: Routes = [
         },
       },
       
-      { path: 'course/assignment/:id', component: AssignmentComponent,
+      { path: 'course/assignment/:id/:subjectId', component: AssignmentComponent,
       data: {
         title: 'content',
         breadcrumb: [

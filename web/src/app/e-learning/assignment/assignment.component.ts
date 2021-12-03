@@ -10,7 +10,8 @@ import { FileModel } from 'src/app/shared/Models/course-content';
 @Component({
   selector: 'app-assignment',
   templateUrl: './assignment.component.html',
-  styleUrls: ['./assignment.component.css']
+  styleUrls: ['./assignment.component.css'],
+  providers: [MessageService]
 })
 export class AssignmentComponent implements OnInit {
   formData: AssignmentModel = new AssignmentModel();
@@ -20,10 +21,12 @@ export class AssignmentComponent implements OnInit {
 
   constructor(private router: Router, 
     private contentService: ContentService,
-    private activatedRoute: ActivatedRoute, private modalService: BsModalService) { }
+    private activatedRoute: ActivatedRoute, private modalService: BsModalService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.formData.id =this.activatedRoute.snapshot.params.id; 
+    this.formData.id =this.activatedRoute.snapshot.params.id;
+    console.log(this.activatedRoute.snapshot.params.subjectId);
     this.getAssignmentBySubject(this.formData.id);
   }
 
@@ -58,8 +61,13 @@ export class AssignmentComponent implements OnInit {
 
   onSubmit(){
     console.log(this.files);
-    this.contentService.UploadFile(this.files).subscribe(
+    this.contentService.UploadFile(this.files,this.activatedRoute.snapshot.params.subjectId).subscribe(
       (res) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Successful submission',
+        });
       },
       (error) => {}
     )

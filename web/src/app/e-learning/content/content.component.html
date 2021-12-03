@@ -5,7 +5,7 @@
       <mat-card-content style="margin-bottom: 20px">
         <mat-card *ngIf="role == 'instructor'">
           <i class="fas fa-briefcase" style="margin-right:10px"></i>
-          <span (click)="getAssignmentContent(3)">Nộp bài tập chương 1</span>
+          <span>Nộp bài tập chương 1</span>
           <mat-icon style="float:right" (click)="openModalWithClass(template, item.Id)">add_circle</mat-icon>
         </mat-card>
       </mat-card-content>
@@ -20,7 +20,7 @@
       <mat-card-content style="margin-bottom: 20px"  *ngFor="let assignment of item.LstAssignment">
         <mat-card>
           <i class="fas fa-briefcase" style="margin-right:10px"></i>
-          <span (click)="getAssignmentContent(assignment.Id)">{{assignment.AssignmentName}}</span>
+          <span (click)="getAssignmentContent(assignment.Id,item.Id)">{{assignment.AssignmentName}}</span>
         </mat-card>
       </mat-card-content>
    </mat-card>

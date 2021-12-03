@@ -64,6 +64,12 @@ export class ContentComponent implements OnInit {
       case 'application/msword':
         color = 'blue';
         break;
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        color = 'blue';
+        break;
+      case 'application/officedocument.spreadsheetml.sheet':
+        color = 'green';
+        break;
       case 'application/vnd.ms-excel':
         color = 'green';
         break;
@@ -83,6 +89,12 @@ export class ContentComponent implements OnInit {
         icon = 'fas fa-file-word';
         break;
       case 'application/vnd.ms-excel':
+        icon = 'fas fa-file-excel';
+        break;
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        icon = 'fas fa-file-word';
+        break;
+      case 'application/officedocument.spreadsheetml.sheet':
         icon = 'fas fa-file-excel';
         break;
       case 'image/png':
@@ -106,8 +118,8 @@ export class ContentComponent implements OnInit {
       )
   }
 
-  getAssignmentContent(id: number){
-    this.router.navigate([ `/e-learning/course/assignment/${id}` ])
+  getAssignmentContent(id: number, subjectId: number){
+    this.router.navigate([ `/e-learning/course/assignment/${id}/${subjectId}` ])
   }
 
   openModalWithClass(template: TemplateRef<any>, subjectId: number) {  
