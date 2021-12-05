@@ -1,4 +1,4 @@
-import { Assignment, AssignmentModel } from './../../shared/Models/assignment';
+import { Assignment, AssignmentModel, FileAssignment, SubmitStatus } from './../../shared/Models/assignment';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
@@ -18,6 +18,8 @@ export class AssignmentComponent implements OnInit {
   Opened: Date =  new Date();
   files: any[] = [];
   fileModel: FileModel[] = [];
+  formStatus: SubmitStatus =  new SubmitStatus();
+  formFile: FileAssignment[] = [];
 
   constructor(private router: Router, 
     private contentService: ContentService,
@@ -28,6 +30,8 @@ export class AssignmentComponent implements OnInit {
     this.formData.id =this.activatedRoute.snapshot.params.id;
     console.log(this.activatedRoute.snapshot.params.subjectId);
     this.getAssignmentBySubject(this.formData.id);
+    this.checkStatusSubmit();
+    this.getLstAssignmentSubmit();
   }
 
   onLogout() {
@@ -66,6 +70,7 @@ export class AssignmentComponent implements OnInit {
     userSubmit = localStorage.getItem('username');
     this.contentService.UploadFile(this.files,assignmentId,userSubmit).subscribe(
       (res) => {
+        this.checkStatusSubmit();
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -74,6 +79,98 @@ export class AssignmentComponent implements OnInit {
       },
       (error) => {}
     )
+  }
+
+  checkStatusSubmit(){
+    let assignmentId = this.activatedRoute.snapshot.params.id;
+    let userSubmit: any;
+    userSubmit = localStorage.getItem('username');
+    this.contentService.GetAssignmentSubmitStatus(userSubmit,assignmentId).subscribe(
+      (res) => {
+        this.formStatus = res as SubmitStatus;
+        console.log(this.formStatus);
+      },
+      (error) => {}
+    )
+  }
+
+  getLstAssignmentSubmit(){
+    let assignmentId = this.activatedRoute.snapshot.params.id;
+    let userSubmit: any;
+    userSubmit = localStorage.getItem('username');
+    this.contentService.GetAssignmentSubmit(userSubmit,assignmentId).subscribe(
+      (res) => {
+        this.formFile = res as FileAssignment[];
+        console.log(this.formFile);
+      },
+      (error) => {}
+    )
+  }
+
+  downLoadFileContent(id: number, contentType: string){
+    this.contentService.DownLoadFileAssignment(id,contentType).subscribe(
+      (res:Blob) => {
+        const blob = new Blob([res], { type: contentType }); // you can change the type
+        const url= window.URL.createObjectURL(blob);
+        window.open(url);
+        console.log("Success")
+      },
+      (error) => {"Error"}
+      )
+  }
+
+  getBackgroundColor(type) {
+    let color = 'orange';
+    if(type == "word"){
+      color = 'blue'
+    }
+    else if(type == "excel"){
+      color = 'green'
+    }
+    switch (type) {
+      case 'application/msword':
+        color = 'blue';
+        break;
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        color = 'blue';
+        break;
+      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+        color = 'green';
+        break;
+      case 'application/vnd.ms-excel':
+        color = 'green';
+        break;
+      case 'image/png':
+        color = 'gray';
+        break;
+      default:
+        break;
+    }
+    return color;
+  }
+
+  getIcon(type){
+    let icon = 'fa-file';
+    switch (type) {
+      case 'application/msword':
+        icon = 'fas fa-file-word';
+        break;
+      case 'application/vnd.ms-excel':
+        icon = 'fas fa-file-excel';
+        break;
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        icon = 'fas fa-file-word';
+        break;
+      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+        icon = 'fas fa-file-excel';
+        break;
+      case 'image/png':
+        icon = 'fas fa-file-image';
+        break;
+      default:
+        break;
+    }
+    return icon;
   }
 
 }

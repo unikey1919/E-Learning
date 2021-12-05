@@ -1,6 +1,8 @@
 <p-toast></p-toast>
    <mat-card style=" margin-top: 20px" appMaterialElevation>
-       <mat-card-title>{{formData.assignmentName}}</mat-card-title>
+       <mat-card-title>
+         {{formData.assignmentName}} 
+        </mat-card-title>
        <mat-card-content style="margin-bottom: 20px">
          <mat-card style="background: lightgreen">
            <div>
@@ -11,10 +13,42 @@
             <strong>Closed:  </strong>
             <span>&nbsp;{{formData.due | date: 'full'}}</span>
           </div>
-         </mat-card>
+        </mat-card>
       </mat-card-content>
        <mat-card-content style="margin-bottom: 20px">
         <div [innerHTML]="formData.details"></div>
+        <mat-card *ngIf="formStatus.totalMilliseconds != 0">
+          <div>
+            <strong>Status: </strong>
+            <button mat-raised-button style="font-size:15px; margin-bottom: 10px;height:35px;margin-left:20px; background:aqua">
+              <div><span>Submitted</span></div>
+              </button>
+          </div>
+          <div>
+            <strong>Remaining: </strong>
+            <span>&nbsp;The assignment was sent early
+               <span *ngIf="formStatus.days > 0"> {{formStatus.days}} days </span>
+               <span *ngIf="formStatus.hours > 0"> {{formStatus.hours}} hours </span>  
+               <span *ngIf="formStatus.minutes > 0"> {{formStatus.minutes}} minutes </span>  
+               <span *ngIf="formStatus.seconds > 0"> {{formStatus.seconds}} seconds </span>    
+            </span>
+          </div>
+          <div style="margin-top:15px">
+            <strong>File Submit: </strong>
+            <mat-card>
+              <mat-card-content *ngFor="let file of formFile">
+                <div>
+                  <span class="download" (click)="downLoadFileContent(file.id, file.fileType)">
+                    <i style="margin-right:10px" [class]="getIcon(file.fileType)" [style.color]="getBackgroundColor(file.fileType)"></i>
+                    {{file.fileName}}
+                  </span>
+                  <span style="float:right">&nbsp;&nbsp;&nbsp;{{file.submitDate | date: 'full'}}</span>
+                </div>
+                
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-card>
       </mat-card-content>
    </mat-card>
 

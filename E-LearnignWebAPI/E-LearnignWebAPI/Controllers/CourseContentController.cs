@@ -97,6 +97,31 @@ namespace E_LearnignWebAPI.Controllers
 
             return File(memory, contentType, fileName);
         }
+        [HttpGet]
+        [Route("DownloadAssignment/{id}")]
+        public async Task<IActionResult> DownloadAssignment(int id)
+        {
+            if (!Directory.Exists(AppDirectory))
+                Directory.CreateDirectory(AppDirectory);
+
+            //getting file from inmemory obj
+            //var file = fileDB?.Where(n => n.Id == id).FirstOrDefault();
+            //getting file from DB
+            var file = _context.FileAssignment.Where(n => n.Id == id).FirstOrDefault();
+            var path = Path.Combine(AppDirectory, file?.FilePath);
+            var memory = new MemoryStream();
+
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+
+            memory.Position = 0;
+            var contentType = "APPLICATION/octet-stream";
+            var fileName = Path.GetFileName(path);
+
+            return File(memory, contentType, fileName);
+        }
         private void SaveToDB(FileRecord record,string subjectId)
         {
             if (record == null)
@@ -190,12 +215,32 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
-
         [HttpGet]
         [Route("GetAssignmentBySubject/{id}")]
         public async Task<ActionResult<Assignment>> GetAssignmentBySubject(int id)
         {
             var assignment =  await _context.Assignment.FindAsync(id);
+            return Ok(assignment);
+        }
+        [HttpGet]
+        [Route("GetAssignmentSubmitStatus/{id}/{assignmentId}")]
+        public IActionResult GetAssignmentSubmitStatus(string id, int assignmentId)
+        {
+            var assignmentSubmit =  _context.FileAssignment.Where(n=> n.isDelete == false && n.UserSubmit == id && n.AssignmentId == assignmentId).Select(n => n.SubmitDate).FirstOrDefault();
+            var assignmentDue = _context.Assignment.Where(n => n.Id == assignmentId).Select(n => n.Due).FirstOrDefault();
+            TimeSpan now = new TimeSpan();
+            //1 / 1 / 0001 12:00:00 AM
+            if (assignmentSubmit == new DateTime())
+                now = assignmentDue - assignmentDue;
+            else
+                now = assignmentDue - assignmentSubmit;        
+            return Ok(now);
+        }
+        [HttpGet]
+        [Route("GetAssignmentSubmit/{id}/{assignmentId}")]
+        public IActionResult GetAssignmentSubmit(string id, int assignmentId)
+        {
+            var assignment = _context.FileAssignment.Where(n => n.isDelete == false && n.UserSubmit == id && n.AssignmentId == assignmentId).ToList();
             return Ok(assignment);
         }
         #endregion

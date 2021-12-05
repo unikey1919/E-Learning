@@ -24,6 +24,10 @@ export class ContentService {
     return this.httpClient.get(this.baseURL+`/${id}`, {responseType: 'blob'});
   }
 
+  DownLoadFileAssignment(id: number, contentType: string){
+    return this.httpClient.get(this.baseURL+`/DownloadAssignment/${id}`, {responseType: 'blob'});
+  }
+
   AddAssignmentBySubject(assignmentObjModel): Observable<any>{
     return this.httpClient.post(this.baseURL + '/AddAssignmentBySubject', assignmentObjModel);
   }
@@ -38,5 +42,13 @@ export class ContentService {
     formData.append('assignmentId', assignmentId.toString());
     formData.append('submitUser', userSubmit.toString());
     return this.httpClient.post(this.baseURL, formData);
+  }
+
+  GetAssignmentSubmitStatus(id: string, assignmentId:number){
+    return this.httpClient.get(this.baseURL + `/GetAssignmentSubmitStatus/${id}/${assignmentId}`);
+  }
+
+  GetAssignmentSubmit(id: string, assignmentId:number){
+    return this.httpClient.get(this.baseURL + `/GetAssignmentSubmit/${id}/${assignmentId}`);
   }
 }
