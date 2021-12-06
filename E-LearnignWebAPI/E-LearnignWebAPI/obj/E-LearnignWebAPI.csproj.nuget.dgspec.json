@@ -78,6 +78,10 @@
               "target": "Package",
               "version": "[5.0.2, )"
             },
+            "NETCore.MailKit": {
+              "target": "Package",
+              "version": "[2.0.3, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"
@@ -152,6 +156,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "NETCore.MailKit": {
+              "target": "Package",
+              "version": "[2.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -219,6 +229,10 @@
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.11, )"
+            },
+            "NETCore.MailKit": {
+              "target": "Package",
+              "version": "[2.0.3, )"
             }
           },
           "imports": [
@@ -284,6 +298,10 @@
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "NETCore.MailKit": {
+              "target": "Package",
+              "version": "[2.0.3, )"
             },
             "System.Configuration.ConfigurationManager": {
               "target": "Package",

@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
         this.formData.email = res.email;
         this.getListCourseByStudent(res);
         localStorage.setItem('username', res.userName);
+        localStorage.setItem('email', res.email);
       },
       err => {
         console.log(err);

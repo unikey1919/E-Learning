@@ -6,6 +6,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { MessageService } from 'primeng/api';
 import { ContentService } from 'src/app/shared/Services/content.service';
 import { FileModel } from 'src/app/shared/Models/course-content';
+import { MailService } from 'src/app/shared/Services/mail.service';
 
 @Component({
   selector: 'app-assignment',
@@ -24,7 +25,7 @@ export class AssignmentComponent implements OnInit {
   constructor(private router: Router, 
     private contentService: ContentService,
     private activatedRoute: ActivatedRoute, private modalService: BsModalService,
-    private messageService: MessageService) { }
+    private messageService: MessageService, private mailService: MailService) { }
 
   ngOnInit(): void {
     this.formData.id =this.activatedRoute.snapshot.params.id;
@@ -71,6 +72,8 @@ export class AssignmentComponent implements OnInit {
     this.contentService.UploadFile(this.files,assignmentId,userSubmit).subscribe(
       (res) => {
         this.checkStatusSubmit();
+        this.sendEmail();
+        this.getLstAssignmentSubmit();
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -173,4 +176,11 @@ export class AssignmentComponent implements OnInit {
     return icon;
   }
 
+  sendEmail(){
+    let toEmail : any;
+    toEmail = localStorage.getItem('email');
+    let subject = "Nộp bài tập";
+    let body = "Bạn đã nộp bài tập, vui lòng không phản hồi lại email này."
+    this.mailService.SendEmail(toEmail, subject, body).subscribe();
+  }
 }

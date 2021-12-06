@@ -21,6 +21,7 @@ export class ELearningComponent implements OnInit {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('userRole');
+    localStorage.removeItem('email');
     this.router.navigate(['/user/login']);
   }
 

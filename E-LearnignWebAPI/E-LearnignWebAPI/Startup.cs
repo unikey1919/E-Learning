@@ -1,6 +1,8 @@
 ﻿
 using ElearningBO;
 using ElearningBO.AppSettings;
+using ElearningBO.Services;
+using ElearningBO.Settings;
 using ElearningBO.UserAuthentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -36,7 +38,8 @@ namespace E_LearnignWebAPI
         {
             //Inject Appsetting
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
-
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<iMailService, MailService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -57,6 +60,7 @@ namespace E_LearnignWebAPI
             });    
 
             services.AddCors();
+            services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()); });
 
             //JWT Authentication
             var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
