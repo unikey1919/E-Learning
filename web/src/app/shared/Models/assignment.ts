@@ -41,3 +41,12 @@ export class FileAssignment {
   userSubmit: string='';
   submitDate: Date = new Date();
 }
+export class StudentSubmit {
+  id: string = '';
+  userName: string = '';
+  email: string = '';
+  fullName: string = '';
+  studentId: number = 0;
+  status: number = 0;
+  lstAssignmentSubmit: FileAssignment[];
+}

@@ -66,13 +66,17 @@ const routes: Routes = [
         },
       },
       
-      { path: 'course/assignment/:id/:subjectId', component: AssignmentComponent,
+      { path: 'course/assignment/:id/:subjectId/:courseId', component: AssignmentComponent,
       data: {
         title: 'content',
         breadcrumb: [
           {
             label: 'Home',
             url: '/e-learning/home'
+          },
+          {
+            label: 'Subject',
+            url: '/e-learning/course/content/:courseId'
           },
           {
             label: 'Assignment',

@@ -1,4 +1,4 @@
-import { Assignment } from './../../shared/Models/assignment';
+import { Assignment, StudentSubmit } from './../../shared/Models/assignment';
 import { Component, OnInit, TemplateRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { CourseContent, FileModel } from 'src/app/shared/Models/course-content';
@@ -119,7 +119,9 @@ export class ContentComponent implements OnInit {
   }
 
   getAssignmentContent(id: number, subjectId: number){
-    this.router.navigate([ `/e-learning/course/assignment/${id}/${subjectId}` ])
+    let courseId: number;
+    courseId = this.activatedRoute.snapshot.params.id;
+    this.router.navigate([ `/e-learning/course/assignment/${id}/${subjectId}/${courseId}` ])
   }
 
   openModalWithClass(template: TemplateRef<any>, subjectId: number) {  

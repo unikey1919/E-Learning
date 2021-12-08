@@ -268,6 +268,51 @@ namespace E_LearnignWebAPI.Controllers
             var assignment = _context.FileAssignment.Where(n => n.isDelete == false && n.AssignmentId == assignmentId).ToList();
             return Ok(assignment);
         }
+
+        [HttpGet]
+        [Route("GetAllStudentSubmit/{courseId}/{assingmentId}")]
+        public IActionResult GetAllStudentSubmit(int courseId, int assingmentId)
+        {
+
+                DataTable dt = elearningBll.GetAllStudentByCourse(courseId);
+                List<StudentSubmit> lstStudent = new List<StudentSubmit>();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    StudentSubmit obj = new StudentSubmit();
+                    obj.Id = (dt.Rows[i]["Id"]).ToString();
+                    obj.UserName = (dt.Rows[i]["UserName"]).ToString();
+                    obj.FullName = (dt.Rows[i]["FullName"]).ToString();
+                    obj.Email = (dt.Rows[i]["Email"]).ToString();
+                    obj.StudentId = Convert.ToInt32(dt.Rows[i]["StudentId"]);
+                //Lấy danh sách bài tập đã nộp theo từng user
+                    var assignmentSubmit = _context.FileAssignment.Where(n => n.UserSubmit == obj.UserName && n.AssignmentId == assingmentId).ToList();
+                    obj.LstAssignmentSubmit = assignmentSubmit;
+
+                //check deadline
+                    var assignmentSubmitStatus = _context.FileAssignment.Where(n => n.isDelete == false && n.UserSubmit == obj.UserName && n.AssignmentId == assingmentId).Select(n => n.SubmitDate).FirstOrDefault();
+                    var assignmentDue = _context.Assignment.Where(n => n.Id == assingmentId).Select(n => n.Due).FirstOrDefault();
+                TimeSpan now = new TimeSpan();
+                //1 / 1 / 0001 12:00:00 AM
+                if (assignmentSubmitStatus == new DateTime())
+                    now = assignmentDue - assignmentDue;
+                else
+                    now = assignmentDue - assignmentSubmitStatus;
+                if (now.Ticks == 0)
+                {
+                    obj.Status = 0; //Chưa nộp
+                }
+                if (now.Ticks < 0)
+                {
+                    obj.Status = 1; //Nộp trễ
+                }
+                if (now.Ticks > 0)
+                {
+                    obj.Status = 2; //Nộp đúng hạn
+                }
+                lstStudent.Add(obj);
+                }
+            return Ok(lstStudent);
+        }
         #endregion
     }
 }

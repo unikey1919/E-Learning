@@ -1,4 +1,4 @@
-import { Assignment, AssignmentModel, FileAssignment, SubmitStatus } from './../../shared/Models/assignment';
+import { Assignment, AssignmentModel, FileAssignment, StudentSubmit, SubmitStatus } from './../../shared/Models/assignment';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
@@ -22,6 +22,7 @@ export class AssignmentComponent implements OnInit {
   formStatus: SubmitStatus =  new SubmitStatus();
   formFile: FileAssignment[] = [];
   role: string='';
+  lstStudentSubmit: StudentSubmit[];
 
   constructor(private router: Router, 
     private contentService: ContentService,
@@ -34,6 +35,7 @@ export class AssignmentComponent implements OnInit {
     this.getAssignmentBySubject(this.formData.id);
     this.checkStatusSubmit();
     this.getLstAssignmentSubmit();
+    this.getAllStudentSubmit(this.activatedRoute.snapshot.params.courseId, this.activatedRoute.snapshot.params.id);
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
   }
 
@@ -184,5 +186,15 @@ export class AssignmentComponent implements OnInit {
     let subject = "Nộp bài tập";
     let body = "Bạn đã nộp bài tập, vui lòng không phản hồi lại email này."
     this.mailService.SendEmail(toEmail, subject, body).subscribe();
+  }
+
+  getAllStudentSubmit(courseId:number, assignmentId:number){
+    this.contentService.GetAllStudentSubmit(courseId, assignmentId).subscribe(
+      (res) => {
+        this.lstStudentSubmit = res as StudentSubmit[];
+        console.log(this.formData);
+      },
+      (error) => {}
+    )
   }
 }

@@ -59,4 +59,8 @@ export class ContentService {
   GetLstAssignmentSubmit(assignmentId:number){
     return this.httpClient.get(this.baseURL + `/GetLstAssignmentSubmit/${assignmentId}`);
   }
+
+  GetAllStudentSubmit(courseId:number, assignmentId:number){
+    return this.httpClient.get(this.baseURL + `/GetAllStudentSubmit/${courseId}/${assignmentId}`);
+  }
 }

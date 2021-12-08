@@ -270,6 +270,18 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > AddAssignmentBySubject Error: " + ex.Message);
             }
         }
+        public DataTable GetAllStudentByCourse(int courseId)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetAllStudentByCourse(courseId);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetAllStudentByCourse Error: " + ex.Message);
+            }
+        }
         #endregion
     }
 }

@@ -18,3 +18,8 @@ mat-card-title {
 .download:hover{
     text-decoration: underline;
 }
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+}
