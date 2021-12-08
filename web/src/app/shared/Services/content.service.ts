@@ -32,6 +32,10 @@ export class ContentService {
     return this.httpClient.post(this.baseURL + '/AddAssignmentBySubject', assignmentObjModel);
   }
 
+  AddSubject(ObjModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/AddSubject', ObjModel);
+  }
+
   GetAssignmentBySubject(id: number){
     return this.httpClient.get(this.baseURL + `/GetAssignmentBySubject/${id}`);
   }
@@ -50,5 +54,9 @@ export class ContentService {
 
   GetAssignmentSubmit(id: string, assignmentId:number){
     return this.httpClient.get(this.baseURL + `/GetAssignmentSubmit/${id}/${assignmentId}`);
+  }
+
+  GetLstAssignmentSubmit(assignmentId:number){
+    return this.httpClient.get(this.baseURL + `/GetLstAssignmentSubmit/${assignmentId}`);
   }
 }

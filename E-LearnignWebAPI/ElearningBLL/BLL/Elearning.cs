@@ -166,6 +166,18 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > GetListUser Error: " + ex.Message);
             }
         }
+
+        public void AddSubject(Subject model)
+        {
+            try
+            {
+                objElDAO.AddSubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddSubject Error: " + ex.Message);
+            }
+        }
         #endregion
 
         #region Student

@@ -17,6 +17,104 @@
       </mat-card-content>
        <mat-card-content style="margin-bottom: 20px">
         <div [innerHTML]="formData.details"></div>
+        <div class="card">
+          <p-table #dt1 dataKey="id" editMode="row" responsiveLayout="scroll"
+           [globalFilterFields]="['coursename', 'code', 'instructorid', 'instructionName', 'description', 'details']">
+              <ng-template pTemplate="caption">
+                  <div class="p-d-flex">
+                      <span class="p-input-icon-left p-ml-auto">
+                          <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search" />
+                      </span>
+                  </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>
+                          <input type="checkbox" class="checkAll" id="checkAll1"/>
+                      </th>
+                      <th>No.</th>
+                      <th>Course</th>
+                      <th>Course Code</th>
+                      <th>Instructor Id</th>
+                      <th>Instructor name</th>
+                      <th>Description</th>
+                      <th>Details</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                  <tr [pEditableRow]="item">
+                      <td>
+                          <input type="checkbox" class="checkItem"/>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="output">
+                                  {{ri}}
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="input">
+                                  <input pInputText type="text">
+                              </ng-template>
+                              <ng-template pTemplate="output">
+                                  Hello
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="input">
+                                  <input pInputText type="text" required >
+                              </ng-template>
+                              <ng-template pTemplate="output">
+                                Hello
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="input" >
+                                  <input pInputText type="text" required>
+                              </ng-template>
+                              <ng-template pTemplate="output">
+                                Hello
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="output">
+                                Hello
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="input" >
+                                  <input pInputText type="text" >
+                              </ng-template>
+                              <ng-template pTemplate="output">
+                                Hello
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="input" >
+                                  <input pInputText type="text">
+                              </ng-template>
+                              <ng-template pTemplate="output">
+                                  Hello
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+
+                  </tr>
+              </ng-template>
+          </p-table>
+      </div>
         <mat-card *ngIf="formStatus.totalMilliseconds != 0">
           <div>
             <strong>Status: </strong>
@@ -52,7 +150,7 @@
       </mat-card-content>
    </mat-card>
 
-   <mat-card style=" margin-top: 20px" appMaterialElevation>
+   <mat-card *ngIf="role == 'student'" style=" margin-top: 20px" appMaterialElevation>
     <mat-card-title>Nộp tập tin</mat-card-title>
     <mat-card-content style="margin-bottom: 20px">
       <ngx-dropzone (change)="onSelect($event)">

@@ -376,6 +376,27 @@ namespace ElearningDAO.Elearning
             return dt;
         }
 
+        public void AddSubject(Subject model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddSubject", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_courseid", model.CourseId);
+                cmd.Parameters.AddWithValue("@p_subjectname", model.SubjectName);
+                cmd.Parameters.AddWithValue("@p_details", model.Details);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > UpdateCourse Error: " + ex.Message);
+            }
+
+        }
         /// <summary>
         /// File
         /// </summary>

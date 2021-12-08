@@ -200,6 +200,21 @@ namespace E_LearnignWebAPI.Controllers
                 };
             }
         }
+
+        [HttpPost]
+        [Route("AddSubject")]
+        public ApiResultMessage AddSubject(Subject model)
+        {
+            try
+            {
+                elearningBll.AddSubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
         #region Assingment
         [HttpPost]
         [Route("AddAssignmentBySubject")]
@@ -215,6 +230,7 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+
         [HttpGet]
         [Route("GetAssignmentBySubject/{id}")]
         public async Task<ActionResult<Assignment>> GetAssignmentBySubject(int id)
@@ -222,6 +238,7 @@ namespace E_LearnignWebAPI.Controllers
             var assignment =  await _context.Assignment.FindAsync(id);
             return Ok(assignment);
         }
+
         [HttpGet]
         [Route("GetAssignmentSubmitStatus/{id}/{assignmentId}")]
         public IActionResult GetAssignmentSubmitStatus(string id, int assignmentId)
@@ -241,6 +258,14 @@ namespace E_LearnignWebAPI.Controllers
         public IActionResult GetAssignmentSubmit(string id, int assignmentId)
         {
             var assignment = _context.FileAssignment.Where(n => n.isDelete == false && n.UserSubmit == id && n.AssignmentId == assignmentId).ToList();
+            return Ok(assignment);
+        }
+
+        [HttpGet]
+        [Route("GetLstAssignmentSubmit/{assignmentId}")]
+        public IActionResult GetLstAssignmentSubmit(int assignmentId)
+        {
+            var assignment = _context.FileAssignment.Where(n => n.isDelete == false && n.AssignmentId == assignmentId).ToList();
             return Ok(assignment);
         }
         #endregion

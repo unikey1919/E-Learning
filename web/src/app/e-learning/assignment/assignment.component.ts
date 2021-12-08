@@ -21,6 +21,7 @@ export class AssignmentComponent implements OnInit {
   fileModel: FileModel[] = [];
   formStatus: SubmitStatus =  new SubmitStatus();
   formFile: FileAssignment[] = [];
+  role: string='';
 
   constructor(private router: Router, 
     private contentService: ContentService,
@@ -33,6 +34,7 @@ export class AssignmentComponent implements OnInit {
     this.getAssignmentBySubject(this.formData.id);
     this.checkStatusSubmit();
     this.getLstAssignmentSubmit();
+    localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
   }
 
   onLogout() {

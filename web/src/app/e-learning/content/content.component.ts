@@ -30,7 +30,7 @@ export class ContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.formData.CourseId =this.activatedRoute.snapshot.params.id; 
-    this.getContentByCourse(this.formData)
+    this.getContentByCourse(this.formData);
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
 
   }
@@ -130,6 +130,14 @@ export class ContentComponent implements OnInit {
     this.formAddData.SubjectId =  subjectId;
   } 
 
+  openContentWithClass(template: TemplateRef<any>) {  
+    this.modalRef = this.modalService.show(  
+      template,  
+      Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
+    );  
+    this.formData.CourseId= this.activatedRoute.snapshot.params.id;
+  } 
+
   closeAddModel(){
       this.modalRef.hide();
   }
@@ -137,21 +145,46 @@ export class ContentComponent implements OnInit {
   onSubmit(){
     this.formAddData.Opened = new Date(this.formAddData.Opened);
     this.formAddData.Due = new Date(this.formAddData.Due);
-    this.formAddData.AssignmentName = this.formAddData.AssignmentName.trim();
+    this.formAddData.AssignmentName = this.formAddData.AssignmentName;
     this.contentService.AddAssignmentBySubject(this.formAddData).subscribe(
       (res: any) => {
         if (res.isError == true) {
           this.messageService.add({
             severity: 'error',
             summary: 'error',
-            detail: 'Fail to create course',
+            detail: 'Fail to create assignment',
           });
         } else {
           this.closeAddModel();
+          this.getContentByCourse(this.formData);
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'Course is created',
+            detail: 'Assignment is created',
+          });
+        }
+      },
+      (err) => {}
+    );
+  }
+
+  onSubmitContent(){
+    this.formData.SubjectName = this.formData.SubjectName;
+    this.contentService.AddSubject(this.formData).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to create new subject',
+          });
+        } else {
+          this.closeAddModel();
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Subject is created',
           });
         }
       },
