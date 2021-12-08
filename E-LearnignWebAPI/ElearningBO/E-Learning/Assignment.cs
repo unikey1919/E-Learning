@@ -15,10 +15,10 @@ namespace ElearningBO.E_Learning
 
         [ForeignKey("Subject")]
         public int SubjectId { get; set; }
-        public string AssignmentName { get; set; }
+        public string AssignmentName { get; set; }      
         public string Details { get; set; }
         public DateTime Opened { get; set; }
-        public DateTime? Due { get; set; }
+        public DateTime Due { get; set; }
         public bool isDelete { get; set; }
         public virtual Subject Subject { get; set; }
     }

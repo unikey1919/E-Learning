@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace E_LearnignWebAPI.Controllers
@@ -21,6 +23,7 @@ namespace E_LearnignWebAPI.Controllers
         private Elearning elearningBll = null;
         private readonly string AppDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Content");
         private readonly ELearningDbContext _context;
+        private static List<FileRecord> fileDB = new List<FileRecord>();
         public CourseContentController(ELearningDbContext context)
         {
             elearningBll = new Elearning();
@@ -43,7 +46,11 @@ namespace E_LearnignWebAPI.Controllers
                     obj.CourseId = Convert.ToInt32(dt.Rows[i]["courseId"]);
                     obj.SubjectName = (dt.Rows[i]["subjectName"]).ToString();
                     DataTable fileData = elearningBll.GetFileBySubject(obj);
+                    //Lấy danh sách bài tập thuộc chương
+                    var assignment = _context.Assignment.Where(n=>n.SubjectId == obj.Id).ToList();
+                    obj.LstAssignment = assignment;
                     obj.LstFile = new List<FileModel>();
+                    //Lấy danh sách file đính kèm thuộc chương
                     for (int j = 0; j < fileData.Rows.Count; j++)
                     {
                         FileModel objFile = new FileModel();
@@ -90,5 +97,177 @@ namespace E_LearnignWebAPI.Controllers
 
             return File(memory, contentType, fileName);
         }
+        [HttpGet]
+        [Route("DownloadAssignment/{id}")]
+        public async Task<IActionResult> DownloadAssignment(int id)
+        {
+            if (!Directory.Exists(AppDirectory))
+                Directory.CreateDirectory(AppDirectory);
+
+            //getting file from inmemory obj
+            //var file = fileDB?.Where(n => n.Id == id).FirstOrDefault();
+            //getting file from DB
+            var file = _context.FileAssignment.Where(n => n.Id == id).FirstOrDefault();
+            var path = Path.Combine(AppDirectory, file?.FilePath);
+            var memory = new MemoryStream();
+
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+
+            memory.Position = 0;
+            var contentType = "APPLICATION/octet-stream";
+            var fileName = Path.GetFileName(path);
+
+            return File(memory, contentType, fileName);
+        }
+        private void SaveToDB(FileRecord record,string subjectId)
+        {
+            if (record == null)
+                throw new ArgumentNullException($"{nameof(record)}");
+
+            FileContent fileData = new FileContent();
+            fileData.SubjectId = Convert.ToInt32(subjectId);
+            fileData.FilePath = record.FilePath;
+            fileData.FileName = record.FileName;
+            fileData.FileExtention = record.FileFormat;
+            fileData.FileType = record.ContentType;
+
+            _context.FileContent.Add(fileData);
+            _context.SaveChanges();
+        }
+        private void SaveToAssignmentDB(FileRecord record, string userSubmit, string assignmentId)
+        {
+            if (record == null)
+                throw new ArgumentNullException($"{nameof(record)}");
+
+            FileAssignment fileData = new FileAssignment();
+            fileData.AssignmentId = Convert.ToInt32(assignmentId);
+            fileData.FilePath = record.FilePath;
+            fileData.FileName = record.FileName;
+            fileData.FileExtention = record.FileFormat;
+            fileData.FileType = record.ContentType;
+            fileData.UserSubmit = userSubmit;
+            fileData.SubmitDate = DateTime.Now;
+            _context.FileAssignment.Add(fileData);
+            _context.SaveChanges();
+        }
+        private async Task<FileRecord> SaveFileAsync(IFormFile myFile)
+        {
+            FileRecord file = new FileRecord();
+            if (myFile != null)
+            {
+                if (!Directory.Exists(AppDirectory))
+                    Directory.CreateDirectory(AppDirectory);
+
+                var fileName = myFile.FileName.Trim();
+                var path = Path.Combine(AppDirectory, fileName);
+
+                file.Id = fileDB.Count() + 1;
+                file.FilePath = path;
+                file.FileName = fileName;
+                file.FileFormat = Path.GetExtension(myFile.FileName);
+                file.ContentType = myFile.ContentType;
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await myFile.CopyToAsync(stream);
+                }
+
+                return file;
+            }
+            return file;
+        }
+        [HttpPost]
+        public async Task<HttpResponseMessage> PostAsync([FromForm] FileObject files)
+        {
+            try
+            {
+                foreach (var file in files.files)
+                {
+                    FileRecord filerc = await SaveFileAsync(file);
+                    SaveToAssignmentDB(filerc, files.submitUser, files.assignmentId);
+                }
+                return new HttpResponseMessage(HttpStatusCode.OK);
+
+            }
+            catch (Exception ex)
+            {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent(ex.Message),
+                };
+            }
+        }
+
+        [HttpPost]
+        [Route("AddSubject")]
+        public ApiResultMessage AddSubject(Subject model)
+        {
+            try
+            {
+                elearningBll.AddSubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        #region Assingment
+        [HttpPost]
+        [Route("AddAssignmentBySubject")]
+        public ApiResultMessage AddAssignmentBySubject(Assignment model)
+        {
+            try
+            {
+                elearningBll.AddAssignmentBySubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpGet]
+        [Route("GetAssignmentBySubject/{id}")]
+        public async Task<ActionResult<Assignment>> GetAssignmentBySubject(int id)
+        {
+            var assignment =  await _context.Assignment.FindAsync(id);
+            return Ok(assignment);
+        }
+
+        [HttpGet]
+        [Route("GetAssignmentSubmitStatus/{id}/{assignmentId}")]
+        public IActionResult GetAssignmentSubmitStatus(string id, int assignmentId)
+        {
+            var assignmentSubmit =  _context.FileAssignment.Where(n=> n.isDelete == false && n.UserSubmit == id && n.AssignmentId == assignmentId).Select(n => n.SubmitDate).FirstOrDefault();
+            var assignmentDue = _context.Assignment.Where(n => n.Id == assignmentId).Select(n => n.Due).FirstOrDefault();
+            TimeSpan now = new TimeSpan();
+            //1 / 1 / 0001 12:00:00 AM
+            if (assignmentSubmit == new DateTime())
+                now = assignmentDue - assignmentDue;
+            else
+                now = assignmentDue - assignmentSubmit;        
+            return Ok(now);
+        }
+        [HttpGet]
+        [Route("GetAssignmentSubmit/{id}/{assignmentId}")]
+        public IActionResult GetAssignmentSubmit(string id, int assignmentId)
+        {
+            var assignment = _context.FileAssignment.Where(n => n.isDelete == false && n.UserSubmit == id && n.AssignmentId == assignmentId).ToList();
+            return Ok(assignment);
+        }
+
+        [HttpGet]
+        [Route("GetLstAssignmentSubmit/{assignmentId}")]
+        public IActionResult GetLstAssignmentSubmit(int assignmentId)
+        {
+            var assignment = _context.FileAssignment.Where(n => n.isDelete == false && n.AssignmentId == assignmentId).ToList();
+            return Ok(assignment);
+        }
+        #endregion
     }
 }

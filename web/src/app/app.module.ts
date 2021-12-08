@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ELearningComponent } from './e-learning/e-learning.component';
-import { ELearningFormComponent } from './e-learning/e-learning-form/e-learning-form.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './user/register/register.component';
@@ -44,12 +43,14 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { StudentComponent } from './admin-panel/student/student.component';
 import { ContentComponent } from './e-learning/content/content.component';
-
+import { AssignmentComponent } from './e-learning/assignment/assignment.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import {NgDynamicBreadcrumbModule} from 'ng-dynamic-breadcrumb';
 @NgModule({
   declarations: [
     AppComponent,
     ELearningComponent,
-    ELearningFormComponent,
     UserComponent,
     RegisterComponent,
     LoginComponent,
@@ -63,6 +64,7 @@ import { ContentComponent } from './e-learning/content/content.component';
     InstructorComponent,
     StudentComponent,
     ContentComponent,
+    AssignmentComponent,
   ],
   imports: [
     MatCheckboxModule,
@@ -94,8 +96,10 @@ import { ContentComponent } from './e-learning/content/content.component';
     DropdownModule,
     MessagesModule,
     MessageModule,
-    ToastModule
-
+    ToastModule,
+    CKEditorModule,
+    NgxDropzoneModule,
+    NgDynamicBreadcrumbModule
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,

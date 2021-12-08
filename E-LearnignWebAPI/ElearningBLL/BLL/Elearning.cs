@@ -166,6 +166,18 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > GetListUser Error: " + ex.Message);
             }
         }
+
+        public void AddSubject(Subject model)
+        {
+            try
+            {
+                objElDAO.AddSubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddSubject Error: " + ex.Message);
+            }
+        }
         #endregion
 
         #region Student
@@ -242,6 +254,20 @@ namespace ElearningBLL.BLL
             catch (Exception ex)
             {
                 throw new Exception("Elearning > GetFileBySubject Error: " + ex.Message);
+            }
+        }
+        #endregion
+
+        #region Assignment
+        public void AddAssignmentBySubject(Assignment model)
+        {
+            try
+            {
+                objElDAO.AddAssignmentBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddAssignmentBySubject Error: " + ex.Message);
             }
         }
         #endregion

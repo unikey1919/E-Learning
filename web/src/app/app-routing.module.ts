@@ -13,6 +13,8 @@ import { TestComponent } from './admin-panel/course/test/test.component';
 import { InstructorComponent } from './admin-panel/instructor/instructor.component';
 import { StudentComponent } from './admin-panel/student/student.component';
 import { ContentComponent } from './e-learning/content/content.component';
+import { AssignmentComponent } from './e-learning/assignment/assignment.component';
+import { ELearningComponent } from './e-learning/e-learning.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user/login', pathMatch: 'full' },
@@ -26,10 +28,62 @@ const routes: Routes = [
     ],
   },
 
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'forbidden', component: ForbiddenComponent },
-  { path: 'course/content/:id', component: ContentComponent },
+  {
+    path: 'e-learning',
+    component: ELearningComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AuthGuard],
+        data: {
+          title: 'content',
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/e-learning/home',
+            }
+          ],
+        },
+      },
 
+      {
+        path: 'course/content/:id',
+        component: ContentComponent,
+        data: {
+          title: 'content',
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/e-learning/home',
+            },
+            {
+              label: 'Content',
+              url: '/e-learning/course/content',
+            },
+          ],
+        },
+      },
+      
+      { path: 'course/assignment/:id/:subjectId', component: AssignmentComponent,
+      data: {
+        title: 'content',
+        breadcrumb: [
+          {
+            label: 'Home',
+            url: '/e-learning/home'
+          },
+          {
+            label: 'Assignment',
+            url: '/e-learning/course/assignment'
+          },
+        ]
+      }, },
+    ],
+  },
+
+  { path: 'forbidden', component: ForbiddenComponent },
   {
     path: 'admin',
     component: AdminPanelComponent,
