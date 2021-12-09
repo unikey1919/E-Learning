@@ -15,10 +15,9 @@
         <mat-card *ngIf="role == 'instructor'">
           <i class="fas fa-briefcase" style="margin-right:10px"></i>
           <span>Thêm mới bài nộp</span>
-          <mat-icon style="float:right" (click)="openModalWithClass(template, item.Id)">add_circle</mat-icon>
+          <mat-icon style="float:right" (click)="openModalWithClass(actions, item.Id)">add_circle</mat-icon>
         </mat-card>
       </mat-card-content>
-
       <mat-card-content>
         <div [innerHTML]="item.Details"></div>
       </mat-card-content>
@@ -40,17 +39,8 @@
       </mat-card-content>
    </mat-card>
    
-<ng-template #template>  
-  <div class="modal-header">
-    <div class="form">
-      <div class="col-lg 2" style="margin-left:-80px"> <mat-icon style="float:right; color:green; margin-left:200px">add_circle_outline</mat-icon></div>
-      <h1 style="margin-left:250px">Add new assignment</h1>
-    </div>
-    
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeAddModel()">  
-      <span aria-hidden="true">×</span>  
-    </button>  
-  </div>  
+ <!--- Popup thêm bài tập -->  
+<ng-template #template>    
   <div class="modal-body">  
     <div class="row">
       <div class="col-lg-1">
@@ -82,21 +72,12 @@
   </div>   
   <div class="modal-footer">  
     <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmit()"></i>
-    <i class="far fa-times-circle fa-2x" style="color:red"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
   </div>  
 </ng-template>  
 
-<ng-template #content>  
-  <div class="modal-header">
-    <div class="form">
-      <div class="col-lg 2" style="margin-left:-80px"> <mat-icon style="float:right; color:green; margin-left:200px">add_circle_outline</mat-icon></div>
-      <h1 style="margin-left:250px">Add new content</h1>
-    </div>
-    
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeAddModel()">  
-      <span aria-hidden="true">×</span>  
-    </button>  
-  </div>  
+ <!--- Popup thêm nội dung chương -->  
+<ng-template #content>   
   <div class="modal-body">  
     <div class="row" style="margin-top:20px">
       <div class="col-lg-3">
@@ -114,6 +95,85 @@
   </div>   
   <div class="modal-footer">  
     <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitContent()"></i>
-    <i class="far fa-times-circle fa-2x" style="color:red"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
   </div>  
 </ng-template> 
+
+<!--- Popup thêm nội dung chức năng -->  
+<ng-template #actions>    
+  <div class="modal-body">  
+    <div class="row" style="display:flex; flex-direction: row; ">
+      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px;" (click)="closeAddModel();openModalWithClass(template, formAddData.SubjectId)">
+        <div class="row" style="margin:10px">
+          <i class="fas fa-atlas fa-5x"></i>
+          <span>Assignment</span>
+        </div>
+      </button>
+      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px;" (click)="closeAddModel();openModalWithClass(file, formAddData.SubjectId)">
+        <div class="row" style="margin:10px">
+          <i class="far fa-file-pdf fa-5x"></i>
+          <span>File</span>
+        </div>
+      </button>
+      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px;" (click)="closeAddModel();openModalWithClass(template, formAddData.SubjectId)">
+        <div class="row" style="margin:10px">
+          <i class="fas fa-video fa-5x"></i>
+          <span>Video</span>
+        </div>
+      </button>
+      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px; margin-top:10px" (click)="closeAddModel();openModalWithClass(template, formAddData.SubjectId)">
+        <div class="row" style="margin:10px">
+          <i class="fas fa-user-tie fa-5x"></i>
+          <span>Forum</span>
+        </div>
+      </button>
+    </div>
+  <!--- Popup thêm nội dung chương -->  
+<ng-template #content>   
+  <div class="modal-body">  
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Content Name</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="text" class="form-control" #SubjectName = "ngModel" name= "SubjectName" [(ngModel)] = "formData.SubjectName">
+      </div>
+    </div>
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formData.Details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitContent()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template>    
+
+<!--- Popup thêm nội dung File nộp -->  
+<ng-template #file>   
+  <div class="modal-body">  
+    <mat-card  style=" margin-top: 20px" appMaterialElevation>
+      <mat-card-title>Nộp tập tin</mat-card-title>
+      <mat-card-content style="margin-bottom: 20px">
+        <ngx-dropzone (change)="onSelect($event)">
+          <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+          <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+            <ngx-dropzone-label>{{ f.name}}</ngx-dropzone-label>
+          </ngx-dropzone-preview>
+        </ngx-dropzone>
+     </mat-card-content>
+     <mat-card-actions>
+      <button mat-raised-button (click) = "onSubmitFile(formAddData.SubjectId)">Nộp bài tập</button>
+     </mat-card-actions>
+  </mat-card>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitContent()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template>    
+
+

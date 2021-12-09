@@ -187,7 +187,13 @@ namespace E_LearnignWebAPI.Controllers
                 foreach (var file in files.files)
                 {
                     FileRecord filerc = await SaveFileAsync(file);
-                    SaveToAssignmentDB(filerc, files.submitUser, files.assignmentId);
+                    if(files.assignmentId == "-1")
+                    {
+                        SaveToDB(filerc, files.subjectId);
+                    }
+                    else
+                        SaveToAssignmentDB(filerc, files.submitUser, files.assignmentId);
+
                 }
                 return new HttpResponseMessage(HttpStatusCode.OK);
 

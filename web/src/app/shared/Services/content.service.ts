@@ -40,11 +40,12 @@ export class ContentService {
     return this.httpClient.get(this.baseURL + `/GetAssignmentBySubject/${id}`);
   }
 
-  UploadFile(files: File[], assignmentId:number, userSubmit: string): Observable<any>{
+  UploadFile(files: File[], assignmentId:number, userSubmit: string, subjectId:number): Observable<any>{
     const formData = new FormData();
     files.forEach(element => formData.append('files', element));
     formData.append('assignmentId', assignmentId.toString());
     formData.append('submitUser', userSubmit.toString());
+    formData.append('subjectId', subjectId.toString());
     return this.httpClient.post(this.baseURL, formData);
   }
 

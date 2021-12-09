@@ -22,6 +22,7 @@ export class ContentComponent implements OnInit {
   modalRef: BsModalRef;
   formAddData: Assignment = new Assignment();
   role: string='';
+  files: any[] = [];
   
   constructor(private router: Router, 
     private contentService: ContentService,
@@ -192,5 +193,32 @@ export class ContentComponent implements OnInit {
       },
       (err) => {}
     );
+  }
+
+  onSelect(event) {
+		console.log(event);
+		this.files.push(...event.addedFiles);
+    console.log(this.files);
+	}
+
+	onRemove(event) {
+		console.log(event);
+		this.files.splice(this.files.indexOf(event), 1);
+	}
+
+  onSubmitFile(subjectId){
+    this.closeAddModel();
+    console.log(this.files);
+    this.contentService.UploadFile(this.files,-1,"",subjectId).subscribe(
+      (res) => {
+        this.getContentByCourse(this.formData);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Successful submission',
+        });
+      },
+      (error) => {}
+    )
   }
 }

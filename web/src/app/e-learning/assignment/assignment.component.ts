@@ -72,8 +72,9 @@ export class AssignmentComponent implements OnInit {
     console.log(this.files);
     let assignmentId = this.activatedRoute.snapshot.params.id;
     let userSubmit: any;
+    let subjectId = this.activatedRoute.snapshot.params.subjectId;
     userSubmit = localStorage.getItem('username');
-    this.contentService.UploadFile(this.files,assignmentId,userSubmit).subscribe(
+    this.contentService.UploadFile(this.files,assignmentId,userSubmit,subjectId).subscribe(
       (res) => {
         this.checkStatusSubmit();
         this.sendEmail();
