@@ -47,7 +47,7 @@ namespace E_LearnignWebAPI.Controllers
                     obj.SubjectName = (dt.Rows[i]["subjectName"]).ToString();
                     DataTable fileData = elearningBll.GetFileBySubject(obj);
                     //Lấy danh sách bài tập thuộc chương
-                    var assignment = _context.Assignment.Where(n=>n.SubjectId == obj.Id).ToList();
+                    var assignment = _context.Assignment.Where(n=>n.SubjectId == obj.Id && n.isDelete == false).ToList();
                     obj.LstAssignment = assignment;
                     obj.LstFile = new List<FileModel>();
                     //Lấy danh sách file đính kèm thuộc chương
@@ -221,6 +221,37 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+
+        [HttpPost]
+        [Route("DelFile")]
+        public ApiResultMessage DelFile(FileContent model)
+        {
+            try
+            {
+                elearningBll.DelFile(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("DelFileSubmit")]
+        public ApiResultMessage DelFileSubmit(FileAssignment model)
+        {
+            try
+            {
+                elearningBll.DelFileSubmit(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
         #region Assingment
         [HttpPost]
         [Route("AddAssignmentBySubject")]
@@ -318,6 +349,36 @@ namespace E_LearnignWebAPI.Controllers
                 lstStudent.Add(obj);
                 }
             return Ok(lstStudent);
+        }
+
+        [HttpPost]
+        [Route("DelAssignment")]
+        public ApiResultMessage DelAssignment(Assignment model)
+        {
+            try
+            {
+                elearningBll.DelAssignment(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("UpdateAssignment")]
+        public ApiResultMessage UpdateAssignment(Assignment model)
+        {
+            try
+            {
+                elearningBll.UpdateAssignment(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
         }
         #endregion
     }

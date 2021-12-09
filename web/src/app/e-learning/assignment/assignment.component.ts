@@ -198,4 +198,41 @@ export class AssignmentComponent implements OnInit {
       (error) => {}
     )
   }
+
+  onSubmitEdit(){
+    let assignmentId = this.activatedRoute.snapshot.params.id;
+    let userSubmit: any;
+    let subjectId = this.activatedRoute.snapshot.params.subjectId;
+    userSubmit = localStorage.getItem('username');
+    this.contentService.DelFileSubmit(userSubmit, assignmentId).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail',
+          });
+        }
+        else{
+          //Xóa trc khi edit theo user
+          this.contentService.UploadFile(this.files,assignmentId,userSubmit,subjectId).subscribe(
+            (res) => {
+              this.checkStatusSubmit();
+              this.sendEmail();
+              this.getLstAssignmentSubmit();
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Successful Edit',
+              });
+            },
+            (error) => {}
+          )
+        }
+      },
+      (error) => {}
+    );
+
+    
+  }
 }

@@ -256,6 +256,28 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > GetFileBySubject Error: " + ex.Message);
             }
         }
+        public void DelFile(FileContent model)
+        {
+            try
+            {
+                objElDAO.DelFile(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelFile Error: " + ex.Message);
+            }
+        }
+        public void DelFileSubmit(FileAssignment model)
+        {
+            try
+            {
+                objElDAO.DelFileSubmit(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelFileSubmit Error: " + ex.Message);
+            }
+        }
         #endregion
 
         #region Assignment
@@ -280,6 +302,28 @@ namespace ElearningBLL.BLL
             catch (Exception ex)
             {
                 throw new Exception("Elearning > GetAllStudentByCourse Error: " + ex.Message);
+            }
+        }
+        public void DelAssignment(Assignment model)
+        {
+            try
+            {
+                objElDAO.DelAssignment(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelAssignment Error: " + ex.Message);
+            }
+        }
+        public void UpdateAssignment(Assignment model)
+        {
+            try
+            {
+                objElDAO.UpdateAssignment(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateAssignment Error: " + ex.Message);
             }
         }
         #endregion

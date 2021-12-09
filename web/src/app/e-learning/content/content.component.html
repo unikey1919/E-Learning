@@ -3,7 +3,7 @@
 <mat-card *ngIf="role == 'instructor'" style="margin-top: 20px;">
 <mat-card-content>
   <i class="fas fa-briefcase" style="margin-right:10px"></i>
-  <span>Thêm mới nội dung chương</span>
+  <span>Add new Subject</span>
   <mat-icon style="float:right" (click)="openContentWithClass(content)">add_circle</mat-icon>
 </mat-card-content>
 </mat-card>
@@ -14,7 +14,7 @@
       <mat-card-content style="margin-bottom: 20px">
         <mat-card *ngIf="role == 'instructor'">
           <i class="fas fa-briefcase" style="margin-right:10px"></i>
-          <span>Thêm mới bài nộp</span>
+          <span>Add new actions</span>
           <mat-icon style="float:right" (click)="openModalWithClass(actions, item.Id)">add_circle</mat-icon>
         </mat-card>
       </mat-card-content>
@@ -23,18 +23,21 @@
       </mat-card-content>
 
       <!-- Danh sách file -->
-      <mat-card-content (click)="downLoadFileContent(file.Id, file.FileType)" *ngFor="let file of item.LstFile">
+      <mat-card-content  *ngFor="let file of item.LstFile">
         <mat-card>
           <i style="margin-right:10px" [class]="getIcon(file.FileType)" [style.color]="getBackgroundColor(file.FileType)"></i>
-          {{file.FileName}}
+         <span (click)="downLoadFileContent(file.Id, file.FileType)">{{file.FileName}}</span>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteFile(file)">delete</mat-icon>
         </mat-card>
       </mat-card-content>
 
       <!-- Danh sách bài tập -->
       <mat-card-content style="margin-bottom: 20px"  *ngFor="let assignment of item.LstAssignment">
         <mat-card>
-          <i class="fas fa-briefcase" style="margin-right:10px"></i>
+          <i class="fas fa-atlas" style="margin-right:10px"></i>
           <span (click)="getAssignmentContent(assignment.Id,item.Id)">{{assignment.AssignmentName}}</span>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteAssignment(assignment)">delete</mat-icon>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editAssignment, assignment)">edit</mat-icon>
         </mat-card>
       </mat-card-content>
    </mat-card>
@@ -74,7 +77,44 @@
     <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmit()"></i>
     <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
   </div>  
-</ng-template>  
+</ng-template>
+
+ <!--- Popup sửa bài tập -->  
+ <ng-template #editAssignment>    
+  <div class="modal-body">  
+    <div class="row">
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Open</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" #Opened = "ngModel" name="Opened" class="form-control" [ngModel]="formAddData.Opened | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formAddData.Opened = $event">
+      </div>
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Close</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" class="form-control" #Due = "ngModel" name="Due" [ngModel]="formAddData.Due | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formAddData.Due = $event">
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Assignment Name</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="text" class="form-control" #AssignmentName = "ngModel" name= "AssignmentName" [(ngModel)] = "formAddData.AssignmentName">
+      </div>
+    </div>
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formAddData.Details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onEditAssignment(formAddData)"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
 
  <!--- Popup thêm nội dung chương -->  
 <ng-template #content>   
@@ -128,29 +168,7 @@
         </div>
       </button>
     </div>
-  <!--- Popup thêm nội dung chương -->  
-<ng-template #content>   
-  <div class="modal-body">  
-    <div class="row" style="margin-top:20px">
-      <div class="col-lg-3">
-        <span style="font-weight: bold; position: absolute; top:25%">Content Name</span>
-      </div>
-      <div class="col-lg-4">
-       <input type ="text" class="form-control" #SubjectName = "ngModel" name= "SubjectName" [(ngModel)] = "formData.SubjectName">
-      </div>
-    </div>
-    <div class="form-group" style ="margin-top:20px">
-      <span style="font-weight: bold">Details</span>
-      <ckeditor [editor]="Editor" [(ngModel)] = "formData.Details"></ckeditor>
-    </div>
-      
-  </div>   
-  <div class="modal-footer">  
-    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitContent()"></i>
-    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
-  </div>  
-</ng-template>    
-
+ 
 <!--- Popup thêm nội dung File nộp -->  
 <ng-template #file>   
   <div class="modal-body">  
@@ -174,6 +192,7 @@
     <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitContent()"></i>
     <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
   </div>  
-</ng-template>    
+</ng-template> 
+
 
 

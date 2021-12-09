@@ -102,7 +102,6 @@ namespace ElearningDAO.Elearning
             {
                 throw new Exception("ElearningDao > UpdateCourse Error: " + ex.Message);
             }
-
         }
         public void DelCourse(CourseModel model)
         {
@@ -397,6 +396,43 @@ namespace ElearningDAO.Elearning
             }
 
         }
+        public void DelFile(FileContent model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DeleteFile", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", model.Id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelFile Error: " + ex.Message);
+            }
+        }
+        public void DelFileSubmit(FileAssignment model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DeleteFileSubmit", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_assignmentid", model.AssignmentId);
+                cmd.Parameters.AddWithValue("@p_usersubmit", model.UserSubmit);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelFileSubmit Error: " + ex.Message);
+            }
+        }
         /// <summary>
         /// File
         /// </summary>
@@ -447,7 +483,6 @@ namespace ElearningDAO.Elearning
             }
 
         }
-
         public DataTable GetAllStudentByCourse(int courseId)
         {
             DataTable dt = new DataTable();
@@ -466,6 +501,46 @@ namespace ElearningDAO.Elearning
                 throw new Exception("ElearningDao > GetContentByCourse Error: " + ex.Message);
             }
             return dt;
+        }
+        public void DelAssignment(Assignment model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DeleteAssignment", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@assignment_id", model.Id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelAssignment Error: " + ex.Message);
+            }
+        }
+        public void UpdateAssignment(Assignment model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_UpdateAssignment", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_assignmentid", model.Id);
+                cmd.Parameters.AddWithValue("@p_assignmentname", model.AssignmentName);
+                cmd.Parameters.AddWithValue("@p_opened", model.Opened);
+                cmd.Parameters.AddWithValue("@p_due", model.Due);
+                cmd.Parameters.AddWithValue("@p_details", model.Details); 
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > UpdateAssignment Error: " + ex.Message);
+            }
         }
         #endregion
     }

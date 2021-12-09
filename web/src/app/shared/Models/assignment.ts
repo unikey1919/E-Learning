@@ -50,3 +50,14 @@ export class StudentSubmit {
   status: number = 0;
   lstAssignmentSubmit: FileAssignment[];
 }
+
+export class FileAssignmentSubmit {
+  Id: number = 0;
+  AssignmentId: number = 0;
+  FileName: string = '';
+  FileExtension: string = '';
+  FilePath: string = '';
+  FileType: string = '';
+  UserSubmit: string='';
+  SubmitDate: Date = new Date();
+}

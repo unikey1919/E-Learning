@@ -148,7 +148,8 @@
       </ngx-dropzone>
    </mat-card-content>
    <mat-card-actions>
-    <button mat-raised-button (click) = "onSubmit()">Nộp bài tập</button>
+    <button *ngIf="formStatus.ticks == 0" mat-raised-button (click) = "onSubmit()">Nộp bài tập</button>
+    <button *ngIf="formStatus.ticks != 0" mat-raised-button (click) = "onSubmit()">Sửa bài nộp</button>
    </mat-card-actions>
 </mat-card>
 

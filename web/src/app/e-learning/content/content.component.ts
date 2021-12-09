@@ -125,7 +125,8 @@ export class ContentComponent implements OnInit {
     this.router.navigate([ `/e-learning/course/assignment/${id}/${subjectId}/${courseId}` ])
   }
 
-  openModalWithClass(template: TemplateRef<any>, subjectId: number) {  
+  openModalWithClass(template: TemplateRef<any>, subjectId: number) { 
+    this.formAddData = new Assignment(); 
     this.modalRef = this.modalService.show(  
       template,  
       Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
@@ -141,8 +142,17 @@ export class ContentComponent implements OnInit {
     this.formData.CourseId= this.activatedRoute.snapshot.params.id;
   } 
 
+  openModelWithItem(template: TemplateRef<any>,formAddData) {  
+    this.modalRef = this.modalService.show(  
+      template,  
+      Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
+    );  
+    this.formAddData = formAddData;
+  } 
+
   closeAddModel(){
       this.modalRef.hide();
+      this.formAddData = new Assignment(); 
   }
 
   onSubmit(){
@@ -220,5 +230,75 @@ export class ContentComponent implements OnInit {
       },
       (error) => {}
     )
+  }
+
+  onDeleteFile(file: FileModel) {
+    this.contentService.DelFile(file).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to delete File',
+          });
+        }
+        else{
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'File is deleted',
+          });
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  onDeleteAssignment(assignment: Assignment) {
+    this.contentService.DelAssignment(assignment).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to delete Assignment',
+          });
+        }
+        else{
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Assignment is deleted',
+          });
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  onEditAssignment(assignment: Assignment) {
+    this.closeAddModel();
+    this.contentService.UpdateAssignment(assignment).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to edit Assignment',
+          });
+        }
+        else{
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Assignment is edited',
+          });
+        }
+      },
+      (error) => {}
+    );
   }
 }

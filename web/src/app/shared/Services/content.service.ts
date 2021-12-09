@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { CourseContent } from '../Models/course-content';
+import { CourseContent, FileModel } from '../Models/course-content';
 import { Observable } from 'rxjs';
-import { Assignment } from '../Models/assignment';
+import { Assignment, FileAssignment, FileAssignmentSubmit } from '../Models/assignment';
 
 
 @Injectable({
@@ -14,6 +14,8 @@ export class ContentService {
   readonly baseURL = 'https://localhost:44395/api/CourseContent';
   objectModel: CourseContent = new CourseContent();
   assignmentObjModel: Assignment = new Assignment();
+  objectFileModel: FileModel = new FileModel();
+  objectFileSubmitModel: FileAssignmentSubmit = new FileAssignmentSubmit();
   
 
   GetContentByCourse(objectModel): Observable<any>{
@@ -30,6 +32,14 @@ export class ContentService {
 
   AddAssignmentBySubject(assignmentObjModel): Observable<any>{
     return this.httpClient.post(this.baseURL + '/AddAssignmentBySubject', assignmentObjModel);
+  }
+
+  UpdateAssignment(assignmentObjModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/UpdateAssignment', assignmentObjModel);
+  }
+
+  DelAssignment(assignmentObjModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/DelAssignment', assignmentObjModel);
   }
 
   AddSubject(ObjModel): Observable<any>{
@@ -63,5 +73,15 @@ export class ContentService {
 
   GetAllStudentSubmit(courseId:number, assignmentId:number){
     return this.httpClient.get(this.baseURL + `/GetAllStudentSubmit/${courseId}/${assignmentId}`);
+  }
+
+  DelFile(ObjectFileModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/DelFile', ObjectFileModel);
+  }
+
+  DelFileSubmit(userSubmit: string, assignmentId:number): Observable<any>{
+    this.objectFileSubmitModel.AssignmentId = assignmentId;
+    this.objectFileSubmitModel.UserSubmit = userSubmit;
+    return this.httpClient.post(this.baseURL + '/DelFileSubmit', this.objectFileSubmitModel);
   }
 }
