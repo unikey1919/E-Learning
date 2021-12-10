@@ -543,5 +543,108 @@ namespace ElearningDAO.Elearning
             }
         }
         #endregion
+
+        #region Forum
+        public void AddForumBySubject(Forum model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddForum", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_subjectid", model.SubjectId);
+                cmd.Parameters.AddWithValue("@p_forumname", model.ForumName);
+                cmd.Parameters.AddWithValue("@p_details", model.Details);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddForumBySubject Error: " + ex.Message);
+            }
+
+        }
+        public void DelForum(Forum model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DelForum", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_forumid", model.Id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelForum Error: " + ex.Message);
+            }
+        }
+        public void UpdateForum(Forum model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_UpdateForum", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_forumid", model.Id);
+                cmd.Parameters.AddWithValue("@p_forumname", model.ForumName);
+                cmd.Parameters.AddWithValue("@p_details", model.Details);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > UpdateForum Error: " + ex.Message);
+            }
+        }
+        #region Discusstion
+        public void AddDiscussBySubject(Discussion model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddDiscussion", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_forumid", model.ForumId);
+                cmd.Parameters.AddWithValue("@p_discussname", model.DiscussName);
+                cmd.Parameters.AddWithValue("@p_details", model.Details);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddDiscussBySubject Error: " + ex.Message);
+            }
+
+        }
+        public void DelDiscuss(Discussion model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DelDiscussion", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_discussId", model.Id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelDiscuss Error: " + ex.Message);
+            }
+        }
+        #endregion
+        #endregion
     }
 }

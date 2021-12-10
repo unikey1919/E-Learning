@@ -47,6 +47,7 @@ import { AssignmentComponent } from './e-learning/assignment/assignment.componen
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import {NgDynamicBreadcrumbModule} from 'ng-dynamic-breadcrumb';
+import { ForumComponent } from './e-learning/forum/forum.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +66,7 @@ import {NgDynamicBreadcrumbModule} from 'ng-dynamic-breadcrumb';
     StudentComponent,
     ContentComponent,
     AssignmentComponent,
+    ForumComponent,
   ],
   imports: [
     MatCheckboxModule,

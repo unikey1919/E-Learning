@@ -48,7 +48,9 @@ namespace E_LearnignWebAPI.Controllers
                     DataTable fileData = elearningBll.GetFileBySubject(obj);
                     //Lấy danh sách bài tập thuộc chương
                     var assignment = _context.Assignment.Where(n=>n.SubjectId == obj.Id && n.isDelete == false).ToList();
+                    var forum = _context.Forum.Where(n => n.SubjectId == obj.Id && n.isDelete == false).ToList();
                     obj.LstAssignment = assignment;
+                    obj.LstForum = forum;
                     obj.LstFile = new List<FileModel>();
                     //Lấy danh sách file đính kèm thuộc chương
                     for (int j = 0; j < fileData.Rows.Count; j++)
@@ -380,6 +382,81 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+        #endregion
+
+        #region Forum
+        [HttpPost]
+        [Route("AddForumBySubject")]
+        public ApiResultMessage AddForumBySubject(Forum model)
+        {
+            try
+            {
+                elearningBll.AddForumBySubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpPost]
+        [Route("DelForum")]
+        public ApiResultMessage DelForum(Forum model)
+        {
+            try
+            {
+                elearningBll.DelForum(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpPost]
+        [Route("UpdateForum")]
+        public ApiResultMessage UpdateForum(Forum model)
+        {
+            try
+            {
+                elearningBll.UpdateForum(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        #region Discusstion
+        [HttpPost]
+        [Route("AddDiscussBySubject")]
+        public ApiResultMessage AddDiscussBySubjectForum(Discussion model)
+        {
+            try
+            {
+                elearningBll.AddDiscussBySubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpPost]
+        [Route("DelDiscuss")]
+        public ApiResultMessage DelDiscuss(Discussion model)
+        {
+            try
+            {
+                elearningBll.DelDiscuss(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        #endregion
         #endregion
     }
 }

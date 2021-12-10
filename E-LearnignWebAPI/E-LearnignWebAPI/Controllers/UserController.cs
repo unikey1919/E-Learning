@@ -60,6 +60,7 @@ namespace E_LearnignWebAPI.Controllers
         public async Task<IActionResult> Login(LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
+            //var user = await _userManager.FindByEmailAsync(model.Email);
             IdentityOptions _identityOptions = new IdentityOptions();
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {

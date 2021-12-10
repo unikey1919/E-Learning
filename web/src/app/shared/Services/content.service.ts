@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CourseContent, FileModel } from '../Models/course-content';
 import { Observable } from 'rxjs';
 import { Assignment, FileAssignment, FileAssignmentSubmit } from '../Models/assignment';
+import { Discussion, Forum } from '../Models/forum';
 
 
 @Injectable({
@@ -14,6 +15,8 @@ export class ContentService {
   readonly baseURL = 'https://localhost:44395/api/CourseContent';
   objectModel: CourseContent = new CourseContent();
   assignmentObjModel: Assignment = new Assignment();
+  forumObjModel: Forum = new Forum();
+  discussionObjModel: Discussion = new Discussion();
   objectFileModel: FileModel = new FileModel();
   objectFileSubmitModel: FileAssignmentSubmit = new FileAssignmentSubmit();
   
@@ -83,5 +86,25 @@ export class ContentService {
     this.objectFileSubmitModel.AssignmentId = assignmentId;
     this.objectFileSubmitModel.UserSubmit = userSubmit;
     return this.httpClient.post(this.baseURL + '/DelFileSubmit', this.objectFileSubmitModel);
+  }
+
+  AddForumBySubject(forumObjModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/AddForumBySubject', forumObjModel);
+  }
+
+  DelForum(forumObjModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/DelForum', forumObjModel);
+  }
+
+  UpdateForum(forumObjModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/UpdateForum', forumObjModel);
+  }
+
+  AddDiscussBySubjectForum(discussionObjModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/AddDiscussBySubjectForum', discussionObjModel);
+  }
+
+  DelDiscuss(discussionObjModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/DelDiscuss', discussionObjModel);
   }
 }

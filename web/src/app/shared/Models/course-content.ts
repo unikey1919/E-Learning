@@ -1,4 +1,5 @@
 import { Assignment } from "./assignment";
+import { Forum } from "./forum";
 
 export class CourseContent {
     Id: number = 0;
@@ -7,6 +8,7 @@ export class CourseContent {
     Details: string = '';
     LstFile: FileModel[];
     LstAssignment: Assignment[]
+    LstForum: Forum[];
 }
 
 export class FileModel {

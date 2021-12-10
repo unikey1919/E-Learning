@@ -7,6 +7,7 @@ import {ActivatedRoute} from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'; 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MessageService } from 'primeng/api';
+import { Forum } from 'src/app/shared/Models/forum';
 
 @Component({
   selector: 'app-content',
@@ -23,6 +24,7 @@ export class ContentComponent implements OnInit {
   formAddData: Assignment = new Assignment();
   role: string='';
   files: any[] = [];
+  formForumData: Forum = new Forum();
   
   constructor(private router: Router, 
     private contentService: ContentService,
@@ -125,13 +127,21 @@ export class ContentComponent implements OnInit {
     this.router.navigate([ `/e-learning/course/assignment/${id}/${subjectId}/${courseId}` ])
   }
 
+  getForumContent(id: number, subjectId: number){
+    let courseId: number;
+    courseId = this.activatedRoute.snapshot.params.id;
+    this.router.navigate([ `/e-learning/course/forum/${id}/${subjectId}/${courseId}` ])
+  }
+
   openModalWithClass(template: TemplateRef<any>, subjectId: number) { 
     this.formAddData = new Assignment(); 
+    this.formForumData = new Forum();
     this.modalRef = this.modalService.show(  
       template,  
       Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
     );  
     this.formAddData.SubjectId =  subjectId;
+    this.formForumData.SubjectId =  subjectId;
   } 
 
   openContentWithClass(template: TemplateRef<any>) {  
@@ -148,11 +158,17 @@ export class ContentComponent implements OnInit {
       Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
     );  
     this.formAddData = formAddData;
+    this.formForumData = formAddData;
   } 
 
   closeAddModel(){
       this.modalRef.hide();
       this.formAddData = new Assignment(); 
+      this.formForumData = new Forum(); 
+  }
+
+  closeModel(){
+    this.modalRef.hide();
   }
 
   onSubmit(){
@@ -295,6 +311,77 @@ export class ContentComponent implements OnInit {
             severity: 'success',
             summary: 'Success',
             detail: 'Assignment is edited',
+          });
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  onSubmitForum(){
+    this.formForumData.ForumName;
+    this.contentService.AddForumBySubject(this.formForumData).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to create new forum',
+          });
+        } else {
+          this.closeAddModel();
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Forum is created',
+          });
+        }
+      },
+      (err) => {}
+    );
+  }
+
+  onDeleteForum(forum: Forum) {
+    this.contentService.DelForum(forum).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to delete Forum',
+          });
+        }
+        else{
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Forum is deleted',
+          });
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  onEditForum(forum: Forum) {
+    this.closeAddModel();
+    this.contentService.UpdateForum(forum).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to edit Forum',
+          });
+        }
+        else{
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Forum is edited',
           });
         }
       },

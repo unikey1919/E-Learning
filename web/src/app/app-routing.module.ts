@@ -1,3 +1,4 @@
+import { ForumComponent } from './e-learning/forum/forum.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './user/user.component';
@@ -81,6 +82,25 @@ const routes: Routes = [
           {
             label: 'Assignment',
             url: '/e-learning/course/assignment'
+          },
+        ]
+      }, },
+
+      { path: 'course/forum/:id/:subjectId/:courseId', component: ForumComponent,
+      data: {
+        title: 'content',
+        breadcrumb: [
+          {
+            label: 'Home',
+            url: '/e-learning/home'
+          },
+          {
+            label: 'Subject',
+            url: '/e-learning/course/content/:courseId'
+          },
+          {
+            label: 'Forum',
+            url: '/e-learning/course/forum'
           },
         ]
       }, },

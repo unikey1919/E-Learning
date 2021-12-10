@@ -327,5 +327,64 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
+        #region Forum
+        public void AddForumBySubject(Forum model)
+        {
+            try
+            {
+                objElDAO.AddForumBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddForumBySubject Error: " + ex.Message);
+            }
+        }
+        public void DelForum(Forum model)
+        {
+            try
+            {
+                objElDAO.DelForum(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelForum Error: " + ex.Message);
+            }
+        }
+        public void UpdateForum(Forum model)
+        {
+            try
+            {
+                objElDAO.UpdateForum(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateForum Error: " + ex.Message);
+            }
+        }
+        #region Discusstion
+        public void AddDiscussBySubject(Discussion model)
+        {
+            try
+            {
+                objElDAO.AddDiscussBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddDiscussBySubject Error: " + ex.Message);
+            }
+        }
+        public void DelDiscuss(Discussion model)
+        {
+            try
+            {
+                objElDAO.DelDiscuss(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelDiscuss Error: " + ex.Message);
+            }
+        }
+        #endregion
+        #endregion
     }
 }
