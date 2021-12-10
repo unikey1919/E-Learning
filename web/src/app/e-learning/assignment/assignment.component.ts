@@ -30,7 +30,7 @@ export class AssignmentComponent implements OnInit {
     private messageService: MessageService, private mailService: MailService) { }
 
   ngOnInit(): void {
-    this.formData.id =this.activatedRoute.snapshot.params.id;
+    this.formData.id = this.activatedRoute.snapshot.params.id;
     console.log(this.activatedRoute.snapshot.params.subjectId);
     this.getAssignmentBySubject(this.formData.id);
     this.checkStatusSubmit();

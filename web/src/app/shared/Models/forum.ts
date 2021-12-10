@@ -5,6 +5,13 @@ export class Forum {
     Details: string = '';
     CreateDate: Date = new Date();
 }
+export class ForumModel {
+    id: number = 0;
+    subjectId: number = 0;
+    forumName: string = '';
+    details: string = '';
+    createDate: Date = new Date();
+}
 export class Discussion {
     Id: number = 0;
     ForumId: number = 0;

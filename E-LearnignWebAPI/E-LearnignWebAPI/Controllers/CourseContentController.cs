@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace E_LearnignWebAPI.Controllers
@@ -457,6 +458,32 @@ namespace E_LearnignWebAPI.Controllers
             }
         }
         #endregion
+        #endregion
+        #region Video
+        [HttpPost]
+        [Route("AddVideoBySubject")]
+        public ApiResultMessage AddVideoBySubject(VideoModel model)
+        {
+            try
+            {
+                //Cắt ID
+                string YoutubeLinkRegex = "(?:.+?)?(?:\\/v\\/|watch\\/|\\?v=|\\&v=|youtu\\.be\\/|\\/v=|^youtu\\.be\\/)([a-zA-Z0-9_-]{11})+";
+                var regex = new Regex(YoutubeLinkRegex, RegexOptions.Compiled);
+                Match youtubeMatch = regex.Match(model.YoutubeLink);
+                string id = string.Empty;
+
+                if (youtubeMatch.Success)
+                    id = youtubeMatch.Groups[1].Value;
+                model.YoutubeLink = id;
+
+                elearningBll.AddVideoBySubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
         #endregion
     }
 }

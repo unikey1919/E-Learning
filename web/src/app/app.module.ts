@@ -48,6 +48,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import {NgDynamicBreadcrumbModule} from 'ng-dynamic-breadcrumb';
 import { ForumComponent } from './e-learning/forum/forum.component';
+import {YouTubePlayerModule} from '@angular/youtube-player';
 @NgModule({
   declarations: [
     AppComponent,
@@ -101,7 +102,8 @@ import { ForumComponent } from './e-learning/forum/forum.component';
     ToastModule,
     CKEditorModule,
     NgxDropzoneModule,
-    NgDynamicBreadcrumbModule
+    NgDynamicBreadcrumbModule,
+    YouTubePlayerModule
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,

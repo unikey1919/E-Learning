@@ -386,5 +386,18 @@ namespace ElearningBLL.BLL
         }
         #endregion
         #endregion
+        #region Video
+        public void AddVideoBySubject(VideoModel model)
+        {
+            try
+            {
+                objElDAO.AddVideoBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddVideoBySubject Error: " + ex.Message);
+            }
+        }
+        #endregion
     }
 }

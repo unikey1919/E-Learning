@@ -140,8 +140,7 @@
     <div class="form-group" style ="margin-top:20px">
       <span style="font-weight: bold">Details</span>
       <ckeditor [editor]="Editor" [(ngModel)] = "formData.Details"></ckeditor>
-    </div>
-      
+    </div>    
   </div>   
   <div class="modal-footer">  
     <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitContent()"></i>
@@ -165,7 +164,7 @@
           <span>File</span>
         </div>
       </button>
-      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px;" (click)=" closeModel();openModalWithClass(template, formAddData.SubjectId)">
+      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px;" (click)=" closeModel();openModalWithClass(addVideo, formAddData.SubjectId)">
         <div class="row" style="margin:10px">
           <i class="fas fa-video fa-5x"></i>
           <span>Video</span>
@@ -251,5 +250,51 @@
   </div>  
 </ng-template> 
 
+<!--- Popup load video-->  
+<ng-template #video>   
+  <div class="modal-body text-center">  
+    <youtube-player
+    videoId="PRQCAL_RMVo"
+    [width]="700" >   
+    </youtube-player>
+      
+  </div>   
+  <div class="modal-footer">
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
 
+<!--- Popup thêm video-->  
+<ng-template #addVideo>   
+  <div class="modal-body">
+    <div class="form-group">
+      <div class="row" style="margin-top:20px">
+        <div class="col-lg-3">
+          <span style="font-weight: bold; position: absolute; top:25%">Title</span>
+        </div>
+        <div class="col-lg-4">
+         <input type ="text" class="form-control" #SubjectName = "ngModel" name= "ForumName" [(ngModel)] = "formForumData.ForumName">
+        </div>
+      </div>
+      <div class="row" style="margin-top:20px">
+        <div class="col-lg-3">
+          <span style="font-weight: bold; position: absolute; top:25%">Link youtube</span>
+        </div>
+        <div class="col-lg-4">
+         <input type ="text" class="form-control" #SubjectName = "ngModel" name= "ForumName" [(ngModel)] = "formForumData.ForumName">
+        </div>
+      </div>
+    </div>  
+    
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formForumData.Details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitForum()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
 

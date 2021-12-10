@@ -35,7 +35,10 @@ export class ContentComponent implements OnInit {
     this.formData.CourseId =this.activatedRoute.snapshot.params.id; 
     this.getContentByCourse(this.formData);
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
-
+    
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
   }
 
   onLogout() {

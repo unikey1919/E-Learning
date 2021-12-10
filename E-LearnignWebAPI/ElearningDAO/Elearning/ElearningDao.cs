@@ -646,5 +646,29 @@ namespace ElearningDAO.Elearning
         }
         #endregion
         #endregion
+        #region Video
+        public void AddVideoBySubject(VideoModel model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddVideo", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_subjectid", model.SubjectId);
+                cmd.Parameters.AddWithValue("@p_title", model.Title);
+                cmd.Parameters.AddWithValue("@p_tags", model.Tags);
+                cmd.Parameters.AddWithValue("@p_url", model.YoutubeLink);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddVideoBySubject Error: " + ex.Message);
+            }
+
+        }
+        #endregion
     }
 }

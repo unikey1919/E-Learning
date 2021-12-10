@@ -27,5 +27,6 @@ namespace ElearningBO
         public DbSet<FileAssignment> FileAssignment { get; set; }
         public DbSet<Forum> Forum { get; set; }
         public DbSet<Discussion> Discussion { get; set; }
+        public DbSet<Video> Video { get; set; }
     }
 }
