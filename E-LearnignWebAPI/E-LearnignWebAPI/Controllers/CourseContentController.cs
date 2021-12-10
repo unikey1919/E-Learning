@@ -49,11 +49,15 @@ namespace E_LearnignWebAPI.Controllers
                     DataTable fileData = elearningBll.GetFileBySubject(obj);
                     //Lấy danh sách bài tập thuộc chương
                     var assignment = _context.Assignment.Where(n=>n.SubjectId == obj.Id && n.isDelete == false).ToList();
-                    var forum = _context.Forum.Where(n => n.SubjectId == obj.Id && n.isDelete == false).ToList();
                     obj.LstAssignment = assignment;
+                    //Lấy danh sách forum thuộc chương
+                    var forum = _context.Forum.Where(n => n.SubjectId == obj.Id && n.isDelete == false).ToList();
                     obj.LstForum = forum;
-                    obj.LstFile = new List<FileModel>();
+                    //Lấy danh sách video thuộc chương
+                    var video= _context.Video.Where(n => n.SubjectId == obj.Id && n.isDelete == false).ToList();
+                    obj.LstVideo = video;
                     //Lấy danh sách file đính kèm thuộc chương
+                    obj.LstFile = new List<FileModel>();
                     for (int j = 0; j < fileData.Rows.Count; j++)
                     {
                         FileModel objFile = new FileModel();

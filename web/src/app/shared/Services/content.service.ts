@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { CourseContent, FileModel } from '../Models/course-content';
+import { CourseContent, FileModel, Video } from '../Models/course-content';
 import { Observable } from 'rxjs';
 import { Assignment, FileAssignment, FileAssignmentSubmit } from '../Models/assignment';
 import { Discussion, Forum } from '../Models/forum';
@@ -19,6 +19,7 @@ export class ContentService {
   discussionObjModel: Discussion = new Discussion();
   objectFileModel: FileModel = new FileModel();
   objectFileSubmitModel: FileAssignmentSubmit = new FileAssignmentSubmit();
+  objVideoModel: Video = new Video();
   
 
   GetContentByCourse(objectModel): Observable<any>{
@@ -107,4 +108,9 @@ export class ContentService {
   DelDiscuss(discussionObjModel): Observable<any>{
     return this.httpClient.post(this.baseURL + '/DelDiscuss', discussionObjModel);
   }
+
+  AddVideoBySubject(objVideoModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/AddVideoBySubject', objVideoModel);
+  }
+
 }

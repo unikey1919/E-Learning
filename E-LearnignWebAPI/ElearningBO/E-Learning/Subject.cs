@@ -34,6 +34,7 @@ namespace ElearningBO.E_Learning
         public bool isDelete { get; set; }
         public List<Assignment> LstAssignment { get; set; }
         public List<Forum> LstForum { get; set; }
+        public List<Video> LstVideo { get; set; }
     }
 
     public class StudentSubmit

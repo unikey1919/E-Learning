@@ -1,7 +1,7 @@
 import { Assignment, StudentSubmit } from './../../shared/Models/assignment';
 import { Component, OnInit, TemplateRef} from '@angular/core';
 import { Router } from '@angular/router';
-import { CourseContent, FileModel } from 'src/app/shared/Models/course-content';
+import { CourseContent, FileModel, Video} from 'src/app/shared/Models/course-content';
 import { ContentService } from 'src/app/shared/Services/content.service';
 import {ActivatedRoute} from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'; 
@@ -25,6 +25,7 @@ export class ContentComponent implements OnInit {
   role: string='';
   files: any[] = [];
   formForumData: Forum = new Forum();
+  formVideoData: Video = new Video();
   
   constructor(private router: Router, 
     private contentService: ContentService,
@@ -139,12 +140,14 @@ export class ContentComponent implements OnInit {
   openModalWithClass(template: TemplateRef<any>, subjectId: number) { 
     this.formAddData = new Assignment(); 
     this.formForumData = new Forum();
+    this.formVideoData = new Video();
     this.modalRef = this.modalService.show(  
       template,  
       Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
     );  
     this.formAddData.SubjectId =  subjectId;
     this.formForumData.SubjectId =  subjectId;
+    this.formVideoData.SubjectId =  subjectId;
   } 
 
   openContentWithClass(template: TemplateRef<any>) {  
@@ -168,6 +171,7 @@ export class ContentComponent implements OnInit {
       this.modalRef.hide();
       this.formAddData = new Assignment(); 
       this.formForumData = new Forum(); 
+      this.formVideoData = new Video();
   }
 
   closeModel(){
@@ -389,6 +393,29 @@ export class ContentComponent implements OnInit {
         }
       },
       (error) => {}
+    );
+  }
+
+  onSubmitVideo(){
+    this.contentService.AddVideoBySubject(this.formVideoData).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to create new video',
+          });
+        } else {
+          this.closeAddModel();
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Video is created',
+          });
+        }
+      },
+      (err) => {}
     );
   }
 }
