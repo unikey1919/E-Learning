@@ -1,7 +1,7 @@
 import { Assignment, StudentSubmit } from './../../shared/Models/assignment';
 import { Component, OnInit, TemplateRef} from '@angular/core';
 import { Router } from '@angular/router';
-import { CourseContent, FileModel, Video} from 'src/app/shared/Models/course-content';
+import { CourseContent, FileModel, Video, VideoModel} from 'src/app/shared/Models/course-content';
 import { ContentService } from 'src/app/shared/Services/content.service';
 import {ActivatedRoute} from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'; 
@@ -26,6 +26,7 @@ export class ContentComponent implements OnInit {
   files: any[] = [];
   formForumData: Forum = new Forum();
   formVideoData: Video = new Video();
+  modelVideo: VideoModel = new VideoModel();
   
   constructor(private router: Router, 
     private contentService: ContentService,
@@ -148,6 +149,20 @@ export class ContentComponent implements OnInit {
     this.formAddData.SubjectId =  subjectId;
     this.formForumData.SubjectId =  subjectId;
     this.formVideoData.SubjectId =  subjectId;
+  }
+  
+  openModalWithVideo(template: TemplateRef<any>, Id: number) { 
+    this.modalRef = this.modalService.show(  
+      template,  
+      Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
+    );
+    this.contentService.GetVideoInfo(Id).subscribe(
+      (res) => {
+        this.modelVideo = res as VideoModel;
+        console.log(this.modelVideo.youtubeLink);
+      },
+      (error) => {}
+    )  
   } 
 
   openContentWithClass(template: TemplateRef<any>) {  
@@ -165,6 +180,9 @@ export class ContentComponent implements OnInit {
     );  
     this.formAddData = formAddData;
     this.formForumData = formAddData;
+    this.formVideoData = formAddData;
+    //Đặt link video trống khi edit
+    this.formVideoData.YoutubeLink = ''; 
   } 
 
   closeAddModel(){
@@ -416,6 +434,53 @@ export class ContentComponent implements OnInit {
         }
       },
       (err) => {}
+    );
+  }
+
+  onDeleteVideo(video: Video) {
+    this.contentService.DelVideo(video).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to delete video',
+          });
+        }
+        else{
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Video is deleted',
+          });
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  onEditVideo(video: Video) {
+    this.closeAddModel();
+    this.contentService.UpdateVideo(video).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to edit video',
+          });
+        }
+        else{
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Video is edited',
+          });
+        }
+      },
+      (error) => {}
     );
   }
 }

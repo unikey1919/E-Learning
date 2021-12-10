@@ -667,7 +667,45 @@ namespace ElearningDAO.Elearning
             {
                 throw new Exception("ElearningDao > AddVideoBySubject Error: " + ex.Message);
             }
-
+        }
+        public void DelVideo(VideoModel model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DeleteVideo", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@video_id", model.Id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelVideo Error: " + ex.Message);
+            }
+        }
+        public void UpdateVideo(VideoModel model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_UpdateVideo", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_videoid", model.Id);
+                cmd.Parameters.AddWithValue("@p_title", model.Title);
+                cmd.Parameters.AddWithValue("@p_tags", model.Tags);
+                cmd.Parameters.AddWithValue("@p_url", model.YoutubeLink);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > UpdateVideo Error: " + ex.Message);
+            }
         }
         #endregion
     }

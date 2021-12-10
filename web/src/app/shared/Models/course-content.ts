@@ -9,7 +9,7 @@ export class CourseContent {
     LstFile: FileModel[];
     LstAssignment: Assignment[]
     LstForum: Forum[];
-
+    LstVideo: Video[];
 }
 
 export class FileModel {
@@ -29,6 +29,13 @@ export class Video {
     Tags: string = '';
  }
 
+export class VideoModel {
+    id: number = 0;
+    subjectId: number = 0;
+    youtubeLink: string = '';
+    title: string = '';
+    tags: string = '';
+ }
 
 
 

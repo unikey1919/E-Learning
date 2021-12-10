@@ -41,6 +41,16 @@
         </mat-card>
       </mat-card-content>
 
+      <!-- Danh sách video bài giảng -->
+      <mat-card-content style="margin-bottom: 20px"  *ngFor="let video of item.LstVideo">
+        <mat-card>
+          <i (click)="openModalWithVideo(videoContent, video.Id)" class="fas fa-play-circle" style="margin-right:10px"></i>
+          <span>{{video.Title}}</span>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteVideo(video)">delete</mat-icon>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editVideo, video)">edit</mat-icon>
+        </mat-card>
+      </mat-card-content>
+
       <!-- Danh sách bài tập -->
       <mat-card-content style="margin-bottom: 20px"  *ngFor="let assignment of item.LstAssignment">
         <mat-card>
@@ -251,14 +261,15 @@
 </ng-template> 
 
 <!--- Popup load video-->  
-<ng-template #video>   
-  <div class="modal-body text-center">  
+<ng-template #videoContent>   
+  <div class="modal-body text-center">
+    <h1>{{modelVideo.title}}</h1>  
     <youtube-player
-    videoId="PRQCAL_RMVo"
-    [width]="700" >   
+    videoId={{modelVideo.youtubeLink}}
+    [width]="700" >
     </youtube-player>
-      
-  </div>   
+  </div>
+  <span [innerHTML]="modelVideo.tags" style="margin-left: 50px;"></span> 
   <div class="modal-footer">
     <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
   </div>  
@@ -294,6 +305,40 @@
   </div>   
   <div class="modal-footer">  
     <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitVideo()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template>
+
+<!--- Popup edit video-->  
+<ng-template #editVideo>   
+  <div class="modal-body">
+    <div class="form-group">
+      <div class="row" style="margin-top:20px">
+        <div class="col-lg-3">
+          <span style="font-weight: bold; position: absolute; top:25%">Title</span>
+        </div>
+        <div class="col-lg-4">
+         <input type ="text" class="form-control" #Title = "ngModel" name= "Title" [(ngModel)] = "formVideoData.Title">
+        </div>
+      </div>
+      <div class="row" style="margin-top:20px">
+        <div class="col-lg-3">
+          <span style="font-weight: bold; position: absolute; top:25%">Link youtube</span>
+        </div>
+        <div class="col-lg-4">
+         <input type ="text" class="form-control" #YoutubeLink = "ngModel" name= "YoutubeLink" [(ngModel)] = "formVideoData.YoutubeLink">
+        </div>
+      </div>
+    </div>  
+    
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formVideoData.Tags"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onEditVideo(formVideoData)"></i>
     <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
   </div>  
 </ng-template> 

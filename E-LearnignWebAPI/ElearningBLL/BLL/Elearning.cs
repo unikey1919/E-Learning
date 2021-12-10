@@ -398,6 +398,28 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > AddVideoBySubject Error: " + ex.Message);
             }
         }
+        public void DelVideo(VideoModel model)
+        {
+            try
+            {
+                objElDAO.DelVideo(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelVideo Error: " + ex.Message);
+            }
+        }
+        public void UpdateVideo(VideoModel model)
+        {
+            try
+            {
+                objElDAO.UpdateVideo(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateVideo Error: " + ex.Message);
+            }
+        }
         #endregion
     }
 }

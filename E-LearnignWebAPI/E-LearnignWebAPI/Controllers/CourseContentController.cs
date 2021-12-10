@@ -488,6 +488,57 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+        [HttpGet]
+        [Route("GetVideoInfo/{Id}")]
+        public async Task<ActionResult<Video>> GetVideoInfo(int Id)
+        {
+            var video = await _context.Video.FindAsync(Id);
+
+            if (video == null)
+            {
+                return NotFound();
+            }
+
+            return video;
+        }
+        [HttpPost]
+        [Route("DelVideo")]
+        public ApiResultMessage DelVideo(VideoModel model)
+        {
+            try
+            {
+                elearningBll.DelVideo(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpPost]
+        [Route("UpdateVideo")]
+        public ApiResultMessage UpdateVideo(VideoModel model)
+        {
+            try
+            {
+                //Cắt ID
+                string YoutubeLinkRegex = "(?:.+?)?(?:\\/v\\/|watch\\/|\\?v=|\\&v=|youtu\\.be\\/|\\/v=|^youtu\\.be\\/)([a-zA-Z0-9_-]{11})+";
+                var regex = new Regex(YoutubeLinkRegex, RegexOptions.Compiled);
+                Match youtubeMatch = regex.Match(model.YoutubeLink);
+                string id = string.Empty;
+
+                if (youtubeMatch.Success)
+                    id = youtubeMatch.Groups[1].Value;
+                model.YoutubeLink = id;
+
+                elearningBll.UpdateVideo(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
         #endregion
     }
 }

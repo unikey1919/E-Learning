@@ -113,4 +113,16 @@ export class ContentService {
     return this.httpClient.post(this.baseURL + '/AddVideoBySubject', objVideoModel);
   }
 
+  GetVideoInfo(Id:number){
+    return this.httpClient.get(this.baseURL + `/GetVideoInfo/${Id}`);
+  }
+
+  UpdateVideo(objVideoModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/UpdateVideo', objVideoModel);
+  }
+
+  DelVideo(objVideoModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/DelVideo', objVideoModel);
+  }
+
 }
