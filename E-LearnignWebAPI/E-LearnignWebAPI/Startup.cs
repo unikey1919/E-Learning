@@ -41,6 +41,7 @@ namespace E_LearnignWebAPI
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddTransient<iMailService, MailService>();
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "E_LearnignWebAPI", Version = "v1" });

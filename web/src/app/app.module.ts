@@ -49,6 +49,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import {NgDynamicBreadcrumbModule} from 'ng-dynamic-breadcrumb';
 import { ForumComponent } from './e-learning/forum/forum.component';
 import {YouTubePlayerModule} from '@angular/youtube-player';
+import { ChatComponent } from './e-learning/chat/chat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +69,7 @@ import {YouTubePlayerModule} from '@angular/youtube-player';
     ContentComponent,
     AssignmentComponent,
     ForumComponent,
+    ChatComponent,
   ],
   imports: [
     MatCheckboxModule,

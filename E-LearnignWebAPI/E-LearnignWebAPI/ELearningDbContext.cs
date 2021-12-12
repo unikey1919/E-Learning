@@ -28,5 +28,7 @@ namespace ElearningBO
         public DbSet<Forum> Forum { get; set; }
         public DbSet<Discussion> Discussion { get; set; }
         public DbSet<Video> Video { get; set; }
+        public DbSet<Message> Message { get; set; }
+        public DbSet<Room> Room { get; set; }
     }
 }

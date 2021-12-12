@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentDetailService } from '../shared/Services/payment-detail.service';
+import { ChatComponent } from './chat/chat.component';
 
 @Component({
   selector: 'app-e-learning',
@@ -10,7 +11,7 @@ import { PaymentDetailService } from '../shared/Services/payment-detail.service'
   ]
 })
 export class ELearningComponent implements OnInit {
-
+  @ViewChild(ChatComponent) child;
   constructor(public service:PaymentDetailService,private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -23,6 +24,10 @@ export class ELearningComponent implements OnInit {
     localStorage.removeItem('userRole');
     localStorage.removeItem('email');
     this.router.navigate(['/user/login']);
+  }
+
+  openForm() {
+    (document.getElementById("myForm") as HTMLFormElement).style.display = "block";
   }
 
 }
