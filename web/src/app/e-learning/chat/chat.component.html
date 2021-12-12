@@ -1,12 +1,106 @@
 
 <div class="chat-popup" id="myForm">
-  <form action="/action_page.php" class="form-container">
-    <h1 *ngFor="let item of files">{{item.id}}</h1>
-
+  <!-- <form action="/action_page.php" class="form-container">
     <label for="msg"><b>Message</b></label>
     <textarea placeholder="Type message.." name="msg" required></textarea>
     <button type="submit" class="btn">Send</button>
     <button type="button" class="btn cancel" (click)="closeForm()">Close</button>
+  </form> -->
+  <form class="form-container">
+    <div class="app">
+      <div class="sidebar">
+        <div class="header">
+          <h2>Chat Rooms</h2>
+          <a> 
+            <i class="fas fa-plus"></i>
+          </a>
+        </div>
+        <ul class="rooms list-unstyled" id="room-list">
+          <li>
+            <a>Học tập</a>
+          </li>
+        </ul>
+        <div class="profile">
+          <div>
+            <img src="#" class="user-avartar"/>
+            <a>
+              <span>Tên đăng nhập</span>
+            </a>
+          </div>
+        </div>
+      </div>
+  
+      <!-- <div class="main-content">
+        <span class="m-auto">
+          Please select room to join
+        </span>
+      </div> -->
+  
+      <div class="main-content">
+        <div class="header">
+          <h2 id="joinedRoom">Học tập</h2>
+          <div class="room-actions">
+            <button></button>
+          </div>
+        </div>
+        <div class="chat-body">
+          <ul class="list-unstyled">
+            <li>
+              <div class="chat-message d-flex">
+                <div class="left-side">
+                  <img src="/assets/img/" />
+                </div>
+                <div class="message-content d-flex flex-column">
+                  <div class="d-flex justify-content-between">
+                    <span class="author">Tác giả</span>
+                    <span class="timestamp">
+                      <i class="fas fa-clock"></i>
+                      <span>10:50</span>
+                    </span>
+                  </div>
+                  <span> Nội dung chat </span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="chat-input">
+          <input matInput id="chat-message" type ="text" value="" placeholder="What's on your mind?"/>
+          <!-- <textarea matInput placeholder="What's on your mind?"></textarea> -->
+          <div class="actions d-flex align-items-center" style="margin-right: 10px;"> 
+            <form>
+              <label for="UploadFile" class="custom-file-upload">
+                <i class="fas fa-image"></i>
+              </label>
+              <input type="file" id="UploadFile" name="File" accept=".jpg, .jpeg, .png">
+            </form>
+            <a id="emojibtn">
+              <i class="fas fa-smile"></i>
+            </a>
+            <i class="fas fa-paper-plane" id="btn-send-message"></i>
+          </div>
+        </div>
+      </div>
+  
+      <div class="users-container">
+        <div class="header">
+          <h2>Who's Here (<span>0</span>)</h2>
+        </div>
+          <ul id="users-list" class="list-unstyled">
+              <li>
+                  <div class="user">
+                      <img src="#" class="user-avatar" />
+                      <div class="right-side">
+                          <span class="author"></span>
+                          <small></small>
+                      </div>
+                  </div>
+              </li>
+          </ul>
+          <input type="text" class="" placeholder="Search someone..."/>
+      </div>
+    </div>
   </form>
+  
 </div>
 

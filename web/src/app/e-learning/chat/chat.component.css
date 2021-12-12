@@ -1,5 +1,11 @@
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box;}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 60px;
+  background: #eee;
+}
+* {
+  box-sizing: border-box;
+}
 
 /* Button used to open the chat form - fixed at the bottom of the page */
 .open-button {
@@ -27,7 +33,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 /* Add styles to the form container */
 .form-container {
-  max-width: 300px;
+  max-width: 100%;
   padding: 10px;
   background-color: white;
 }
@@ -51,13 +57,13 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 /* Set a style for the submit/send button */
 .form-container .btn {
-  background-color: #04AA6D;
+  background-color: #04aa6d;
   color: white;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
   width: 100%;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   opacity: 0.8;
 }
 
@@ -67,6 +73,303 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 
 /* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
+.form-container .btn:hover,
+.open-button:hover {
   opacity: 1;
+}
+
+.app {
+  display: flex;
+  height: 60vh;
+  justify-content: space-between;
+  background: white;
+  border: 1px solid #ccc;
+}
+
+.app .sidebar {
+  width: 200px;
+}
+
+.app .users-container {
+  width: 250px;
+}
+
+.app .main-content {
+  flex-grow: 1;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background: #157cce;
+  color: white;
+}
+
+.sidebar a {
+  color: white;
+}
+
+.sidebar i {
+  font-size: 14px;
+  color: white;
+}
+
+.sidebar .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 10px;
+}
+
+.sidebar .header h2 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.sidebar .header i {
+  color: white;
+  font-size: 14px;
+}
+
+.sidebar ul {
+  overflow-y: auto;
+}
+
+.sidebar ul li a {
+  display: block;
+  padding: 2px 10px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.sidebar ul li a.active {
+  background: #8abde6;
+}
+
+.sidebar ul li a:hover {
+  background: #8abde6;
+}
+
+.sidebar ul li a:before{
+  content: "#";
+  margin-right: 2px;
+}
+
+.sidebar .profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height:48px;
+  padding: 10px;
+  background: #1a6baa;
+  margin-top: auto;
+}
+
+.sidebar .profile div{
+  display: flex;
+  align-items: center;
+  flex-flow:1;
+}
+
+.sidebar .profile div .user-avatar{
+  width: 32px;
+  height: 32px;
+  border: 2px solid white;
+  padding: 1px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.sidebar .profile div a{
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.main-content{
+  border-right: 1px solid #eee;
+  overflow:hidden;
+  display:flex;
+  flex-direction: column;
+  width:400px;
+}
+
+.main-content .header{
+  height:50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.main-content .header h2{
+  margin: 0;
+  font-size: 18px
+}
+
+.main-content .header h2:before{
+  content:"#";
+}
+
+.main-content .chat-body {
+  overflow-y: auto;
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.main-content .chat-input {
+  height:50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  background: #f2f2f2;
+}
+
+.main-content .chat-input input {
+  width: 90%;
+  border: none;
+  height: 50px;
+  border-radius: 0;
+  border-top: 1px solid #eee;
+  background: #f2f2f2;
+  margin-top: auto;
+  text-indent: 10px;
+  margin-right: 10px;
+  word-wrap: break-word;      /* IE 5.5-7 */
+    white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+    white-space: pre-wrap;
+}
+
+.main-content .chat-input input[type="file"]{
+  display: none;
+}
+
+.main-content .chat-input .actions i {
+  color:#aaa;
+  cursor: pointer;
+}
+
+.main-content .chat-input .actions i:hover{
+  color:#555;
+}
+
+.main-content .chat-input .actions label{
+  margin-bottom: 0;
+}
+
+.main-content .chat-input .actions #emojibtn{
+  margin: 0 10px;
+}
+
+.chat-message {
+  margin: 10px;
+  min-width: 200px;
+}
+
+.chat-message .message-content {
+  background: #f5f5f5;
+  padding: 3px 8px;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  color: #777;
+  min-width: 220px;
+  max-width: 500px;
+}
+
+.chat-message .message-content .author {
+  color: #1a6baa;
+  font-size:12px;
+  font-weight: bold
+}
+
+.chat-message .message-content .content {
+  display:block;
+  padding: 2px 0;
+}
+
+.chat-message .message-content .timestamp {
+  font-size: 12px;
+  color: #999;
+  float: right;
+  line-height: 21px;
+  margin: 0 5px;
+}
+
+.chat-message .message-avatar{
+  width: 40px;
+  height: 40px;
+  float: left;
+  margin-right: 10px;
+  border-radius: 21px;
+}
+
+.users-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.users-container .header{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.users-container .header h2{
+  margin:0;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #555;
+  font-size: 16px;
+}
+
+.users-container #user-list .user{
+  padding: 10px;
+  display: flex;
+  align-items:center;
+}
+
+.users-container #user-list .user img{
+  width: 32px;
+  height: 32px;
+  margin-right: 5px;
+}
+
+
+.users-container #user-list .user .right-side{
+  width: 100%;
+  line-height: 16px;
+  overflow:hidden;
+}
+
+.users-container #user-list .user .right-side .span{
+  display:block;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.users-container #user-list .user:hover{
+  background: #f2f2f2;
+  cursor:pointer;
+}
+
+.users-container input {
+  width: 100%;
+  border: none;
+  height: 50px;
+  border-radius: 0;
+  border-top: 1px solid #eee;
+  background: #f2f2f2;
+  margin-top: auto;
+  text-indent: 10px;
 }
