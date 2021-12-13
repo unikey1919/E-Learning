@@ -350,7 +350,7 @@ body {
   overflow:hidden;
 }
 
-.users-container #user-list .user .right-side .span{
+.users-container #user-list .user .right-side span{
   display:block;
   font-size: 14px;
   white-space: nowrap;
@@ -373,3 +373,42 @@ body {
   margin-top: auto;
   text-indent: 10px;
 }
+
+input[type="radio"] {
+  display: none;
+}
+  input[type="radio"] + img {
+      border-radius: 50%;
+      border: 2px solid transparent;
+      padding: 1px;
+      cursor: pointer;
+  }
+  input[type="radio"]:checked + img {
+      border-radius: 50%;
+      border: 2px solid #5dca38;
+      padding: 1px;
+  }
+
+.ismine {
+  flex-direction: row-reverse;
+}
+
+  .ismine .message-content {
+      background: #8abde6;
+  }
+
+      .ismine .message-content .author,
+      .ismine .message-content .timestamp,
+      .ismine .message-content .timestamp span,
+      .ismine .message-content .content {
+          color: white;
+      }
+
+      .ismine .message-content div {
+          flex-direction: row-reverse;
+      }
+
+  .ismine .message-avatar {
+      margin-right: 0;
+      margin-left: 10px;
+  }

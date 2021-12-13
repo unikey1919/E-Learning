@@ -2,6 +2,7 @@
 using ElearningBO;
 using ElearningBO.E_Learning;
 using ElearningBO.UserAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using System;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace E_LearnignWebAPI.Hubs
 {
+    [Authorize]
     public class ChatHub : Hub
     {
         public readonly static List<UserViewModel> _Connections = new List<UserViewModel>();

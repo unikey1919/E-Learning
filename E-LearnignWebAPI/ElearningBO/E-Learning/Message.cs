@@ -15,7 +15,7 @@ namespace ElearningBO.E_Learning
         [Key]
         public int Id { get; set; }
         public string Content { get; set; }
-        public DateTime TimeStamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
         [ForeignKey("Room")]
         public int RoomId { get; set; }

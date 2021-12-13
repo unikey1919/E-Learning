@@ -23,6 +23,7 @@
     "@angular/youtube-player": "^12.2.13",
     "@ckeditor/ckeditor5-angular": "^2.0.2",
     "@ckeditor/ckeditor5-build-classic": "^31.0.0",
+    "@microsoft/signalr": "^6.0.0",
     "moment": "^2.29.1",
     "ng-dynamic-breadcrumb": "^6.0.0",
     "ngx-bootstrap": "^7.1.0",

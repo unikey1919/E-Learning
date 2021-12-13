@@ -29,14 +29,15 @@ namespace E_LearnignWebAPI.Controllers
         private readonly string[] AllowedExtensions;
         private readonly IWebHostEnvironment _environment;
         private readonly IHubContext<ChatHub> _hubContext;
-        public MessageController(ELearningDbContext context, IMapper mapper, IWebHostEnvironment environment, IConfiguration configruation)
+        public MessageController(ELearningDbContext context, IMapper mapper, IWebHostEnvironment environment, IConfiguration configruation, IHubContext<ChatHub> hubContext)
         {
             elearningBll = new Elearning();
             _context = context;
             _mapper = mapper;
             _environment = environment;
-            FileSizeLimit = configruation.GetSection("FileUpload").GetValue<int>("FileSizeLimit");
-            AllowedExtensions = configruation.GetSection("FileUpload").GetValue<string>("AllowedExtensions").Split(",");
+            _hubContext = hubContext;
+            //FileSizeLimit = configruation.GetSection("FileUpload").GetValue<int>("FileSizeLimit");
+            //AllowedExtensions = configruation.GetSection("FileUpload").GetValue<string>("AllowedExtensions").Split(",");
         }
 
         [HttpGet("{id}")]
@@ -60,7 +61,7 @@ namespace E_LearnignWebAPI.Controllers
             var messages = _context.Message.Where(m => m.RoomId == room.Id)
                 .Include(m => m.FromUser)
                 .Include(m => m.Room)
-                .OrderByDescending(m => m.TimeStamp)
+                .OrderByDescending(m => m.Timestamp)
                 .Take(20)
                 .AsEnumerable()
                 .Reverse()
@@ -208,7 +209,7 @@ namespace E_LearnignWebAPI.Controllers
                 var message = new Message()
                 {
                     Content = Regex.Replace(htmlImage, @"(?i)<(?!img|a|/a|/img).*?>", string.Empty),
-                    TimeStamp = DateTime.Now,
+                    Timestamp = DateTime.Now,
                     FromUser = user,
                     Room = room
                 };

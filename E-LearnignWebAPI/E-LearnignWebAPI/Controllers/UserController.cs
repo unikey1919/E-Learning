@@ -71,7 +71,8 @@ namespace E_LearnignWebAPI.Controllers
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                         new Claim("UserID", user.Id.ToString()),
-                        new Claim(_identityOptions.ClaimsIdentity.RoleClaimType,role.FirstOrDefault())
+                        new Claim(_identityOptions.ClaimsIdentity.RoleClaimType,role.FirstOrDefault()),
+                        new Claim(_identityOptions.ClaimsIdentity.UserNameClaimType,user.UserName.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_applicationSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)

@@ -15,7 +15,7 @@ namespace E_LearnignWebAPI.Mapping
                 .ForMember(dst => dst.From, opt => opt.MapFrom(x => x.FromUser.FullName))
                 .ForMember(dst => dst.Room, opt => opt.MapFrom(x => x.Room.Name))
                 .ForMember(dst => dst.Content, opt => opt.MapFrom(x => x.Content))
-                .ForMember(dst => dst.Timestamp, opt => opt.MapFrom(x => x.TimeStamp));
+                .ForMember(dst => dst.Timestamp, opt => opt.MapFrom(x => x.Timestamp));
             CreateMap<MessageViewModel, Message>();
         }
     }
