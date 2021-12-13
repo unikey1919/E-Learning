@@ -19,4 +19,8 @@ export class ChatService {
   GetRoomMessage(): Observable<any>{
     return this.httpClient.get(this.baseURL + '/GetRoomMessage');
   }
+
+  EditRoom(id: number,objectRoomModel): Observable<any>{
+    return this.httpClient.put(this.baseURL + `/EditRoom/${id}`, objectRoomModel);
+  }
 }

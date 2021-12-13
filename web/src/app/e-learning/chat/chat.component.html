@@ -1,11 +1,5 @@
 <p-toast></p-toast>
 <div class="chat-popup" id="myForm">
-  <!-- <form action="/action_page.php" class="form-container">
-    <label for="msg"><b>Message</b></label>
-    <textarea placeholder="Type message.." name="msg" required></textarea>
-    <button type="submit" class="btn">Send</button>
-    <button type="button" class="btn cancel" (click)="closeForm()">Close</button>
-  </form> -->
   <form class="form-container">
     <div class="app">
       <div class="sidebar">
@@ -30,18 +24,23 @@
           </div>
         </div>
       </div>
-  
-      <!-- <div class="main-content">
-        <span class="m-auto">
+
+      <div class="main-content" *ngIf= "!joinedRoom">
+        <span class="m-auto" >
           Please select room to join
         </span>
-      </div> -->
-  
-      <div class="main-content">
-        <div class="header">
-          <h2 id="joinedRoom">Học tập</h2>
-          <div class="room-actions">
-            <button></button>
+      </div>
+      <div class="main-content" *ngIf="joinedRoom"> 
+        <div class="header" >
+          <h2 id="joinedRoom" *ngIf="isEditRoom == false">{{joinedRoom}}</h2>
+          <div class="room-actions" *ngIf="isEditRoom == false">
+            <mat-icon style="float:right">delete</mat-icon>
+            <mat-icon style="float:right" (click)="showEdit(1)">edit</mat-icon>
+          </div>
+          <input *ngIf="isEditRoom == true" type ="text" style="width:70%" class="form-control" #name = "ngModel" name= "name" [(ngModel)] = "formAddData.name">
+          <div *ngIf="isEditRoom == true" class="room-actions">
+            <mat-icon style="float:right"(click)="showEdit(1)">cancel</mat-icon>
+            <mat-icon style="float:right"(click)="onEditRoom(joinedRoomId,formAddData)">done</mat-icon>           
           </div>
         </div>
         <div class="chat-body">
