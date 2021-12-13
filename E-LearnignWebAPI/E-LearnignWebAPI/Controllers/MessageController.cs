@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using E_LearnignWebAPI.Hubs;
 using ElearningBLL.BLL;
 using ElearningBO;
 using ElearningBO.E_Learning;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -26,6 +28,7 @@ namespace E_LearnignWebAPI.Controllers
         private readonly int FileSizeLimit;
         private readonly string[] AllowedExtensions;
         private readonly IWebHostEnvironment _environment;
+        private readonly IHubContext<ChatHub> _hubContext;
         public MessageController(ELearningDbContext context, IMapper mapper, IWebHostEnvironment environment, IConfiguration configruation)
         {
             elearningBll = new Elearning();
@@ -105,6 +108,68 @@ namespace E_LearnignWebAPI.Controllers
 
             var roomViewModel = _mapper.Map<Room, RoomViewModel>(room);
             return Ok(roomViewModel);
+        }
+        [HttpPost]
+        [Route("CreateRoom")]
+        public async Task<ActionResult<Room>> CreateRoom(RoomViewModel roomViewModel)
+        {
+            if (_context.Room.Any(r => r.Name == roomViewModel.Name))
+                return BadRequest("Invalid room name or room already exists");
+
+            var user = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            var room = new Room()
+            {
+                Name = roomViewModel.Name,
+                Admin = user
+            };
+
+            _context.Room.Add(room);
+            await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("addChatRoom", new { id = room.Id, name = room.Name });
+
+            return CreatedAtAction(nameof(Get), new { id = room.Id }, new { id = room.Id, name = room.Name });
+        }
+        [HttpPut]
+        [Route("EditRoom/{id}")]
+        public async Task<IActionResult> EditRoom(int id, RoomViewModel roomViewModel)
+        {
+            if (_context.Room.Any(r => r.Name == roomViewModel.Name))
+                return BadRequest("Invalid room name or room already exists");
+
+            var room = await _context.Room
+                .Include(r => r.Admin)
+                .Where(r => r.Id == id && r.Admin.UserName == User.Identity.Name)
+                .FirstOrDefaultAsync();
+
+            if (room == null)
+                return NotFound();
+
+            room.Name = roomViewModel.Name;
+            await _context.SaveChangesAsync();
+
+            await _hubContext.Clients.All.SendAsync("updateChatRoom", new { id = room.Id, room.Name });
+
+            return NoContent();
+        }
+        [HttpDelete]
+        [Route("DeleteRoom/{id}")]
+        public async Task<IActionResult> DeleteRoom(int id)
+        {
+            var room = await _context.Room
+                .Include(r => r.Admin)
+                .Where(r => r.Id == id && r.Admin.UserName == User.Identity.Name)
+                .FirstOrDefaultAsync();
+
+            if (room == null)
+                return NotFound();
+
+            _context.Room.Remove(room);
+            await _context.SaveChangesAsync();
+
+            await _hubContext.Clients.All.SendAsync("removeChatRoom", room.Id);
+            await _hubContext.Clients.Group(room.Name).SendAsync("onRoomDeleted", string.Format("Room {0} has been deleted.\nYou are moved to the first available room!", room.Name));
+
+            return NoContent();
         }
         #endregion
         #region UploadFile

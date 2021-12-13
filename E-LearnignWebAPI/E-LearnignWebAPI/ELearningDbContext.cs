@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ElearningBO
 {
-    public class ELearningDbContext: IdentityDbContext
+    public class ELearningDbContext: IdentityDbContext<ApplicationUser>
     {
         public ELearningDbContext(DbContextOptions<ELearningDbContext> options) : base(options)
         {
