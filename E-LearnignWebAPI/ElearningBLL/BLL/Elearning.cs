@@ -273,6 +273,18 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > GetListUser Error: " + ex.Message);
             }
         }
+
+        public void AddSubject(Subject model)
+        {
+            try
+            {
+                objElDAO.AddSubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddSubject Error: " + ex.Message);
+            }
+        }
         #endregion
 
         #region Student
@@ -337,6 +349,182 @@ namespace ElearningBLL.BLL
             catch (Exception ex)
             {
                 throw new Exception("Elearning > GetContentByCourse Error: " + ex.Message);
+            }
+        }
+        public DataTable GetFileBySubject(SubjectContent model)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetFileBySubject(model);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetFileBySubject Error: " + ex.Message);
+            }
+        }
+        public void DelFile(FileContent model)
+        {
+            try
+            {
+                objElDAO.DelFile(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelFile Error: " + ex.Message);
+            }
+        }
+        public void DelFileSubmit(FileAssignment model)
+        {
+            try
+            {
+                objElDAO.DelFileSubmit(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelFileSubmit Error: " + ex.Message);
+            }
+        }
+        #endregion
+
+        #region Assignment
+        public void AddAssignmentBySubject(Assignment model)
+        {
+            try
+            {
+                objElDAO.AddAssignmentBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddAssignmentBySubject Error: " + ex.Message);
+            }
+        }
+        public DataTable GetAllStudentByCourse(int courseId)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetAllStudentByCourse(courseId);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetAllStudentByCourse Error: " + ex.Message);
+            }
+        }
+        public void DelAssignment(Assignment model)
+        {
+            try
+            {
+                objElDAO.DelAssignment(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelAssignment Error: " + ex.Message);
+            }
+        }
+        public void UpdateAssignment(Assignment model)
+        {
+            try
+            {
+                objElDAO.UpdateAssignment(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateAssignment Error: " + ex.Message);
+            }
+        }
+        #endregion
+        #region Forum
+        public void AddForumBySubject(Forum model)
+        {
+            try
+            {
+                objElDAO.AddForumBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddForumBySubject Error: " + ex.Message);
+            }
+        }
+        public void DelForum(Forum model)
+        {
+            try
+            {
+                objElDAO.DelForum(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelForum Error: " + ex.Message);
+            }
+        }
+        public void UpdateForum(Forum model)
+        {
+            try
+            {
+                objElDAO.UpdateForum(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateForum Error: " + ex.Message);
+            }
+        }
+        #region Discusstion
+        public void AddDiscussBySubject(Discussion model)
+        {
+            try
+            {
+                objElDAO.AddDiscussBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddDiscussBySubject Error: " + ex.Message);
+            }
+        }
+        public void DelDiscuss(Discussion model)
+        {
+            try
+            {
+                objElDAO.DelDiscuss(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelDiscuss Error: " + ex.Message);
+            }
+        }
+        #endregion
+        #endregion
+        #region Video
+        public void AddVideoBySubject(VideoModel model)
+        {
+            try
+            {
+                objElDAO.AddVideoBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddVideoBySubject Error: " + ex.Message);
+            }
+        }
+        public void DelVideo(VideoModel model)
+        {
+            try
+            {
+                objElDAO.DelVideo(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelVideo Error: " + ex.Message);
+            }
+        }
+        public void UpdateVideo(VideoModel model)
+        {
+            try
+            {
+                objElDAO.UpdateVideo(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateVideo Error: " + ex.Message);
             }
         }
         #endregion

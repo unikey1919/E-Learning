@@ -43,8 +43,6 @@ export class InstructorComponent implements OnInit {
     this.getListUser();
   }
 
-  
-
   onCheckboxChange(e) {
     if (e.target.checked) {
       this.list1.push(new FormControl(e.target.value));
@@ -58,6 +56,7 @@ export class InstructorComponent implements OnInit {
         i++;
       });
     }
+    console.log(this.list1)
   }
 
   modalRef1(){
@@ -95,10 +94,8 @@ export class InstructorComponent implements OnInit {
           this.getListInstructor();
         },
         (err) => {}
-      );
-      
-    }
-    
+      );    
+    }    
   }
 
   openModalWithClass(template: TemplateRef<any>) {  

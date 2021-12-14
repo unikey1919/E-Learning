@@ -22,9 +22,8 @@ export class HomeComponent implements OnInit {
         this.formData.fullName = res.fullName;
         this.formData.email = res.email;
         this.getListCourseByStudent(res);
-        var payLoad = JSON.parse(window.atob(localStorage.getItem('token')!.split('.')[1]));
         localStorage.setItem('username', res.userName);
-        localStorage.setItem('userRole', payLoad.role);
+        localStorage.setItem('email', res.email);
       },
       err => {
         console.log(err);
@@ -34,6 +33,8 @@ export class HomeComponent implements OnInit {
 
   onLogout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userRole');
     this.router.navigate(['/user/login']);
   }
 
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
       this.courseService.GetCourseByTeacher(formData).subscribe(
         (res) => {
           this.lstCourse = JSON.parse(res.message) as Course[];
+          console.log(this.lstCourse);
         },
         (error) => {}
       );
