@@ -1,15 +1,345 @@
-<div class="container-fluid">
-    <nav class="navbar">
-      <a class="navbar-brand" style="margin-left: 10px">Home</a>
-      <a class="navbar-brand" style="position: absolute; margin-left: 65px; color:blue">/Content</a>
-      <button class="btn btn-danger my-2 my-sm-0" style="margin-right: 10px" (click)="onLogout()">Logout</button>
-    </nav>
-    
-   <mat-card style=" margin-top: 20px">
-       <mat-card-title>Card title</mat-card-title>
-       <mat-card-content>
-        This is card content.
-    </mat-card-content>
+<p-toast></p-toast>
+
+<mat-card *ngIf="role == 'instructor'" style="margin-top: 20px;">
+<mat-card-content>
+  <i class="fas fa-briefcase" style="margin-right:10px"></i>
+  <span>Add new Subject</span>
+  <mat-icon style="float:right" (click)="openContentWithClass(content)">add_circle</mat-icon>
+</mat-card-content>
+</mat-card>
+   <mat-card style=" margin-top: 20px" *ngFor="let item of lstContent" appMaterialElevation>
+      <mat-card-title>{{item.SubjectName}}</mat-card-title>
+      
+      <!-- Thêm mới actions -->
+      <mat-card-content style="margin-bottom: 20px">
+        <mat-card *ngIf="role == 'instructor'">
+          <i class="fas fa-briefcase" style="margin-right:10px"></i>
+          <span>Add new actions</span>
+          <mat-icon style="float:right" (click)="openModalWithClass(actions, item.Id)">add_circle</mat-icon>
+        </mat-card>
+      </mat-card-content>
+      <mat-card-content>
+        <div [innerHTML]="item.Details"></div>
+      </mat-card-content>
+
+      <!-- Danh sách file -->
+      <mat-card-content  *ngFor="let file of item.LstFile">
+        <mat-card>
+          <i style="margin-right:10px" [class]="getIcon(file.FileType)" [style.color]="getBackgroundColor(file.FileType)"></i>
+         <span (click)="downLoadFileContent(file.Id, file.FileType)">{{file.FileName}}</span>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteFile(file)">delete</mat-icon>
+        </mat-card>
+      </mat-card-content>
+
+       <!-- Danh sách forum -->
+       <mat-card-content style="margin-bottom: 20px"  *ngFor="let forum of item.LstForum">
+        <mat-card>
+          <i class="fas fa-user-tie" style="margin-right:10px"></i>
+          <span (click)="getForumContent(forum.Id,item.Id)">{{forum.ForumName}}</span>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteForum(forum)">delete</mat-icon>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editForum, forum)">edit</mat-icon>
+        </mat-card>
+      </mat-card-content>
+
+      <!-- Danh sách video bài giảng -->
+      <mat-card-content style="margin-bottom: 20px"  *ngFor="let video of item.LstVideo">
+        <mat-card>
+          <i (click)="openModalWithVideo(videoContent, video.Id)" class="fas fa-play-circle" style="margin-right:10px"></i>
+          <span>{{video.Title}}</span>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteVideo(video)">delete</mat-icon>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editVideo, video)">edit</mat-icon>
+        </mat-card>
+      </mat-card-content>
+
+      <!-- Danh sách bài tập -->
+      <mat-card-content style="margin-bottom: 20px"  *ngFor="let assignment of item.LstAssignment">
+        <mat-card>
+          <i class="fas fa-atlas" style="margin-right:10px"></i>
+          <span (click)="getAssignmentContent(assignment.Id,item.Id)">{{assignment.AssignmentName}}</span>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteAssignment(assignment)">delete</mat-icon>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editAssignment, assignment)">edit</mat-icon>
+        </mat-card>
+      </mat-card-content>
    </mat-card>
    
-</div>
+ <!--- Popup thêm bài tập -->  
+<ng-template #template>    
+  <div class="modal-body">  
+    <div class="row">
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Open</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" #Opened = "ngModel" name="Opened" class="form-control" [ngModel]="formAddData.Opened | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formAddData.Opened = $event">
+      </div>
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Close</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" class="form-control" #Due = "ngModel" name="Due" [ngModel]="formAddData.Due | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formAddData.Due = $event">
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Assignment Name</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="text" class="form-control" #AssignmentName = "ngModel" name= "AssignmentName" [(ngModel)] = "formAddData.AssignmentName">
+      </div>
+    </div>
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formAddData.Details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmit()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template>
+
+ <!--- Popup sửa bài tập -->  
+ <ng-template #editAssignment>    
+  <div class="modal-body">  
+    <div class="row">
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Open</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" #Opened = "ngModel" name="Opened" class="form-control" [ngModel]="formAddData.Opened | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formAddData.Opened = $event">
+      </div>
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Close</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" class="form-control" #Due = "ngModel" name="Due" [ngModel]="formAddData.Due | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formAddData.Due = $event">
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Assignment Name</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="text" class="form-control" #AssignmentName = "ngModel" name= "AssignmentName" [(ngModel)] = "formAddData.AssignmentName">
+      </div>
+    </div>
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formAddData.Details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onEditAssignment(formAddData)"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
+
+ <!--- Popup thêm nội dung chương -->  
+<ng-template #content>   
+  <div class="modal-body">  
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Content Name</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="text" class="form-control" #SubjectName = "ngModel" name= "SubjectName" [(ngModel)] = "formData.SubjectName">
+      </div>
+    </div>
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formData.Details"></ckeditor>
+    </div>    
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitContent()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
+
+<!--- Popup thêm nội dung chức năng -->  
+<ng-template #actions>    
+  <div class="modal-body">  
+    <div class="row" style="display:flex; flex-direction: row; ">
+      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px;" (click)=" closeModel();openModalWithClass(template, formAddData.SubjectId)">
+        <div class="row" style="margin:10px">
+          <i class="fas fa-atlas fa-5x"></i>
+          <span>Assignment</span>
+        </div>
+      </button>
+      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px;" (click)=" closeModel();openModalWithClass(file, formAddData.SubjectId)">
+        <div class="row" style="margin:10px">
+          <i class="far fa-file-pdf fa-5x"></i>
+          <span>File</span>
+        </div>
+      </button>
+      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px;" (click)=" closeModel();openModalWithClass(addVideo, formAddData.SubjectId)">
+        <div class="row" style="margin:10px">
+          <i class="fas fa-video fa-5x"></i>
+          <span>Video</span>
+        </div>
+      </button>
+      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px; margin-top:10px" (click)=" closeModel();openModalWithClass(forum, formForumData.SubjectId)">
+        <div class="row" style="margin:10px">
+          <i class="fas fa-user-tie fa-5x"></i>
+          <span>Forum</span>
+        </div>
+      </button>
+    </div>
+  </div>
+  </ng-template>
+<!--- Popup thêm nội dung File nộp -->  
+<ng-template #file>   
+  <div class="modal-body">  
+    <mat-card  style=" margin-top: 20px" appMaterialElevation>
+      <mat-card-title>Nộp tập tin</mat-card-title>
+      <mat-card-content style="margin-bottom: 20px">
+        <ngx-dropzone (change)="onSelect($event)">
+          <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+          <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+            <ngx-dropzone-label>{{ f.name}}</ngx-dropzone-label>
+          </ngx-dropzone-preview>
+        </ngx-dropzone>
+     </mat-card-content>
+     <mat-card-actions>
+      <button mat-raised-button (click) = "onSubmitFile(formAddData.SubjectId)">Nộp bài tập</button>
+     </mat-card-actions>
+  </mat-card>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitContent()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
+
+<!--- Popup thêm nội dung forum -->  
+<ng-template #forum>   
+  <div class="modal-body">  
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Forum Name</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="text" class="form-control" #SubjectName = "ngModel" name= "ForumName" [(ngModel)] = "formForumData.ForumName">
+      </div>
+    </div>
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formForumData.Details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitForum()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
+
+<!--- Popup sửa forum -->  
+<ng-template #editForum>    
+  <div class="modal-body">  
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Forum Name</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="text" class="form-control" #SubjectName = "ngModel" name= "ForumName" [(ngModel)] = "formForumData.ForumName">
+      </div>
+    </div>
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formForumData.Details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onEditForum(formForumData)"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
+
+<!--- Popup load video-->  
+<ng-template #videoContent>   
+  <div class="modal-body text-center">
+    <h1>{{modelVideo.title}}</h1>  
+    <youtube-player
+    videoId={{modelVideo.youtubeLink}}
+    [width]="700" >
+    </youtube-player>
+  </div>
+  <span [innerHTML]="modelVideo.tags" style="margin-left: 50px;"></span> 
+  <div class="modal-footer">
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
+
+<!--- Popup thêm video-->  
+<ng-template #addVideo>   
+  <div class="modal-body">
+    <div class="form-group">
+      <div class="row" style="margin-top:20px">
+        <div class="col-lg-3">
+          <span style="font-weight: bold; position: absolute; top:25%">Title</span>
+        </div>
+        <div class="col-lg-4">
+         <input type ="text" class="form-control" #Title = "ngModel" name= "Title" [(ngModel)] = "formVideoData.Title">
+        </div>
+      </div>
+      <div class="row" style="margin-top:20px">
+        <div class="col-lg-3">
+          <span style="font-weight: bold; position: absolute; top:25%">Link youtube</span>
+        </div>
+        <div class="col-lg-4">
+         <input type ="text" class="form-control" #YoutubeLink = "ngModel" name= "YoutubeLink" [(ngModel)] = "formVideoData.YoutubeLink">
+        </div>
+      </div>
+    </div>  
+    
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formVideoData.Tags"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitVideo()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template>
+
+<!--- Popup edit video-->  
+<ng-template #editVideo>   
+  <div class="modal-body">
+    <div class="form-group">
+      <div class="row" style="margin-top:20px">
+        <div class="col-lg-3">
+          <span style="font-weight: bold; position: absolute; top:25%">Title</span>
+        </div>
+        <div class="col-lg-4">
+         <input type ="text" class="form-control" #Title = "ngModel" name= "Title" [(ngModel)] = "formVideoData.Title">
+        </div>
+      </div>
+      <div class="row" style="margin-top:20px">
+        <div class="col-lg-3">
+          <span style="font-weight: bold; position: absolute; top:25%">Link youtube</span>
+        </div>
+        <div class="col-lg-4">
+         <input type ="text" class="form-control" #YoutubeLink = "ngModel" name= "YoutubeLink" [(ngModel)] = "formVideoData.YoutubeLink">
+        </div>
+      </div>
+    </div>  
+    
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formVideoData.Tags"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onEditVideo(formVideoData)"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
+

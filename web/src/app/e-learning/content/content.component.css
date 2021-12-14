@@ -10,3 +10,11 @@
 .course-card {
     width: 400px;
 }
+
+mat-card-title {
+    margin-bottom: 1rem;
+}
+
+mat-card-content:hover{
+    text-decoration: underline;
+}

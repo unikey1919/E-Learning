@@ -29,7 +29,22 @@ namespace ElearningBO.E_Learning
         public int Id { get; set; }
         public int CourseId { get; set; }
         public string SubjectName { get; set; }
+        public List<FileModel> LstFile { get; set; }
         public string Details { get; set; }
         public bool isDelete { get; set; }
+        public List<Assignment> LstAssignment { get; set; }
+        public List<Forum> LstForum { get; set; }
+        public List<Video> LstVideo { get; set; }
+    }
+
+    public class StudentSubmit
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string FullName { get; set; }
+        public int StudentId { get; set; }
+        public int Status { get; set; }
+        public List<FileAssignment> LstAssignmentSubmit { get; set; }
     }
 }
