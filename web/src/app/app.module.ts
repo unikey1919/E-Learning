@@ -44,6 +44,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { StudentComponent } from './admin-panel/student/student.component';
 import { ContentComponent } from './e-learning/content/content.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -94,8 +96,9 @@ import { ContentComponent } from './e-learning/content/content.component';
     DropdownModule,
     MessagesModule,
     MessageModule,
-    ToastModule
-
+    ToastModule,
+    MatDatepickerModule,
+    NgbModule
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,

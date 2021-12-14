@@ -157,26 +157,29 @@ export class StudentComponent implements OnInit {
   }
 
   onDelete(student: Student) {
-    this.studentService.DelStudent(student).subscribe(
-      (res: any) => {
-        if (res.isError == true) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'error',
-            detail: 'Fail to delete student',
-          });
-        }
-        else{
-          this.getListStudent();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Student is deleted',
-          });
-        }
-      },
-      (error) => {}
-    );
+    if(confirm("Are you sure to delete this student?")) {
+      this.studentService.DelStudent(student).subscribe(
+        (res: any) => {
+          if (res.isError == true) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'error',
+              detail: 'Fail to delete student',
+            });
+          }
+          else{
+            this.getListStudent();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Student is deleted',
+            });
+          }
+        },
+        (error) => {}
+      );
+    }
+    
   }
 }
 

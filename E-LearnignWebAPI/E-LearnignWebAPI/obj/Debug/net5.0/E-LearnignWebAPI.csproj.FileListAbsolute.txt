@@ -576,4 +576,25 @@ C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\obj\Debug\net
 C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\obj\Debug\net5.0\ref\E-LearnignWebAPI.dll
 C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\obj\Debug\net5.0\E-LearnignWebAPI.pdb
 C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\obj\Debug\net5.0\E-LearnignWebAPI.genruntimeconfig.cache
+<<<<<<< Updated upstream
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\obj\Debug\net5.0\E-LearnignWebAPI.csproj.CopyComplete
+=======
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\System.IO.Pipelines.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\MailKit.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\MimeKit.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\NETCore.MailKit.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\MailKit.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\MimeKit.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\NETCore.MailKit.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\System.IO.Pipelines.dll
+>>>>>>> Stashed changes
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\EPPlus.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\System.Xml.XPath.XmlDocument.dll
+C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\ExcelDataReader.dll
