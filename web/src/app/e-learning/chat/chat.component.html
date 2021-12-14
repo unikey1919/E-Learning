@@ -75,9 +75,10 @@
               <input type="file" id="UploadFile" name="File" accept=".jpg, .jpeg, .png">
             </form>
             <a id="emojibtn">
-              <i class="fas fa-smile"></i>
+              <i class="fas fa-smile" (click)="toggled = !toggled"></i>
             </a>
-            <i class="fas fa-paper-plane" id="btn-send-message"></i>
+            <!-- <emoji-mart *ngIf="toggled" (click)="handleSelection($event)"></emoji-mart>
+            <i class="fas fa-paper-plane" id="btn-send-message"></i> -->
           </div>
         </div>
       </div>

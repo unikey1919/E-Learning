@@ -26,8 +26,11 @@ namespace ElearningBO.E_Learning
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [ForeignKey("Course")]
+        public int CourseId { get; set; }
         public ApplicationUser Admin { get; set; }
         public ICollection<Message> Messages { get; set; }
+        public virtual Course Course { get; set; }
     }
     public class MessageViewModel
     {

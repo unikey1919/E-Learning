@@ -194,7 +194,7 @@ namespace E_LearnignWebAPI.Controllers
                 foreach (var file in files.files)
                 {
                     FileRecord filerc = await SaveFileAsync(file);
-                    if(files.assignmentId == "-1")
+                    if (files.assignmentId == "-1")
                     {
                         SaveToDB(filerc, files.subjectId);
                     }

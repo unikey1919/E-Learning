@@ -31,6 +31,7 @@ export class ChatComponent implements OnInit {
   token: any;
   isEditRoom: Boolean = false;
   serverInfoMessage: string = '';
+  toggled: boolean = false;
 
   constructor(
     private modalService: BsModalService,
@@ -296,6 +297,11 @@ export class ChatComponent implements OnInit {
         });
       }
     )
+  }
+
+  handleSelection(event) {
+    console.log(event.char);
+    this.formChatMessage.content += event.char;
   }
 
   // filteredChatUsers() {

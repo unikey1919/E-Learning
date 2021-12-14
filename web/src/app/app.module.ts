@@ -50,6 +50,7 @@ import {NgDynamicBreadcrumbModule} from 'ng-dynamic-breadcrumb';
 import { ForumComponent } from './e-learning/forum/forum.component';
 import {YouTubePlayerModule} from '@angular/youtube-player';
 import { ChatComponent } from './e-learning/chat/chat.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,7 +106,8 @@ import { ChatComponent } from './e-learning/chat/chat.component';
     CKEditorModule,
     NgxDropzoneModule,
     NgDynamicBreadcrumbModule,
-    YouTubePlayerModule
+    YouTubePlayerModule,
+    PickerModule
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,
