@@ -60,6 +60,7 @@ namespace E_LearnignWebAPI.Controllers
         public async Task<IActionResult> Login(LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
+            //var user = await _userManager.FindByEmailAsync(model.Email);
             IdentityOptions _identityOptions = new IdentityOptions();
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
@@ -70,7 +71,8 @@ namespace E_LearnignWebAPI.Controllers
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                         new Claim("UserID", user.Id.ToString()),
-                        new Claim(_identityOptions.ClaimsIdentity.RoleClaimType,role.FirstOrDefault())
+                        new Claim(_identityOptions.ClaimsIdentity.RoleClaimType,role.FirstOrDefault()),
+                        new Claim(_identityOptions.ClaimsIdentity.UserNameClaimType,user.UserName.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_applicationSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)

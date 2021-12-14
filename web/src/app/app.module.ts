@@ -47,6 +47,10 @@ import { AssignmentComponent } from './e-learning/assignment/assignment.componen
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import {NgDynamicBreadcrumbModule} from 'ng-dynamic-breadcrumb';
+import { ForumComponent } from './e-learning/forum/forum.component';
+import {YouTubePlayerModule} from '@angular/youtube-player';
+import { ChatComponent } from './e-learning/chat/chat.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +69,8 @@ import {NgDynamicBreadcrumbModule} from 'ng-dynamic-breadcrumb';
     StudentComponent,
     ContentComponent,
     AssignmentComponent,
+    ForumComponent,
+    ChatComponent,
   ],
   imports: [
     MatCheckboxModule,
@@ -99,7 +105,9 @@ import {NgDynamicBreadcrumbModule} from 'ng-dynamic-breadcrumb';
     ToastModule,
     CKEditorModule,
     NgxDropzoneModule,
-    NgDynamicBreadcrumbModule
+    NgDynamicBreadcrumbModule,
+    YouTubePlayerModule,
+    PickerModule
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,

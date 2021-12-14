@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ElearningBO
 {
-    public class ELearningDbContext: IdentityDbContext
+    public class ELearningDbContext: IdentityDbContext<ApplicationUser>
     {
         public ELearningDbContext(DbContextOptions<ELearningDbContext> options) : base(options)
         {
@@ -25,5 +25,10 @@ namespace ElearningBO
         public DbSet<FileContent> FileContent { get; set; }
         public DbSet<Assignment> Assignment { get; set; }
         public DbSet<FileAssignment> FileAssignment { get; set; }
+        public DbSet<Forum> Forum { get; set; }
+        public DbSet<Discussion> Discussion { get; set; }
+        public DbSet<Video> Video { get; set; }
+        public DbSet<Message> Message { get; set; }
+        public DbSet<Room> Room { get; set; }
     }
 }

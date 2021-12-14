@@ -1,0 +1,129 @@
+<p-toast></p-toast>
+<div class="chat-popup" id="myForm">
+  <form class="form-container">
+    <div class="app">
+      <div class="sidebar">
+        <div class="header">
+          <h2>Chat Rooms</h2>
+          <a> 
+            <i class="fas fa-plus" (click)="openModalWithClass(actions, 2)"></i>
+          </a>
+          
+        </div>
+        <ul class="rooms list-unstyled" id="room-list" *ngFor="let item of lstRoom">
+          <li>
+            <a (click)="joinRoom(item)" [style.active]="joinedRoom == item.name">{{item.name}}</a>
+          </li>
+        </ul>
+        <div class="profile">
+          <div>
+            <img src="#" class="user-avartar"/>
+            <a>
+              <span>Tên đăng nhập</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content" *ngIf= "!joinedRoom">
+        <span class="m-auto" >
+          Please select room to join
+        </span>
+      </div>
+      <div class="main-content" *ngIf="joinedRoom"> 
+        <div class="header" >
+          <h2 id="joinedRoom" *ngIf="isEditRoom == false">{{joinedRoom}}</h2>
+          <div class="room-actions" *ngIf="isEditRoom == false">
+            <mat-icon style="float:right" (click)="onDeleteRoom()">delete</mat-icon>
+            <mat-icon style="float:right" (click)="showEdit(1)">edit</mat-icon>
+          </div>
+          <input *ngIf="isEditRoom == true" type ="text" style="width:70%" class="form-control" #name = "ngModel" name= "name" [(ngModel)] = "formAddData.name">
+          <div *ngIf="isEditRoom == true" class="room-actions">
+            <mat-icon style="float:right"(click)="showEdit(1)">cancel</mat-icon>
+            <mat-icon style="float:right"(click)="onEditRoom(joinedRoomId,formAddData)">done</mat-icon>           
+          </div>
+        </div>
+        <div class="chat-body">
+          <ul class="list-unstyled" *ngFor="let message of chatMessages">
+            <li>
+              <div class="chat-message d-flex" [ngClass]="message.isMine === true? 'ismine':'isorder'">
+                <div class="left-side">
+                  <img src="/assets/img/" class="message-avatar" />
+                </div>
+                <div class="message-content d-flex flex-column">
+                  <div class="d-flex justify-content-between">
+                    <span class="author">{{message.from}}</span>
+                    <span class="timestamp">
+                      <i class="fas fa-clock"></i>
+                      <span>{{message.timestamp}}</span>
+                    </span>
+                  </div>
+                  <span>{{message.content}}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="chat-input">
+          <input matInput id="chat-message" #content = "ngModel" name= "content" [(ngModel)] = "formChatMessage.content" (keyup.enter)="sendNewMessage()"/>
+          <!-- <textarea matInput placeholder="What's on your mind?"></textarea> -->
+          <div class="actions d-flex align-items-center" style="margin-right: 10px;"> 
+            <form>
+              <label for="UploadFile" class="custom-file-upload">
+                <i class="fas fa-image"></i>
+              </label>
+              <input type="file" id="UploadFile" name="File" accept=".jpg, .jpeg, .png">
+            </form>
+            <a id="emojibtn">
+              <i class="fas fa-smile" (click)="toggled = !toggled"></i>
+            </a>
+            <!-- <emoji-mart *ngIf="toggled" (click)="handleSelection($event)"></emoji-mart>
+            <i class="fas fa-paper-plane" id="btn-send-message"></i> -->
+          </div>
+        </div>
+      </div>
+  
+      <div class="users-container">
+        <div class="header">
+          <h2>Who's Here (<span *ngIf ="lstUser != undefined">{{lstUser.length}}</span>)</h2>
+        </div>
+          <ul id="user-list" class="list-unstyled" *ngFor="let user of lstUser">
+              <li (click)="onPrivateChat(user)">
+                  <div class="user">
+                      <img src="#" class="user-avatar" />
+                      <div class="right-side">
+                          <input type="hidden" value ="user.username" />
+                          <span class="author">{{user.username}}</span>
+                          <small>{{user.device}}</small>
+                      </div>
+                  </div>
+              </li>
+          </ul>
+          <input type="text" class="" placeholder="Search someone..."/>
+      </div>
+    </div>
+  </form>
+  
+</div>
+
+<!--- Popup thêm room -->  
+<ng-template #actions>   
+  <div class="modal-body">
+    <div class="form-group">
+      <div class="row" style="margin-top:20px">
+        <div class="col-lg-3">
+          <span style="font-weight: bold; position: absolute; top:25%">Rooms Name</span>
+        </div>
+        <div class="col-lg-4">
+         <input type ="text" class="form-control"  #Name = "ngModel" name= "Name" [(ngModel)] = "formAddData.name">
+        </div>
+      </div>
+    </div>  
+    
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green"(click)="onSubmit()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red"></i>
+  </div>  
+</ng-template> 
+

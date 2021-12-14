@@ -1,4 +1,5 @@
 import { Assignment } from "./assignment";
+import { Forum } from "./forum";
 
 export class CourseContent {
     Id: number = 0;
@@ -7,6 +8,8 @@ export class CourseContent {
     Details: string = '';
     LstFile: FileModel[];
     LstAssignment: Assignment[]
+    LstForum: Forum[];
+    LstVideo: Video[];
 }
 
 export class FileModel {
@@ -17,5 +20,22 @@ export class FileModel {
    FilePath: string = '';
    FileType: string = '';
 }
+
+export class Video {
+    Id: number = 0;
+    SubjectId: number = 0;
+    YoutubeLink: string = '';
+    Title: string = '';
+    Tags: string = '';
+ }
+
+export class VideoModel {
+    id: number = 0;
+    subjectId: number = 0;
+    youtubeLink: string = '';
+    title: string = '';
+    tags: string = '';
+ }
+
 
 

@@ -3,8 +3,12 @@
       <!-- <a class="navbar-brand" style="margin-left: 10px">Home</a>
       <a class="navbar-brand" style="position: absolute; margin-left: 65px; color:blue">/Content</a> -->
       <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
-      <button class="btn btn-danger my-2 my-sm-0" style="margin-right: 10px" (click)="onLogout()">Logout</button>
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <i class="fas fa-comment-dots fa-2x" style="margin-right:10px"(click)="openForm()"></i>
+        <button class="btn btn-danger my-2 my-sm-0" style="margin-right: 10px" (click)="onLogout()">Logout</button>
+      </div>
     </nav>
+    <app-chat></app-chat>
 <router-outlet></router-outlet>
 </div>
 

@@ -1,4 +1,4 @@
-import { Assignment, AssignmentModel, FileAssignment, SubmitStatus } from './../../shared/Models/assignment';
+import { Assignment, AssignmentModel, FileAssignment, StudentSubmit, SubmitStatus } from './../../shared/Models/assignment';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
@@ -22,6 +22,7 @@ export class AssignmentComponent implements OnInit {
   formStatus: SubmitStatus =  new SubmitStatus();
   formFile: FileAssignment[] = [];
   role: string='';
+  lstStudentSubmit: StudentSubmit[];
 
   constructor(private router: Router, 
     private contentService: ContentService,
@@ -29,11 +30,12 @@ export class AssignmentComponent implements OnInit {
     private messageService: MessageService, private mailService: MailService) { }
 
   ngOnInit(): void {
-    this.formData.id =this.activatedRoute.snapshot.params.id;
+    this.formData.id = this.activatedRoute.snapshot.params.id;
     console.log(this.activatedRoute.snapshot.params.subjectId);
     this.getAssignmentBySubject(this.formData.id);
     this.checkStatusSubmit();
     this.getLstAssignmentSubmit();
+    this.getAllStudentSubmit(this.activatedRoute.snapshot.params.courseId, this.activatedRoute.snapshot.params.id);
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
   }
 
@@ -70,8 +72,9 @@ export class AssignmentComponent implements OnInit {
     console.log(this.files);
     let assignmentId = this.activatedRoute.snapshot.params.id;
     let userSubmit: any;
+    let subjectId = this.activatedRoute.snapshot.params.subjectId;
     userSubmit = localStorage.getItem('username');
-    this.contentService.UploadFile(this.files,assignmentId,userSubmit).subscribe(
+    this.contentService.UploadFile(this.files,assignmentId,userSubmit,subjectId).subscribe(
       (res) => {
         this.checkStatusSubmit();
         this.sendEmail();
@@ -184,5 +187,52 @@ export class AssignmentComponent implements OnInit {
     let subject = "Nộp bài tập";
     let body = "Bạn đã nộp bài tập, vui lòng không phản hồi lại email này."
     this.mailService.SendEmail(toEmail, subject, body).subscribe();
+  }
+
+  getAllStudentSubmit(courseId:number, assignmentId:number){
+    this.contentService.GetAllStudentSubmit(courseId, assignmentId).subscribe(
+      (res) => {
+        this.lstStudentSubmit = res as StudentSubmit[];
+        console.log(this.formData);
+      },
+      (error) => {}
+    )
+  }
+
+  onSubmitEdit(){
+    let assignmentId = this.activatedRoute.snapshot.params.id;
+    let userSubmit: any;
+    let subjectId = this.activatedRoute.snapshot.params.subjectId;
+    userSubmit = localStorage.getItem('username');
+    this.contentService.DelFileSubmit(userSubmit, assignmentId).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail',
+          });
+        }
+        else{
+          //Xóa trc khi edit theo user
+          this.contentService.UploadFile(this.files,assignmentId,userSubmit,subjectId).subscribe(
+            (res) => {
+              this.checkStatusSubmit();
+              this.sendEmail();
+              this.getLstAssignmentSubmit();
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Successful Edit',
+              });
+            },
+            (error) => {}
+          )
+        }
+      },
+      (error) => {}
+    );
+
+    
   }
 }

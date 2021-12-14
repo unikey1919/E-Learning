@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace E_LearnignWebAPI.Controllers
@@ -47,10 +48,16 @@ namespace E_LearnignWebAPI.Controllers
                     obj.SubjectName = (dt.Rows[i]["subjectName"]).ToString();
                     DataTable fileData = elearningBll.GetFileBySubject(obj);
                     //Lấy danh sách bài tập thuộc chương
-                    var assignment = _context.Assignment.Where(n=>n.SubjectId == obj.Id).ToList();
+                    var assignment = _context.Assignment.Where(n=>n.SubjectId == obj.Id && n.isDelete == false).ToList();
                     obj.LstAssignment = assignment;
-                    obj.LstFile = new List<FileModel>();
+                    //Lấy danh sách forum thuộc chương
+                    var forum = _context.Forum.Where(n => n.SubjectId == obj.Id && n.isDelete == false).ToList();
+                    obj.LstForum = forum;
+                    //Lấy danh sách video thuộc chương
+                    var video= _context.Video.Where(n => n.SubjectId == obj.Id && n.isDelete == false).ToList();
+                    obj.LstVideo = video;
                     //Lấy danh sách file đính kèm thuộc chương
+                    obj.LstFile = new List<FileModel>();
                     for (int j = 0; j < fileData.Rows.Count; j++)
                     {
                         FileModel objFile = new FileModel();
@@ -187,7 +194,13 @@ namespace E_LearnignWebAPI.Controllers
                 foreach (var file in files.files)
                 {
                     FileRecord filerc = await SaveFileAsync(file);
-                    SaveToAssignmentDB(filerc, files.submitUser, files.assignmentId);
+                    if (files.assignmentId == "-1")
+                    {
+                        SaveToDB(filerc, files.subjectId);
+                    }
+                    else
+                        SaveToAssignmentDB(filerc, files.submitUser, files.assignmentId);
+
                 }
                 return new HttpResponseMessage(HttpStatusCode.OK);
 
@@ -215,6 +228,37 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+
+        [HttpPost]
+        [Route("DelFile")]
+        public ApiResultMessage DelFile(FileContent model)
+        {
+            try
+            {
+                elearningBll.DelFile(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("DelFileSubmit")]
+        public ApiResultMessage DelFileSubmit(FileAssignment model)
+        {
+            try
+            {
+                elearningBll.DelFileSubmit(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
         #region Assingment
         [HttpPost]
         [Route("AddAssignmentBySubject")]
@@ -267,6 +311,233 @@ namespace E_LearnignWebAPI.Controllers
         {
             var assignment = _context.FileAssignment.Where(n => n.isDelete == false && n.AssignmentId == assignmentId).ToList();
             return Ok(assignment);
+        }
+
+        [HttpGet]
+        [Route("GetAllStudentSubmit/{courseId}/{assingmentId}")]
+        public IActionResult GetAllStudentSubmit(int courseId, int assingmentId)
+        {
+
+                DataTable dt = elearningBll.GetAllStudentByCourse(courseId);
+                List<StudentSubmit> lstStudent = new List<StudentSubmit>();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    StudentSubmit obj = new StudentSubmit();
+                    obj.Id = (dt.Rows[i]["Id"]).ToString();
+                    obj.UserName = (dt.Rows[i]["UserName"]).ToString();
+                    obj.FullName = (dt.Rows[i]["FullName"]).ToString();
+                    obj.Email = (dt.Rows[i]["Email"]).ToString();
+                    obj.StudentId = Convert.ToInt32(dt.Rows[i]["StudentId"]);
+                //Lấy danh sách bài tập đã nộp theo từng user
+                    var assignmentSubmit = _context.FileAssignment.Where(n => n.UserSubmit == obj.UserName && n.AssignmentId == assingmentId).ToList();
+                    obj.LstAssignmentSubmit = assignmentSubmit;
+
+                //check deadline
+                    var assignmentSubmitStatus = _context.FileAssignment.Where(n => n.isDelete == false && n.UserSubmit == obj.UserName && n.AssignmentId == assingmentId).Select(n => n.SubmitDate).FirstOrDefault();
+                    var assignmentDue = _context.Assignment.Where(n => n.Id == assingmentId).Select(n => n.Due).FirstOrDefault();
+                TimeSpan now = new TimeSpan();
+                //1 / 1 / 0001 12:00:00 AM
+                if (assignmentSubmitStatus == new DateTime())
+                    now = assignmentDue - assignmentDue;
+                else
+                    now = assignmentDue - assignmentSubmitStatus;
+                if (now.Ticks == 0)
+                {
+                    obj.Status = 0; //Chưa nộp
+                }
+                if (now.Ticks < 0)
+                {
+                    obj.Status = 1; //Nộp trễ
+                }
+                if (now.Ticks > 0)
+                {
+                    obj.Status = 2; //Nộp đúng hạn
+                }
+                lstStudent.Add(obj);
+                }
+            return Ok(lstStudent);
+        }
+
+        [HttpPost]
+        [Route("DelAssignment")]
+        public ApiResultMessage DelAssignment(Assignment model)
+        {
+            try
+            {
+                elearningBll.DelAssignment(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("UpdateAssignment")]
+        public ApiResultMessage UpdateAssignment(Assignment model)
+        {
+            try
+            {
+                elearningBll.UpdateAssignment(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        #endregion
+
+        #region Forum
+        [HttpPost]
+        [Route("AddForumBySubject")]
+        public ApiResultMessage AddForumBySubject(Forum model)
+        {
+            try
+            {
+                elearningBll.AddForumBySubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpPost]
+        [Route("DelForum")]
+        public ApiResultMessage DelForum(Forum model)
+        {
+            try
+            {
+                elearningBll.DelForum(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpPost]
+        [Route("UpdateForum")]
+        public ApiResultMessage UpdateForum(Forum model)
+        {
+            try
+            {
+                elearningBll.UpdateForum(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        #region Discusstion
+        [HttpPost]
+        [Route("AddDiscussBySubject")]
+        public ApiResultMessage AddDiscussBySubjectForum(Discussion model)
+        {
+            try
+            {
+                elearningBll.AddDiscussBySubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpPost]
+        [Route("DelDiscuss")]
+        public ApiResultMessage DelDiscuss(Discussion model)
+        {
+            try
+            {
+                elearningBll.DelDiscuss(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        #endregion
+        #endregion
+        #region Video
+        [HttpPost]
+        [Route("AddVideoBySubject")]
+        public ApiResultMessage AddVideoBySubject(VideoModel model)
+        {
+            try
+            {
+                //Cắt ID
+                string YoutubeLinkRegex = "(?:.+?)?(?:\\/v\\/|watch\\/|\\?v=|\\&v=|youtu\\.be\\/|\\/v=|^youtu\\.be\\/)([a-zA-Z0-9_-]{11})+";
+                var regex = new Regex(YoutubeLinkRegex, RegexOptions.Compiled);
+                Match youtubeMatch = regex.Match(model.YoutubeLink);
+                string id = string.Empty;
+
+                if (youtubeMatch.Success)
+                    id = youtubeMatch.Groups[1].Value;
+                model.YoutubeLink = id;
+
+                elearningBll.AddVideoBySubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpGet]
+        [Route("GetVideoInfo/{Id}")]
+        public async Task<ActionResult<Video>> GetVideoInfo(int Id)
+        {
+            var video = await _context.Video.FindAsync(Id);
+
+            if (video == null)
+            {
+                return NotFound();
+            }
+
+            return video;
+        }
+        [HttpPost]
+        [Route("DelVideo")]
+        public ApiResultMessage DelVideo(VideoModel model)
+        {
+            try
+            {
+                elearningBll.DelVideo(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpPost]
+        [Route("UpdateVideo")]
+        public ApiResultMessage UpdateVideo(VideoModel model)
+        {
+            try
+            {
+                //Cắt ID
+                string YoutubeLinkRegex = "(?:.+?)?(?:\\/v\\/|watch\\/|\\?v=|\\&v=|youtu\\.be\\/|\\/v=|^youtu\\.be\\/)([a-zA-Z0-9_-]{11})+";
+                var regex = new Regex(YoutubeLinkRegex, RegexOptions.Compiled);
+                Match youtubeMatch = regex.Match(model.YoutubeLink);
+                string id = string.Empty;
+
+                if (youtubeMatch.Success)
+                    id = youtubeMatch.Groups[1].Value;
+                model.YoutubeLink = id;
+
+                elearningBll.UpdateVideo(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
         }
         #endregion
     }

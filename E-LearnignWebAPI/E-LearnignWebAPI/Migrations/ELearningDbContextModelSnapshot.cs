@@ -32,7 +32,7 @@ namespace E_LearnignWebAPI.Migrations
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Due")
+                    b.Property<DateTime>("Due")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Opened")
@@ -81,6 +81,38 @@ namespace E_LearnignWebAPI.Migrations
                     b.HasIndex("InstructorId");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Discussion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiscussName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ForumId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isDelete")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ForumId");
+
+                    b.ToTable("Discussion");
                 });
 
             modelBuilder.Entity("ElearningBO.E_Learning.Enrollment", b =>
@@ -187,6 +219,35 @@ namespace E_LearnignWebAPI.Migrations
                     b.ToTable("FileContent");
                 });
 
+            modelBuilder.Entity("ElearningBO.E_Learning.Forum", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ForumName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDelete")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Forum");
+                });
+
             modelBuilder.Entity("ElearningBO.E_Learning.Instructor", b =>
                 {
                     b.Property<int>("Id")
@@ -205,6 +266,59 @@ namespace E_LearnignWebAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Instructors");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FromUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromUserId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Message");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AdminId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Room");
                 });
 
             modelBuilder.Entity("ElearningBO.E_Learning.Student", b =>
@@ -256,6 +370,106 @@ namespace E_LearnignWebAPI.Migrations
                     b.ToTable("Subject");
                 });
 
+            modelBuilder.Entity("ElearningBO.E_Learning.Video", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("YoutubeLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isDelete")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Video");
+                });
+
+            modelBuilder.Entity("ElearningBO.UserAuthentication.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -305,77 +519,6 @@ namespace E_LearnignWebAPI.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -458,16 +601,6 @@ namespace E_LearnignWebAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ElearningBO.UserAuthentication.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
             modelBuilder.Entity("ElearningBO.E_Learning.Assignment", b =>
                 {
                     b.HasOne("ElearningBO.E_Learning.Subject", "Subject")
@@ -488,6 +621,17 @@ namespace E_LearnignWebAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Discussion", b =>
+                {
+                    b.HasOne("ElearningBO.E_Learning.Forum", "Forum")
+                        .WithMany()
+                        .HasForeignKey("ForumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Forum");
                 });
 
             modelBuilder.Entity("ElearningBO.E_Learning.Enrollment", b =>
@@ -531,6 +675,17 @@ namespace E_LearnignWebAPI.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("ElearningBO.E_Learning.Forum", b =>
+                {
+                    b.HasOne("ElearningBO.E_Learning.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("ElearningBO.E_Learning.Instructor", b =>
                 {
                     b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", "ApplicationUser")
@@ -538,6 +693,40 @@ namespace E_LearnignWebAPI.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Message", b =>
+                {
+                    b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", "FromUser")
+                        .WithMany()
+                        .HasForeignKey("FromUserId");
+
+                    b.HasOne("ElearningBO.E_Learning.Room", "Room")
+                        .WithMany("Messages")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FromUser");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Room", b =>
+                {
+                    b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", "Admin")
+                        .WithMany()
+                        .HasForeignKey("AdminId");
+
+                    b.HasOne("ElearningBO.E_Learning.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("ElearningBO.E_Learning.Student", b =>
@@ -560,6 +749,17 @@ namespace E_LearnignWebAPI.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("ElearningBO.E_Learning.Video", b =>
+                {
+                    b.HasOne("ElearningBO.E_Learning.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -571,7 +771,7 @@ namespace E_LearnignWebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -580,7 +780,7 @@ namespace E_LearnignWebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -595,7 +795,7 @@ namespace E_LearnignWebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -604,7 +804,7 @@ namespace E_LearnignWebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -619,6 +819,11 @@ namespace E_LearnignWebAPI.Migrations
             modelBuilder.Entity("ElearningBO.E_Learning.Instructor", b =>
                 {
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Room", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("ElearningBO.E_Learning.Student", b =>
