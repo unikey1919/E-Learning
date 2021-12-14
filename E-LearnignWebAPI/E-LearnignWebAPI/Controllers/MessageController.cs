@@ -71,6 +71,31 @@ namespace E_LearnignWebAPI.Controllers
 
             return Ok(messagesViewModel);
         }
+        [HttpPost]
+        public async Task<ActionResult<Message>> Create(MessageViewModel messageViewModel)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            var room = _context.Room.FirstOrDefault(r => r.Name == messageViewModel.Room);
+            if (room == null)
+                return BadRequest();
+
+            var msg = new Message()
+            {
+                Content = Regex.Replace(messageViewModel.Content, @"<.*?>", string.Empty),
+                FromUser = user,
+                Room = room,
+                Timestamp = DateTime.Now
+            };
+
+            _context.Message.Add(msg);
+            await _context.SaveChangesAsync();
+
+            // Broadcast the message
+            var createdMessage = _mapper.Map<Message, MessageViewModel>(msg);
+            await _hubContext.Clients.Group(room.Name).SendAsync("newMessage", createdMessage);
+
+            return CreatedAtAction(nameof(Get), new { id = msg.Id }, createdMessage);
+        }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -173,72 +198,72 @@ namespace E_LearnignWebAPI.Controllers
             return NoContent();
         }
         #endregion
-        #region UploadFile
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upload([FromForm] UploadViewModel uploadViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                if (!Validate(uploadViewModel.File))
-                {
-                    return BadRequest("Validation failed!");
-                }
+        //#region UploadFile
+        //[HttpPost]
+        ////[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Upload([FromForm] UploadViewModel uploadViewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (!Validate(uploadViewModel.File))
+        //        {
+        //            return BadRequest("Validation failed!");
+        //        }
 
-                var fileName = DateTime.Now.ToString("yyyymmddMMss") + "_" + Path.GetFileName(uploadViewModel.File.FileName);
-                var folderPath = Path.Combine(_environment.WebRootPath, "uploads");
-                var filePath = Path.Combine(folderPath, fileName);
-                if (!Directory.Exists(folderPath))
-                    Directory.CreateDirectory(folderPath);
+        //        var fileName = DateTime.Now.ToString("yyyymmddMMss") + "_" + Path.GetFileName(uploadViewModel.File.FileName);
+        //        var folderPath = Path.Combine(_environment.WebRootPath, "uploads");
+        //        var filePath = Path.Combine(folderPath, fileName);
+        //        if (!Directory.Exists(folderPath))
+        //            Directory.CreateDirectory(folderPath);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await uploadViewModel.File.CopyToAsync(fileStream);
-                }
+        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            await uploadViewModel.File.CopyToAsync(fileStream);
+        //        }
 
-                var user = _context.ApplicationUsers.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-                var room = _context.Room.Where(r => r.Id == uploadViewModel.RoomId).FirstOrDefault();
-                if (user == null || room == null)
-                    return NotFound();
+        //        var user = _context.ApplicationUsers.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+        //        var room = _context.Room.Where(r => r.Id == uploadViewModel.RoomId).FirstOrDefault();
+        //        if (user == null || room == null)
+        //            return NotFound();
 
-                string htmlImage = string.Format(
-                    "<a href=\"/uploads/{0}\" target=\"_blank\">" +
-                    "<img src=\"/uploads/{0}\" class=\"post-image\">" +
-                    "</a>", fileName);
+        //        string htmlImage = string.Format(
+        //            "<a href=\"/uploads/{0}\" target=\"_blank\">" +
+        //            "<img src=\"/uploads/{0}\" class=\"post-image\">" +
+        //            "</a>", fileName);
 
-                var message = new Message()
-                {
-                    Content = Regex.Replace(htmlImage, @"(?i)<(?!img|a|/a|/img).*?>", string.Empty),
-                    Timestamp = DateTime.Now,
-                    FromUser = user,
-                    Room = room
-                };
+        //        var message = new Message()
+        //        {
+        //            Content = Regex.Replace(htmlImage, @"(?i)<(?!img|a|/a|/img).*?>", string.Empty),
+        //            Timestamp = DateTime.Now,
+        //            FromUser = user,
+        //            Room = room
+        //        };
 
-                await _context.Message.AddAsync(message);
-                await _context.SaveChangesAsync();
+        //        await _context.Message.AddAsync(message);
+        //        await _context.SaveChangesAsync();
 
-                // Send image-message to group
-                var messageViewModel = _mapper.Map<Message, MessageViewModel>(message);
-                //   await _hubContext.Clients.Group(room.Name).SendAsync("newMessage", messageViewModel);
+        //        // Send image-message to group
+        //        var messageViewModel = _mapper.Map<Message, MessageViewModel>(message);
+        //        //   await _hubContext.Clients.Group(room.Name).SendAsync("newMessage", messageViewModel);
 
-                return Ok();
-            }
+        //        return Ok();
+        //    }
 
-            return BadRequest();
-        }
+        //    return BadRequest();
+        //}
 
-        private bool Validate(IFormFile file)
-        {
-            if (file.Length > FileSizeLimit)
-                return false;
+        //private bool Validate(IFormFile file)
+        //{
+        //    if (file.Length > FileSizeLimit)
+        //        return false;
 
-            var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
-            if (string.IsNullOrEmpty(extension) || !AllowedExtensions.Any(s => s.Contains(extension)))
-                return false;
+        //    var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        //    if (string.IsNullOrEmpty(extension) || !AllowedExtensions.Any(s => s.Contains(extension)))
+        //        return false;
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        #endregion
+        //#endregion
     }
 }
