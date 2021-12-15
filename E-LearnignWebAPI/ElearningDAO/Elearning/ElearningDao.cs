@@ -632,7 +632,7 @@ namespace ElearningDAO.Elearning
                 string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetDiscussionForum(@p_forumid, @p_id)", conn);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetDiscussion(@p_forumid, @p_id)", conn);
                 cmd.Parameters.AddWithValue("@p_forumid", forumId);
                 cmd.Parameters.AddWithValue("@p_id", id);
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);

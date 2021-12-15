@@ -372,7 +372,6 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
-
         [HttpPost]
         [Route("UpdateAssignment")]
         public ApiResultMessage UpdateAssignment(Assignment model)
@@ -390,6 +389,19 @@ namespace E_LearnignWebAPI.Controllers
         #endregion
 
         #region Forum
+        [HttpGet]
+        [Route("GetForum/{id}")]
+        public async Task<ActionResult<Forum>> GetForum(int id)
+        {
+            var forum = await _context.Forum.FindAsync(id);
+
+            if (forum == null)
+            {
+                return NotFound();
+            }
+
+            return forum;
+        }
         [HttpPost]
         [Route("AddForumBySubject")]
         public ApiResultMessage AddForumBySubject(Forum model)
@@ -448,7 +460,7 @@ namespace E_LearnignWebAPI.Controllers
             }
         }
         [HttpGet]
-        [Route("GetDiscussByForum/{forumId}/{id}")]
+        [Route("GetDiscuss/{forumId}/{id}")]
         public ApiResultMessage GetDiscuss(int forumId,int id)
         {
             try

@@ -89,6 +89,10 @@ export class ContentService {
     return this.httpClient.post(this.baseURL + '/DelFileSubmit', this.objectFileSubmitModel);
   }
 
+  GetForum(id:number): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/GetForum/${id}`);
+  }
+
   AddForumBySubject(forumObjModel): Observable<any>{
     return this.httpClient.post(this.baseURL + '/AddForumBySubject', forumObjModel);
   }

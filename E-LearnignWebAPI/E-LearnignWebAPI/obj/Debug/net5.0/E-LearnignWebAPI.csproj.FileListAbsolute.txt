@@ -586,4 +586,3 @@ C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debu
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll
-C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\obj\Debug\net5.0\E-LearnignWebAPI.csproj.CopyComplete

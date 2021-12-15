@@ -27,6 +27,7 @@ export class ForumComponent implements OnInit {
   ngOnInit(): void {
     this.formData.id = this.activatedRoute.snapshot.params.id;
     this.getDiscussByForum();
+    this.getForum();
   }
 
   onSubmitDiscussion(){
@@ -77,10 +78,20 @@ export class ForumComponent implements OnInit {
     );
   }
 
+  getForum(){
+    var forumId = this.activatedRoute.snapshot.params.id;
+    this.contentService.GetForum(forumId).subscribe(
+      (res) => {
+        this.formData = res;
+      },
+      (error) => {}
+    );
+  }
+
   getDiscussionContent(id: number){
     var courseId = this.activatedRoute.snapshot.params.courseId;
     var subjectId = this.activatedRoute.snapshot.params.subjectId;
-    var forumId = this.activatedRoute.snapshot.params.forumId;
+    var forumId = this.activatedRoute.snapshot.params.id;
     this.router.navigate([ `/e-learning/course/discussion/${id}/${forumId}/${subjectId}/${courseId}` ])
   }
 }

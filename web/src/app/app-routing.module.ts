@@ -119,7 +119,7 @@ const routes: Routes = [
           },
           {
             label: 'Forum',
-            url: '/e-learning/course/forum/:forumId'
+            url: '/e-learning/course/forum/:forumId/:subjectId/:courseId'
           },
           {
             label: 'Discussion',

@@ -1,1 +1,21 @@
-<p>discussion works!</p>
+<mat-card style=" margin-top: 20px" appMaterialElevation>
+    <mat-card-title>
+      {{formForumData.forumName}}
+    </mat-card-title>
+    <mat-card-content style="margin-bottom: 20px" *ngFor="let item of formData">
+     <mat-card>
+         <mat-card-content>
+             <div class="row">
+                <strong style="font-size:16px">{{item.DiscussName}}</strong>
+                <div class="col-lg-4"> 
+                    By <span style="color:blue">{{item.FullName}}</span> - at {{item.CreateDate | date: "short"}}
+                 </div>
+             </div>
+             <div [innerHTML]="item.Details" style="margin-top:20px"></div>
+         </mat-card-content>
+         <mat-card-actions>
+             <button style="align-item:right" mat-stroked-button>Answer this post</button>
+         </mat-card-actions>
+     </mat-card>
+    </mat-card-content>
+  </mat-card>
