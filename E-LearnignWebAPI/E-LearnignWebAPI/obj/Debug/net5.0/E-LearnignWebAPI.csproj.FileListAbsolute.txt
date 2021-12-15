@@ -599,3 +599,7 @@ C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net
 C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\System.IO.Pipelines.dll
 C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll
 C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\System.Xml.XPath.XmlDocument.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\EPPlus.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\System.Xml.XPath.XmlDocument.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\obj\Debug\net5.0\E-LearnignWebAPI.csproj.CopyComplete
