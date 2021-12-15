@@ -51,6 +51,7 @@ import { ForumComponent } from './e-learning/forum/forum.component';
 import {YouTubePlayerModule} from '@angular/youtube-player';
 import { ChatComponent } from './e-learning/chat/chat.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { DiscussionComponent } from './e-learning/chat/discussion/discussion.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +72,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     AssignmentComponent,
     ForumComponent,
     ChatComponent,
+    DiscussionComponent,
   ],
   imports: [
     MatCheckboxModule,

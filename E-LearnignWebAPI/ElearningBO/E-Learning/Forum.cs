@@ -30,7 +30,7 @@ namespace ElearningBO.E_Learning
 
         [ForeignKey("Forum")]
         public int ForumId { get; set; }
-        public ApplicationUser UserId { get; set; }
+        public ApplicationUser User { get; set; }
         public string DiscussName { get; set; }
         public string Details { get; set; }
         public DateTime CreateDate { get; set; }

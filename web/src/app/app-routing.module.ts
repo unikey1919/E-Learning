@@ -16,6 +16,7 @@ import { StudentComponent } from './admin-panel/student/student.component';
 import { ContentComponent } from './e-learning/content/content.component';
 import { AssignmentComponent } from './e-learning/assignment/assignment.component';
 import { ELearningComponent } from './e-learning/e-learning.component';
+import { DiscussionComponent } from './e-learning/chat/discussion/discussion.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user/login', pathMatch: 'full' },
@@ -101,6 +102,28 @@ const routes: Routes = [
           {
             label: 'Forum',
             url: '/e-learning/course/forum'
+          },
+        ]
+      }, },
+      { path: 'course/discussion/:id/:forumId/:subjectId/:courseId', component: DiscussionComponent,
+      data: {
+        title: 'content',
+        breadcrumb: [
+          {
+            label: 'Home',
+            url: '/e-learning/home'
+          },
+          {
+            label: 'Subject',
+            url: '/e-learning/course/content/:courseId'
+          },
+          {
+            label: 'Forum',
+            url: '/e-learning/course/forum/:forumId'
+          },
+          {
+            label: 'Discussion',
+            url: '/e-learning/course/discussion'
           },
         ]
       }, },

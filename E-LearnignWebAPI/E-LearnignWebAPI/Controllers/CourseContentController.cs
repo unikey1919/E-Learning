@@ -433,12 +433,41 @@ namespace E_LearnignWebAPI.Controllers
             }
         }
         #region Discusstion
+        [HttpGet]
+        [Route("GetDiscussByForum/{forumId}")]
+        public ApiResultMessage GetDiscussByForum(int forumId)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetDiscussByForum(forumId);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpGet]
+        [Route("GetDiscussByForum/{forumId}/{id}")]
+        public ApiResultMessage GetDiscuss(int forumId,int id)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetDiscuss(forumId,id);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
         [HttpPost]
         [Route("AddDiscussBySubject")]
         public ApiResultMessage AddDiscussBySubjectForum(Discussion model)
         {
             try
             {
+                model.User = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
                 elearningBll.AddDiscussBySubject(model);
                 return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
             }

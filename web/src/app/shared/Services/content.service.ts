@@ -101,8 +101,16 @@ export class ContentService {
     return this.httpClient.post(this.baseURL + '/UpdateForum', forumObjModel);
   }
 
+  GetDiscussByForum(forumId: number): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/GetDiscussByForum/${forumId}`);
+  }
+
+  GetDiscuss(forumId: number, id: number): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/GetDiscuss/${forumId}/${id}`);
+  }
+
   AddDiscussBySubjectForum(discussionObjModel): Observable<any>{
-    return this.httpClient.post(this.baseURL + '/AddDiscussBySubjectForum', discussionObjModel);
+    return this.httpClient.post(this.baseURL + '/AddDiscussBySubject', discussionObjModel);
   }
 
   DelDiscuss(discussionObjModel): Observable<any>{

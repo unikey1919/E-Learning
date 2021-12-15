@@ -605,6 +605,45 @@ namespace ElearningDAO.Elearning
             }
         }
         #region Discusstion
+        public DataTable GetDiscussByForum(int forumId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetDiscussionForum(@p_forumid)", conn);
+                cmd.Parameters.AddWithValue("@p_forumid", forumId);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetDiscuss Error: " + ex.Message);
+            }
+            return dt;
+        }
+        public DataTable GetDiscuss(int forumId, int id)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetDiscussionForum(@p_forumid, @p_id)", conn);
+                cmd.Parameters.AddWithValue("@p_forumid", forumId);
+                cmd.Parameters.AddWithValue("@p_id", id);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetDiscussByForum Error: " + ex.Message);
+            }
+            return dt;
+        }
         public void AddDiscussBySubject(Discussion model)
         {
             try
@@ -616,6 +655,7 @@ namespace ElearningDAO.Elearning
                 cmd.Parameters.AddWithValue("@p_forumid", model.ForumId);
                 cmd.Parameters.AddWithValue("@p_discussname", model.DiscussName);
                 cmd.Parameters.AddWithValue("@p_details", model.Details);
+                cmd.Parameters.AddWithValue("@p_user", model.User.Id);
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();

@@ -362,6 +362,30 @@ namespace ElearningBLL.BLL
             }
         }
         #region Discusstion
+        public DataTable GetDiscussByForum(int forumId)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetDiscussByForum(forumId);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetDiscussByForum Error: " + ex.Message);
+            }
+        }
+        public DataTable GetDiscuss(int forumId, int id)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetDiscuss(forumId,id);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetDiscuss Error: " + ex.Message);
+            }
+        }
         public void AddDiscussBySubject(Discussion model)
         {
             try
