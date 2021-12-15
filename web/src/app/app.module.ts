@@ -51,6 +51,7 @@ import { ForumComponent } from './e-learning/forum/forum.component';
 import {YouTubePlayerModule} from '@angular/youtube-player';
 import { ChatComponent } from './e-learning/chat/chat.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,7 +108,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     NgxDropzoneModule,
     NgDynamicBreadcrumbModule,
     YouTubePlayerModule,
-    PickerModule
+    PickerModule,
+    NgbModule
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,
