@@ -43,8 +43,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { StudentComponent } from './admin-panel/student/student.component';
 import { ContentComponent } from './e-learning/content/content.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AssignmentComponent } from './e-learning/assignment/assignment.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgxDropzoneModule } from 'ngx-dropzone';
@@ -105,8 +103,6 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     MessagesModule,
     MessageModule,
     ToastModule,
-    MatDatepickerModule,
-    NgbModule,
     CKEditorModule,
     NgxDropzoneModule,
     NgDynamicBreadcrumbModule,
