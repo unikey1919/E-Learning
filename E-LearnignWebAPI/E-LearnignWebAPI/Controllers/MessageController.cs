@@ -146,7 +146,8 @@ namespace E_LearnignWebAPI.Controllers
             var room = new Room()
             {
                 Name = roomViewModel.Name,
-                Admin = user
+                Admin = user,
+                CourseId = roomViewModel.CourseId
             };
 
             _context.Room.Add(room);

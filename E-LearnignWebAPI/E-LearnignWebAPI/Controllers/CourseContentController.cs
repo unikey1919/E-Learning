@@ -329,7 +329,7 @@ namespace E_LearnignWebAPI.Controllers
                     obj.Email = (dt.Rows[i]["Email"]).ToString();
                     obj.StudentId = Convert.ToInt32(dt.Rows[i]["StudentId"]);
                 //Lấy danh sách bài tập đã nộp theo từng user
-                    var assignmentSubmit = _context.FileAssignment.Where(n => n.UserSubmit == obj.UserName && n.AssignmentId == assingmentId).ToList();
+                    var assignmentSubmit = _context.FileAssignment.Where(n => n.UserSubmit == obj.UserName && n.AssignmentId == assingmentId && n.isDelete == false).ToList();
                     obj.LstAssignmentSubmit = assignmentSubmit;
 
                 //check deadline
