@@ -156,26 +156,28 @@ export class InstructorComponent implements OnInit {
   }
 
   onDelete(instructor: Instructor) {
-    this.instructorService.DelInstructor(instructor).subscribe(
-      (res: any) => {
-        if (res.isError == true) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'error',
-            detail: 'Fail to delete instructor',
-          });
-        }
-        else{
-          this.getListInstructor();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Instructor is deleted',
-          });
-        }
-      },
-      (error) => {}
-    );
+    if(confirm("Are you sure to delete this instructor?")) {
+      this.instructorService.DelInstructor(instructor).subscribe(
+        (res: any) => {
+          if (res.isError == true) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'error',
+              detail: 'Fail to delete instructor',
+            });
+          }
+          else{
+            this.getListInstructor();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Instructor is deleted',
+            });
+          }
+        },
+        (error) => {}
+      );
+    }
   }
 }
 

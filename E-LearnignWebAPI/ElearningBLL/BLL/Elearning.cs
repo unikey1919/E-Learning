@@ -1,8 +1,11 @@
 ﻿using ElearningBO.E_Learning;
 using ElearningDAO.Elearning;
+using Microsoft.AspNetCore.Http;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +45,20 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > GetAllCourse Error: " + ex.Message);
             }
         }
+
+        public DataTable GetAllCode()
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetAllCode();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetAllCode Error: " + ex.Message);
+            }
+        }
+
         public void AddCourse(CourseModel model)
         {
             try
@@ -100,6 +117,96 @@ namespace ElearningBLL.BLL
             catch (Exception ex)
             {
                 throw new Exception("Elearning > GetCourseByTeacher Error: " + ex.Message);
+            }
+        }
+
+        //Lấy danh sách học sinh theo khóa học
+        public DataTable GetStudentByCourse(int courseid)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetStudentByCourse(courseid);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetStudentByCourse Error: " + ex.Message);
+            }
+        }
+
+        //Lấy danh sách học sinh theo khóa học
+        public DataTable GetStudentNotInCourse(int courseid)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetStudentNotInCourse(courseid);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetStudentNotInCourse Error: " + ex.Message);
+            }
+        }
+
+        //xóa học sinh từ khóa học
+        public void DeleteStudentFromCourse(EnrollmentModel model)
+        {
+            try
+            {
+                objElDAO.DeleteStudentFromCourse(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DeleteStudentFromCourse Error: " + ex.Message);
+            }
+        }
+
+        //xóa danh sách học sinh từ khóa học
+        public void DeleteListStudentFromCourse(List<String> listEnrollment)
+        {
+            try
+            {
+                objElDAO.DeleteListStudentFromCourse(listEnrollment);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DeleteListStudentFromCourse Error: " + ex.Message);
+            }
+        }
+
+        //Thêm học sinh vào khóa học
+        public void AddStudentToCourse(AddEnrollment addEnrollment)
+        {
+            try
+            {
+                objElDAO.AddStudentToCourse(addEnrollment);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > AddStudentToCourse Error: " + ex.Message);
+            }
+        }
+
+        //Thêm khóa học bằng excel
+        public void AddCourseByExcel(List<CourseModelExcel> listExcel)
+        {
+            try
+            {
+                for (int i = 0; i < listExcel.Count; i++)
+                {
+                    CourseModel courseModel = new CourseModel();
+                    courseModel.Id = listExcel[i].Id;
+                    courseModel.InstructorId = listExcel[i].InstructorId;
+                    courseModel.Code = listExcel[i].Code;
+                    courseModel.Coursename = listExcel[i].CourseName;
+                    courseModel.Description = listExcel[i].Description;
+                    courseModel.Details = listExcel[i].Details;
+                    objElDAO.AddCourse(courseModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > AddStudentToCourse Error: " + ex.Message);
             }
         }
         #endregion

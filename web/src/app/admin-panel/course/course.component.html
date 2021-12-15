@@ -1,7 +1,11 @@
 
+<div>
+    <label style="font-family: Helᴠetiᴄa; font-size: medium; margin-right: 5px;">Nạp file excel:</label>
+    <input type="file" name="files" accept=".xlsx" (change)="chooseFile($event)" />
+    <button (click)="upload()" style="margin-left: 5px;" [hidden]="checkFile" mat-stroked-button color="primary">Nạp</button>
+</div>
+<br>
 <p-toast></p-toast>
-
-<a routerLink="test">Continue</a>
 
 <div class="row" *ngIf="showMe">
     <div class="col-lg-2">
@@ -41,13 +45,14 @@
                         <input type="checkbox" class="checkAll" id="checkAll1"/>
                     </th>
                     <th>No.</th>
-                    <th>Course</th>
-                    <th>Course Code</th>
-                    <th>Instructor Id</th>
-                    <th>Instructor name</th>
-                    <th>Description</th>
-                    <th>Details</th>
-                    <th style="width:8rem">
+                    <th>Khóa học</th>
+                    <th>Mã khóa học</th>
+                    <th>Id giảng viên</th>
+                    <th>Tên giảng viên </th>
+                    <th>Mô tả</th>
+                    <th>Chi tiết</th>
+                    <th>Danh sách học sinh</th>
+                    <th style="width:12rem">
                         <button (click)="showHide()" style="background: rgb(173, 224, 173)"  mat-raised-button>
                             <mat-icon >add</mat-icon>
                         </button>
@@ -123,6 +128,11 @@
                             </ng-template>
                         </p-cellEditor>
                     </td>
+                    <td>
+                        <button mat-icon-button (click)="openModalWithClass(template, item.id)">
+                            <mat-icon>remove_red_eye</mat-icon>
+                        </button>
+                    </td>
                     <td >
                         <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onRowEditInit(item)">
                             <mat-icon>launch</mat-icon>
@@ -141,6 +151,176 @@
             </ng-template>
         </p-table>
     </div>
+    <ng-template #template>  
+        <div class="modal-header">  
+          <h2 class="modal-title pull-left" style="color: red;">Danh sách học sinh của khóa</h2>  
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef1()">  
+            <span aria-hidden="true">×</span>  
+          </button>  
+        </div>  
+        <div class="modal-body">  
+          <div class="card">
+              <p-table #dt1  [value]="listStudentByCourse" dataKey="id" editMode="row" responsiveLayout="scroll"
+               [globalFilterFields]="['fullname','email', 'phonenumber']">
+                  <ng-template pTemplate="caption">
+                      <div class="p-d-flex">
+                          <span class="p-input-icon-left p-ml-auto">
+                              <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search" />
+                          </span>
+                      </div>
+                  </ng-template>
+                  
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th>
+      
+                          </th>
+                          <th>Họ và tên/th>
+                          <th>Email</th>
+                          <th>Số điện thoại</th>
+                          <th style="width:12rem">
+                            <button (click)="openModalWithClass1(template1)" style="background: rgb(173, 224, 173)"  mat-raised-button>
+                                <mat-icon >add</mat-icon>
+                            </button>
+                          </th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                      <tr [pEditableRow]="item">
+                          <td>
+                              <input type="checkbox" [value]="item.enrollmentid" (change)="onCheckboxChange($event)" ng-show="myVar"/>
+                          </td>
+                          <td>
+                              <p-cellEditor>
+                                  <ng-template pTemplate="output">
+                                      {{item.studentname}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td>       
+                          <td>
+                              <p-cellEditor>
+                                  <ng-template pTemplate="output">
+                                      {{item.email}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td>   
+                          <td>
+                              <p-cellEditor>
+                                  <ng-template pTemplate="output">
+                                      {{item.phonenumber}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td>   
+                          <td >
+                            <button mat-icon-button color="warn" (click)="onDeleteStudentFromCourse(item)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                          </td>
+                      </tr>
+                  </ng-template>
+              </p-table>
+          </div>
+        </div>   
+        <div class="modal-footer">  
+            <div [hidden]="checkList">
+                <button mat-raised-button color="warn" (click)="onDeleteListStudentFromCourse()">Xóa các mục đã chọn</button>
+            </div>
+          <i (click)="modalRef1()" class="far fa-times-circle fa-2x" style="color:red"></i>
+        </div>  
+      </ng-template>
 
-    
+      <ng-template #template1>  
+        <div class="modal-header">  
+          <h2 class="modal-title pull-left" style="color: red;">Danh sách học sinh chưa tham gia vào lớp</h2>  
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef2()">  
+            <span aria-hidden="true">×</span>  
+          </button>  
+          
+        </div>  
+        <form class="form-inline">
+            <div class="form-group" style="padding-left: 15px; padding-top: 5px;">
+                <label style="font-family: Helᴠetiᴄa; font-size: medium;">Date Enrollment:&nbsp;</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" [(ngModel)]="model1" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn-outline-secondary" (click)="d.toggle()" type="button">
+                    <mat-icon>calendar_today</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
 
+            <div class="form-group" style="padding-left: 10px; padding-top: 5px;">
+                <label style="font-family: Helᴠetiᴄa; font-size: medium;">Date Completion:&nbsp;</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp1" [(ngModel)]="model2" ngbDatepicker #d1="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn-outline-secondary" (click)="d1.toggle()" type="button">
+                    <mat-icon>calendar_today</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        <div class="modal-body">  
+          <div class="card">
+              <p-table #dt1  [value]="listStudentNotInCourse" dataKey="id" editMode="row" responsiveLayout="scroll"
+               [globalFilterFields]="['fullname','email', 'phonenumber']">
+                  <ng-template pTemplate="caption">
+                      <div class="p-d-flex">
+                          <span class="p-input-icon-left p-ml-auto">
+                              <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search" />
+                          </span>
+                      </div>
+                  </ng-template>
+                  
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th>
+      
+                          </th>
+                          <th>Họ và tên</th>
+                          <th>Email</th>
+                          <th>Số điện thoại</th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                      <tr [pEditableRow]="item">
+                          <td>
+                              <input type="checkbox" [value]="item.id" (change)="onCheckboxChange1($event)" ng-show="myVar"/>
+                          </td>
+                          <td>
+                              <p-cellEditor>
+                                  <ng-template pTemplate="output">
+                                      {{item.studentname}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td>       
+                          <td>
+                              <p-cellEditor>
+                                  <ng-template pTemplate="output">
+                                      {{item.email}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td>   
+                          <td>
+                              <p-cellEditor>
+                                  <ng-template pTemplate="output">
+                                      {{item.phonenumber}}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td>   
+                      </tr>
+                  </ng-template>
+              </p-table>
+          </div>
+        </div>   
+        <div class="modal-footer">  
+            <i (click)="submitForm()" class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green"></i>
+            <i (click)="modalRef2()" class="far fa-times-circle fa-2x" style="color:red"></i>
+        </div>  
+      </ng-template>
+      
