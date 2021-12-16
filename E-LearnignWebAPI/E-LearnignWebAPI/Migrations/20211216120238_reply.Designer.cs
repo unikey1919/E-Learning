@@ -4,14 +4,16 @@ using ElearningBO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_LearnignWebAPI.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211216120238_reply")]
+    partial class reply
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,6 +36,9 @@ namespace E_LearnignWebAPI.Migrations
 
                     b.Property<int>("DiscussId")
                         .HasColumnType("int");
+
+                    b.Property<string>("DiscussName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Reply")
                         .HasColumnType("int");

@@ -502,6 +502,42 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+        [HttpPost]
+        [Route("AddAnswer")]
+        public ApiResultMessage AddAnswer(Answer model)
+        {
+            try
+            {
+                model.User = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                elearningBll.AddAnswer(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        #endregion
+        #region Answer
+        [HttpGet]
+        [Route("GetAnswer/{discussId}")]
+        public IActionResult GetAnswer(int discussId)
+        {
+            var answer = _context.Answer
+                .Include(n => n.User)
+                .Where(n => n.isDelete == false && n.DiscussId == discussId)
+                .OrderBy(m => m.CreateDate)
+                .ToList();
+
+            return Ok(answer);
+        }
+        [HttpGet]
+        [Route("GetAnswerReply/{id}")]
+        public IActionResult GetAnswerReply(int id)
+        {
+            var reply = _context.Answer.Include(n => n.User).Where(n=> n.Id == id).ToList();
+            return Ok(reply);
+        }
         #endregion
         #endregion
         #region Video

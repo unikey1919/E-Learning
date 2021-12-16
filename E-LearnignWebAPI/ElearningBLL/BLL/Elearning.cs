@@ -408,6 +408,17 @@ namespace ElearningBLL.BLL
                 throw new Exception("DeliveryLoad > DelDiscuss Error: " + ex.Message);
             }
         }
+        public void AddAnswer(Answer model)
+        {
+            try
+            {
+                objElDAO.AddAnswer(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddAnswer Error: " + ex.Message);
+            }
+        }
         #endregion
         #endregion
         #region Video

@@ -4,14 +4,16 @@ using ElearningBO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_LearnignWebAPI.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211216132545_reply5")]
+    partial class reply5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,6 +27,9 @@ namespace E_LearnignWebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AnswersId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -45,6 +50,8 @@ namespace E_LearnignWebAPI.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnswersId");
 
                     b.HasIndex("DiscussId");
 
@@ -639,6 +646,10 @@ namespace E_LearnignWebAPI.Migrations
 
             modelBuilder.Entity("ElearningBO.E_Learning.Answer", b =>
                 {
+                    b.HasOne("ElearningBO.E_Learning.Answer", "Answers")
+                        .WithMany()
+                        .HasForeignKey("AnswersId");
+
                     b.HasOne("ElearningBO.E_Learning.Discussion", "Discussion")
                         .WithMany()
                         .HasForeignKey("DiscussId")
@@ -648,6 +659,8 @@ namespace E_LearnignWebAPI.Migrations
                     b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Answers");
 
                     b.Navigation("Discussion");
 

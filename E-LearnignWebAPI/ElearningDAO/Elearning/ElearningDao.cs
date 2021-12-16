@@ -684,6 +684,28 @@ namespace ElearningDAO.Elearning
                 throw new Exception("ElearningDao > DelDiscuss Error: " + ex.Message);
             }
         }
+        public void AddAnswer(Answer model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddAnswer", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_discussid", model.DiscussId);
+                cmd.Parameters.AddWithValue("@p_userid", model.User.Id.Trim());
+                cmd.Parameters.AddWithValue("@p_detail", model.Details);
+                cmd.Parameters.AddWithValue("@p_reply", model.Reply);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddAnswer Error: " + ex.Message);
+            }
+
+        }
         #endregion
         #endregion
         #region Video

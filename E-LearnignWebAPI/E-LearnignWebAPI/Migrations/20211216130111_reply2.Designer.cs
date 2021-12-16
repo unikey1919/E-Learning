@@ -4,14 +4,16 @@ using ElearningBO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_LearnignWebAPI.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    partial class ELearningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211216130111_reply2")]
+    partial class reply2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace E_LearnignWebAPI.Migrations
                     b.Property<int>("DiscussId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Reply")
+                    b.Property<int?>("ReplyId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -47,6 +49,8 @@ namespace E_LearnignWebAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DiscussId");
+
+                    b.HasIndex("ReplyId");
 
                     b.HasIndex("UserId");
 
@@ -645,11 +649,17 @@ namespace E_LearnignWebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ElearningBO.E_Learning.Answer", "Reply")
+                        .WithMany()
+                        .HasForeignKey("ReplyId");
+
                     b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Discussion");
+
+                    b.Navigation("Reply");
 
                     b.Navigation("User");
                 });

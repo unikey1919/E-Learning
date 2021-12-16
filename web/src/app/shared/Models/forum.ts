@@ -1,3 +1,5 @@
+import { UserModel } from "./user.model";
+
 export class Forum {
     Id: number = 0;
     SubjectId: number = 0;
@@ -29,4 +31,23 @@ export class DiscussionModel {
     UserId: string = '';
     FullName: string = '';
     Email: string = '';
+}
+
+export class Answer{
+    id: number = 0;
+    discussId: number = 0;
+    user: UserModel;
+    details: string = '';
+    createDate: Date = new Date();
+}
+
+export class AnswersModel {
+    id: number = 0;
+    discussId: number = 0;
+    user: UserModel;
+    details: string = '';
+    createDate: Date = new Date();
+    reply: number = 0;
+    answer: Answer[];
+
 }
