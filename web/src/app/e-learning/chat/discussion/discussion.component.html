@@ -1,9 +1,6 @@
 <mat-card style=" margin-top: 20px" appMaterialElevation>
-    <mat-card-title>
-      {{formForumData.forumName}}
-    </mat-card-title>
     <mat-card-content style="margin-bottom: 20px" *ngFor="let item of formData">
-     <mat-card>
+     <!-- <mat-card mat-elevation-z10>
          <mat-card-content>
              <div class="row">
                 <strong style="font-size:16px">{{item.DiscussName}}</strong>
@@ -13,9 +10,52 @@
              </div>
              <div [innerHTML]="item.Details" style="margin-top:20px"></div>
          </mat-card-content>
-         <mat-card-actions>
-             <button style="align-item:right" mat-stroked-button>Answer this post</button>
+         <mat-card-actions style="display: ruby-base;">
+             <button mat-stroked-button style="float:right">Answer this post</button>
          </mat-card-actions>
-     </mat-card>
+     </mat-card> -->
+     <div class="p-body-header">
+         <div class="p-title">
+             <h1 class="p-title-value">
+                 <span class="label label--royalBlue">
+                    {{formForumData.forumName}}            
+                 </span>
+                 <span class="label-append">&nbsp;</span>[Dịch] Hướng dẫn OC DDR4
+             </h1>
+         </div>
+         <div class="p-description">
+             <ul class="listInline listInline--bulleted">
+                 <li>
+                     <i class="fas fa-user" aria-hidden="true" title="Thread starter"> 
+                     </i>
+                     <a class="username u-concealed">{{item.FullName}}</a>
+                 </li>
+                 <li style="margin-left: 10px;">
+                     <i class="fas fa-clock" aria-hidden="true" title="Start date"></i>
+                     <a class="u-concealed">
+                         <time class="u-dt">{{item.CreateDate | date:'short'}}</time>
+                    </a>
+                 </li>
+             </ul>
+
+         </div>
+     </div>
+     <div class="p-body-content"> 
+          <div class="card-container">
+              <div class="header">
+                  <a>
+                      <img src="#" alt="">
+                  </a>
+                  <h2>Nguyễn Đăng Thắng</h2>
+              </div>
+              <div class="description">
+                  <div class="header-timeline">{{item.CreateDate | date:'short'}}</div>
+                  <span [innerHTML]="item.Details"></span>
+                  <div class="social">
+                    <a><i class="fas fa-reply"></i></a>
+                  </div>
+              </div>
+          </div>
+     </div>
     </mat-card-content>
   </mat-card>

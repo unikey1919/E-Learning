@@ -37,4 +37,18 @@ namespace ElearningBO.E_Learning
         public bool isDelete { get; set; }
         public virtual Forum Forum { get; set; }
     }
+    public class Answer
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey("Forum")]
+        public int ForumId { get; set; }
+        public ApplicationUser User { get; set; }
+        public string DiscussName { get; set; }
+        public string Details { get; set; }
+        public DateTime CreateDate { get; set; }
+        public bool isDelete { get; set; }
+        public virtual Forum Forum { get; set; }
+    }
 }
