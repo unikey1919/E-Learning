@@ -19,16 +19,11 @@ import { ELearningComponent } from './e-learning/e-learning.component';
 import { DiscussionComponent } from './e-learning/chat/discussion/discussion.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'user/login', pathMatch: 'full' },
-
-  {
-    path: 'user',
-    component: UserComponent,
+  { path: '', component: LoginComponent,
     children: [
-      { path: 'registration', component: RegisterComponent },
-      { path: 'login', component: LoginComponent },
-    ],
-  },
+    { path: 'registration', component: RegisterComponent },
+    { path: 'login', component: LoginComponent },
+  ], pathMatch: 'full' },
 
   {
     path: 'e-learning',

@@ -52,6 +52,8 @@ import {YouTubePlayerModule} from '@angular/youtube-player';
 import { ChatComponent } from './e-learning/chat/chat.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { DiscussionComponent } from './e-learning/chat/discussion/discussion.component';
+import { GoogleLoginProvider } from 'angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,13 +111,30 @@ import { DiscussionComponent } from './e-learning/chat/discussion/discussion.com
     NgxDropzoneModule,
     NgDynamicBreadcrumbModule,
     YouTubePlayerModule,
-    PickerModule
+    PickerModule,
+    SocialLoginModule
   ],
   providers: [UserProfileService,{
-    provide: HTTP_INTERCEPTORS,
+    provide:  HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
-    multi: true
-  }],
+    multi: true,
+  },
+  {
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: false,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(
+            // replace this with your google client id			
+            '1012631387332-u96f4fm9tncnblvmha1v9of6aorgsl91.apps.googleusercontent.com'
+          )
+        }
+      ]
+    } as SocialAuthServiceConfig,
+  }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

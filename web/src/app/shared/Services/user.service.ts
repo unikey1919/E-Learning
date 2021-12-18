@@ -21,9 +21,10 @@ export class UserService {
     return this.httpClient.post(this.baseURL + '/Register', this.formData);
   }
 
-  login(userName: string, passWord: string): Observable<any> {
+  login(userName: string, passWord: string, email): Observable<any> {
     this.formDataLogin.userName = userName;
     this.formDataLogin.password = passWord;
+    this.formDataLogin.email = email;
     return this.httpClient.post(this.baseURL + '/Login', this.formDataLogin);
   }
 

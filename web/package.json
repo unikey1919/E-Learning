@@ -25,6 +25,7 @@
     "@ckeditor/ckeditor5-build-classic": "^31.0.0",
     "@ctrl/ngx-emoji-mart": "^6.1.1",
     "@microsoft/signalr": "^6.0.0",
+    "angularx-social-login": "^4.0.1",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "ng-dynamic-breadcrumb": "^6.0.0",
