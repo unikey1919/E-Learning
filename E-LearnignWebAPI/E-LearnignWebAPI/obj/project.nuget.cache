@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "D5lR4HupTGoSbYybTuP34SHTNbTEz6wMvavwoBImzR6k4P9mO+WmyaAE6QpHu4aWZ7T4/IPUtgEQsbVYeoHCpw==",
+  "dgSpecHash": "KqqWTv9dMGb0iPZjq6ja5bdFeoYbbZh5peT3pwaE0kKwqdBaiyLynkDJn4xLzrs8YYj9IJbuJH4+Y/oL12dhGw==",
   "success": true,
   "projectFilePath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj",
   "expectedPackageFiles": [
@@ -207,7 +207,8 @@
     "C:\\Users\\thang\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\thang\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\thang\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\thang\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\thang\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\thang\\.nuget\\packages\\twilio\\5.69.0\\twilio.5.69.0.nupkg.sha512"
   ],
   "logs": []
 }

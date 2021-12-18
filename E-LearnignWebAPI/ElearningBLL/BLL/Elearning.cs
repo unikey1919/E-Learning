@@ -103,7 +103,6 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
-
         #region Instructor
         public DataTable GetAllInstructor()
         {
@@ -179,7 +178,6 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
-
         #region Student
         public DataTable GetAllStudent1()
         {
@@ -230,7 +228,6 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
-
         #region CourseContent
         public DataTable GetContentByCourse(SubjectContent model)
         {
@@ -279,7 +276,6 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
-
         #region Assignment
         public void AddAssignmentBySubject(Assignment model)
         {
@@ -453,6 +449,20 @@ namespace ElearningBLL.BLL
             catch (Exception ex)
             {
                 throw new Exception("Elearning > UpdateVideo Error: " + ex.Message);
+            }
+        }
+        #endregion
+        #region SMS
+        public DataTable GetListSMSByCourse(int subjectId)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetListSMSByCourse(subjectId);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetListEmailByCourse Error: " + ex.Message);
             }
         }
         #endregion

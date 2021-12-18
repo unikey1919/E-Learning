@@ -11,10 +11,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace E_LearnignWebAPI.Controllers
 {
@@ -29,6 +33,7 @@ namespace E_LearnignWebAPI.Controllers
         private readonly string[] AllowedExtensions;
         private readonly IWebHostEnvironment _environment;
         private readonly IHubContext<ChatHub> _hubContext;
+        private readonly IConfiguration configruations;
         public MessageController(ELearningDbContext context, IMapper mapper, IWebHostEnvironment environment, IConfiguration configruation, IHubContext<ChatHub> hubContext)
         {
             elearningBll = new Elearning();
@@ -199,72 +204,38 @@ namespace E_LearnignWebAPI.Controllers
             return NoContent();
         }
         #endregion
-        //#region UploadFile
-        //[HttpPost]
-        ////[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Upload([FromForm] UploadViewModel uploadViewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (!Validate(uploadViewModel.File))
-        //        {
-        //            return BadRequest("Validation failed!");
-        //        }
 
-        //        var fileName = DateTime.Now.ToString("yyyymmddMMss") + "_" + Path.GetFileName(uploadViewModel.File.FileName);
-        //        var folderPath = Path.Combine(_environment.WebRootPath, "uploads");
-        //        var filePath = Path.Combine(folderPath, fileName);
-        //        if (!Directory.Exists(folderPath))
-        //            Directory.CreateDirectory(folderPath);
+        [HttpGet]
+        [Route("SendSms/{subjectId}")]
+        public ApiResultMessage SendSms(int subjectId)
+        {
+            
+            DataTable dataSMS = elearningBll.GetListSMSByCourse(subjectId);
+            List<SMSmodel> lstSMS = new List<SMSmodel>();
+            for (int i = 0; i < dataSMS.Rows.Count; i++)
+            {
+                SMSmodel model = new SMSmodel();
+                model.PhoneNumber = dataSMS.Rows[i]["PhoneNumber"].ToString();
+                model.FullName = dataSMS.Rows[i]["FullName"].ToString();
+                model.Email = dataSMS.Rows[i]["Email"].ToString();
+                model.CourseName = dataSMS.Rows[i]["CourseName"].ToString();
+                model.Code = dataSMS.Rows[i]["Code"].ToString();
+                model.SubjectName = dataSMS.Rows[i]["SubjectName"].ToString();
+                lstSMS.Add(model);
+                var accountSid = "AC8a44777b5fb8d6a7973734c5405ad95e";
+                var authToken = "dd44017494a88de96f1d90bd80280e1c";
+                TwilioClient.Init(accountSid, authToken);
 
-        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //        {
-        //            await uploadViewModel.File.CopyToAsync(fileStream);
-        //        }
+                var to = new PhoneNumber(dataSMS.Rows[i]["PhoneNumber"].ToString());
+                var from = new PhoneNumber("+12343513388");
 
-        //        var user = _context.ApplicationUsers.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-        //        var room = _context.Room.Where(r => r.Id == uploadViewModel.RoomId).FirstOrDefault();
-        //        if (user == null || room == null)
-        //            return NotFound();
-
-        //        string htmlImage = string.Format(
-        //            "<a href=\"/uploads/{0}\" target=\"_blank\">" +
-        //            "<img src=\"/uploads/{0}\" class=\"post-image\">" +
-        //            "</a>", fileName);
-
-        //        var message = new Message()
-        //        {
-        //            Content = Regex.Replace(htmlImage, @"(?i)<(?!img|a|/a|/img).*?>", string.Empty),
-        //            Timestamp = DateTime.Now,
-        //            FromUser = user,
-        //            Room = room
-        //        };
-
-        //        await _context.Message.AddAsync(message);
-        //        await _context.SaveChangesAsync();
-
-        //        // Send image-message to group
-        //        var messageViewModel = _mapper.Map<Message, MessageViewModel>(message);
-        //        //   await _hubContext.Clients.Group(room.Name).SendAsync("newMessage", messageViewModel);
-
-        //        return Ok();
-        //    }
-
-        //    return BadRequest();
-        //}
-
-        //private bool Validate(IFormFile file)
-        //{
-        //    if (file.Length > FileSizeLimit)
-        //        return false;
-
-        //    var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
-        //    if (string.IsNullOrEmpty(extension) || !AllowedExtensions.Any(s => s.Contains(extension)))
-        //        return false;
-
-        //    return true;
-        //}
-
-        //#endregion
+                var message = MessageResource.Create(
+                    to: to,
+                    from: from,
+                    body: "Hello " + dataSMS.Rows[i]["FullName"].ToString() + " Course" + dataSMS.Rows[i]["CourseName"].ToString() + " (" + dataSMS.Rows[i]["Code"].ToString() + ")" + " have one assignment to submit at " + dataSMS.Rows[i]["SubjectName"].ToString());
+            }
+             return new ApiResultMessage { IsError = false, Message = "Sended", MessageDetail = "" };
+        }
+    
     }
 }

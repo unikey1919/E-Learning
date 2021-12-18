@@ -33,7 +33,6 @@ namespace ElearningDAO.Elearning
             {
                 throw new Exception("ElearningDao > GetAllStudent Error: " + ex.Message);
             }
-            
             return dt;
         }
         #region Khóa học
@@ -543,7 +542,6 @@ namespace ElearningDAO.Elearning
             }
         }
         #endregion
-
         #region Forum
         public void AddForumBySubject(Forum model)
         {
@@ -768,6 +766,27 @@ namespace ElearningDAO.Elearning
             {
                 throw new Exception("ElearningDao > UpdateVideo Error: " + ex.Message);
             }
+        }
+        #endregion
+        #region SMS
+        public DataTable GetListSMSByCourse(int subjectId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetListSMSByCourse(@p_subjectId)", conn);
+                cmd.Parameters.AddWithValue("@p_subjectId", subjectId);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetListSMSByCourse Error: " + ex.Message);
+            }
+            return dt;
         }
         #endregion
     }

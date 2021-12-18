@@ -66,5 +66,14 @@ namespace ElearningBO.E_Learning
         public string CurrentRoom { get; set; }
         public string Device { get; set; }
     }
+    public class SMSmodel
+    {
+        public string PhoneNumber { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string CourseName { get; set; }
+        public string Code { get; set; }
+        public string SubjectName { get; set; }
+    }
 }
     
