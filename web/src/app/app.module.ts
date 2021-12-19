@@ -54,6 +54,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { DiscussionComponent } from './e-learning/chat/discussion/discussion.component';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,7 +113,8 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
     NgDynamicBreadcrumbModule,
     YouTubePlayerModule,
     PickerModule,
-    SocialLoginModule
+    SocialLoginModule,
+    NgbModule
   ],
   providers: [UserProfileService,{
     provide:  HTTP_INTERCEPTORS,

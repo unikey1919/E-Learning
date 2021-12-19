@@ -7,3 +7,12 @@ export class Course {
     description: string='';
     details: string='';
 }
+
+export class CourseExcel {
+    Id: number = 0;
+    InstructorId: number = 0;
+    Code: string='';
+    CourseName: string='';
+    Description: string='';
+    Details: string='';
+}
