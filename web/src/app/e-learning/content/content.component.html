@@ -1,13 +1,13 @@
 <p-toast></p-toast>
 
-<mat-card *ngIf="role == 'instructor'" style="margin-top: 20px;">
-<mat-card-content>
+<mat-card *ngIf="role == 'instructor'" style="margin-top: 60px;">
+<mat-card-content >
   <i class="fas fa-briefcase" style="margin-right:10px"></i>
   <span>Add new Subject</span>
   <mat-icon style="float:right" (click)="openContentWithClass(content)">add_circle</mat-icon>
 </mat-card-content>
 </mat-card>
-   <mat-card style=" margin-top: 20px" *ngFor="let item of lstContent" appMaterialElevation>
+   <mat-card style=" margin-top: 60px" *ngFor="let item of lstContent" appMaterialElevation>
       <mat-card-title>{{item.SubjectName}}</mat-card-title>
       
       <!-- Thêm mới actions -->

@@ -2,13 +2,24 @@
     <nav class="navbar">
       <!-- <a class="navbar-brand" style="margin-left: 10px">Home</a>
       <a class="navbar-brand" style="position: absolute; margin-left: 65px; color:blue">/Content</a> -->
-      <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
-      <div style="display: flex; justify-content: center; align-items: center;">
-        <i class="fas fa-comment-dots fa-2x" style="margin-right:10px"(click)="openForm()"></i>
-        <button class="btn btn-danger my-2 my-sm-0" style="margin-right: 10px" (click)="onLogout()">Logout</button>
+      <!-- <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb> -->
+      <div class="col-lg-3" style="display: flex; justify-content: center; align-items: center; margin-left:1500px">
+        <i class="fas fa-comment-dots fa-2x"  (click)="openForm()"></i>
+        <button class="btn btn-danger my-2 my-sm-0" style="margin-left:10px" (click)="onLogout()">Logout</button>
       </div>
     </nav>
+    <div class="header">
+      <img src="assets/img/mo-hinh-elearning-trong-hoc-tap-1.jpg">
+    </div>
+    
     <app-chat></app-chat>
+    <mat-card style="margin-top:75px;height: 70px;">
+        <div class="col-lg-4">
+          <app-ng-dynamic-breadcrumb style ="margin-bottom: 10px;" [bgColor]="'none'" [fontSize]="'16px'">
+          </app-ng-dynamic-breadcrumb>
+        </div>
+       <div><input type="text" style="margin-left:800px"></div>  
+    </mat-card>
 <router-outlet></router-outlet>
 </div>
 

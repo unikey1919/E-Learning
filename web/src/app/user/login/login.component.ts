@@ -5,6 +5,7 @@ import { UserService } from 'src/app/shared/Services/user.service';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { SocialAuthService  } from 'angularx-social-login';
+import { UserProfileService } from 'src/app/shared/Services/user-profile.service';
 
 
 @Component({
@@ -14,14 +15,16 @@ import { SocialAuthService  } from 'angularx-social-login';
 })
 export class LoginComponent implements OnInit {
   user: SocialUser | null;
+  img: any;
   formModel = {
     UserName: '',
     Password: ''
-  }
+  };
+  username: any;
 
   constructor(
     private service: UserService, private router: Router, private toastr:ToastrService,
-    private authService: SocialAuthService){ 
+    private authService: SocialAuthService, private userProfileService:UserProfileService ){ 
       this.user = null;
 	    this.authService.authState.subscribe((user: SocialUser) => {
 	    console.log(user);
@@ -49,6 +52,7 @@ export class LoginComponent implements OnInit {
         var payLoad = JSON.parse(window.atob(localStorage.getItem('token')!.split('.')[1]));
         var userRole = payLoad.role;
         localStorage.setItem('userRole', payLoad.role);
+        this.onGetUserProfile();
         if (userRole == 'Student' || userRole == 'Instructor'){
           this.router.navigateByUrl('/e-learning/home');
         } 
@@ -71,14 +75,16 @@ export class LoginComponent implements OnInit {
 
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: any) => {
+      this.img = this.user?.photoUrl;
       localStorage.setItem('google_auth',JSON.stringify(x));
-      console.log(this.user?.email);
+      localStorage.setItem('img', this.img);
       this.service.login('', '', this.user?.email).subscribe(
         (res: any) => {
           localStorage.setItem('token', res.token);
           var payLoad = JSON.parse(window.atob(localStorage.getItem('token')!.split('.')[1]));
           var userRole = payLoad.role;
           localStorage.setItem('userRole', payLoad.role);
+          this.onGetUserProfile();
           if (userRole == 'Student' || userRole == 'Instructor'){
             this.router.navigateByUrl('/e-learning/home');
           } 
@@ -102,6 +108,19 @@ export class LoginComponent implements OnInit {
 
   signOut(): void {
     this.authService.signOut();
-  } 
+  }
+  
+  onGetUserProfile(){
+    this.username = localStorage.getItem('username');
+    this.userProfileService.getUserProfile().subscribe(
+      res => {
+        localStorage.setItem('username', res.userName);
+        localStorage.setItem('email', res.email);
+      },
+      err => {
+        console.log(err);
+      },
+    ); 
+  }
 
 }

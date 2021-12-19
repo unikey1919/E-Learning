@@ -66,6 +66,15 @@ namespace E_LearnignWebAPI.Controllers
             try
             {
                 elearningBll.AddCourse(model);
+                var user = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                var room = new Room()
+                {
+                    Name = model.Coursename,
+                    Admin = user,
+                    CourseCode = model.Code
+                };
+                _context.Room.Add(room);
+                _context.SaveChanges();
                 return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
             }
             catch (Exception ex)
@@ -96,6 +105,13 @@ namespace E_LearnignWebAPI.Controllers
             try
             {
                 elearningBll.DelCourse(model);
+
+                var room = _context.Room
+                .Include(r => r.Admin)
+                .Where(r => r.CourseCode == model.Code && r.Admin.UserName == User.Identity.Name)
+                .FirstOrDefault();
+                _context.Room.Remove(room);
+                _context.SaveChanges();
                 return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
             }
             catch (Exception ex)

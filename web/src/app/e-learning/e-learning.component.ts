@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Room } from '../shared/Models/chat';
+import { ChatService } from '../shared/Services/chat.service';
 import { PaymentDetailService } from '../shared/Services/payment-detail.service';
 import { ChatComponent } from './chat/chat.component';
 
@@ -11,11 +13,16 @@ import { ChatComponent } from './chat/chat.component';
   ]
 })
 export class ELearningComponent implements OnInit {
+  role: string = '';
+  username: any;
   @ViewChild(ChatComponent) child;
-  constructor(public service:PaymentDetailService,private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(public service:PaymentDetailService,private router: Router, private activatedRoute: ActivatedRoute
+    ,private chatService: ChatService) { }
 
   ngOnInit(): void {
     console.log(this.activatedRoute);
+    localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
+    this.username = localStorage.getItem('username');
   }
 
   onLogout() {
@@ -29,5 +36,6 @@ export class ELearningComponent implements OnInit {
   openForm() {
     (document.getElementById("myForm") as HTMLFormElement).style.display = "block";
   }
+
 
 }

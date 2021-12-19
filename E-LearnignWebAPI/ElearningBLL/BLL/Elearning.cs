@@ -572,6 +572,30 @@ namespace ElearningBLL.BLL
                 throw new Exception("Elearning > GetListEmailByCourse Error: " + ex.Message);
             }
         }
+        public DataTable GetRoomByStudent(string username)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetRoomByStudent(username);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetRoomByStudent Error: " + ex.Message);
+            }
+        }
+        public DataTable GetRoomByInstructor(string username)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetRoomByInstructor(username);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetRoomByInstructor Error: " + ex.Message);
+            }
+        }
         #endregion
     }
 }

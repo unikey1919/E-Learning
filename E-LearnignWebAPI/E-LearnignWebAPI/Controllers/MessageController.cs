@@ -119,12 +119,24 @@ namespace E_LearnignWebAPI.Controllers
         }
         #region Room
         [HttpGet]
-        [Route("GetRoomMessage")]
-        public async Task<ActionResult<IEnumerable<RoomViewModel>>> GetRoomMessage()
+        [Route("GetRoomMessage/{username}/{role}")]
+        public async Task<ActionResult<IEnumerable<RoomViewModel>>> GetRoomMessage(string username, string role)
         {
+            DataTable roomdata = new DataTable();
+            if(role == "student")
+                roomdata = elearningBll.GetRoomByStudent(username);
+            if(role == "instructor")
+                roomdata = elearningBll.GetRoomByInstructor(username);
 
-            var rooms = await _context.Room.ToListAsync();
-
+            List<Room> rooms = new List<Room>();
+            for (int i = 0; i < roomdata.Rows.Count; i++)
+            {
+                Room room = new Room();
+                room.Id = Convert.ToInt32(roomdata.Rows[i]["Id"]);
+                room.Name = roomdata.Rows[i]["Name"].ToString();
+                room.CourseCode = roomdata.Rows[i]["CourseCode"].ToString();
+                rooms.Add(room);
+            }
             var roomsViewModel = _mapper.Map<IEnumerable<Room>, IEnumerable<RoomViewModel>>(rooms);
 
             return Ok(roomsViewModel);
@@ -152,7 +164,7 @@ namespace E_LearnignWebAPI.Controllers
             {
                 Name = roomViewModel.Name,
                 Admin = user,
-                CourseId = roomViewModel.CourseId
+                CourseCode = roomViewModel.CourseCode
             };
 
             _context.Room.Add(room);
