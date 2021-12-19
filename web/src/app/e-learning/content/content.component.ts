@@ -8,6 +8,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MessageService } from 'primeng/api';
 import { Forum } from 'src/app/shared/Models/forum';
+import { ChatService } from 'src/app/shared/Services/chat.service';
 
 @Component({
   selector: 'app-content',
@@ -31,7 +32,7 @@ export class ContentComponent implements OnInit {
   constructor(private router: Router, 
     private contentService: ContentService,
     private activatedRoute: ActivatedRoute, private modalService: BsModalService, 
-    private messageService: MessageService) { }
+    private messageService: MessageService,private chatService: ChatService,) { }
 
   ngOnInit(): void {
     this.formData.CourseId =this.activatedRoute.snapshot.params.id; 
@@ -209,6 +210,7 @@ export class ContentComponent implements OnInit {
             detail: 'Fail to create assignment',
           });
         } else {
+          this.chatService.SendSMS(this.formAddData.SubjectId).subscribe();
           this.closeAddModel();
           this.getContentByCourse(this.formData);
           this.messageService.add({
@@ -216,6 +218,7 @@ export class ContentComponent implements OnInit {
             summary: 'Success',
             detail: 'Assignment is created',
           });
+          
         }
       },
       (err) => {}

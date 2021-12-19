@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -62,6 +63,28 @@ namespace E_LearnignWebAPI.Controllers
             var user = await _userManager.FindByNameAsync(model.UserName);
             //var user = await _userManager.FindByEmailAsync(model.Email);
             IdentityOptions _identityOptions = new IdentityOptions();
+            //login bằng mail
+            if(user == null)
+            {
+                user = await _userManager.FindByEmailAsync(model.Email);
+                var role = await _userManager.GetRolesAsync(user);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim("UserID", user.Id.ToString()),
+                        new Claim(_identityOptions.ClaimsIdentity.RoleClaimType,role.FirstOrDefault()),
+                        new Claim(_identityOptions.ClaimsIdentity.UserNameClaimType,user.UserName.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_applicationSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                var token = tokenHandler.WriteToken(securityToken);
+                return Ok(new { token });
+            }
+            //login mặc định
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 //Get Role assigned to the user
@@ -83,6 +106,11 @@ namespace E_LearnignWebAPI.Controllers
                 return Ok(new { token });
             }
             else return BadRequest(new { message = "Username or password is incorrect." });
+        }
+        public class AuthenticateRequest
+        {
+            [Required]
+            public string IdToken { get; set; }
         }
     }
 }

@@ -51,6 +51,9 @@ import { ForumComponent } from './e-learning/forum/forum.component';
 import {YouTubePlayerModule} from '@angular/youtube-player';
 import { ChatComponent } from './e-learning/chat/chat.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { DiscussionComponent } from './e-learning/chat/discussion/discussion.component';
+import { GoogleLoginProvider } from 'angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
@@ -72,6 +75,7 @@ import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AssignmentComponent,
     ForumComponent,
     ChatComponent,
+    DiscussionComponent,
   ],
   imports: [
     MatCheckboxModule,
@@ -109,13 +113,30 @@ import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgDynamicBreadcrumbModule,
     YouTubePlayerModule,
     PickerModule,
+    SocialLoginModule,
     NgbModule
   ],
   providers: [UserProfileService,{
-    provide: HTTP_INTERCEPTORS,
+    provide:  HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
-    multi: true
-  }],
+    multi: true,
+  },
+  {
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: false,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(
+            // replace this with your google client id			
+            '1012631387332-u96f4fm9tncnblvmha1v9of6aorgsl91.apps.googleusercontent.com'
+          )
+        }
+      ]
+    } as SocialAuthServiceConfig,
+  }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

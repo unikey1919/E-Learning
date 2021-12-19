@@ -36,5 +36,9 @@ export class ChatService {
   MessageHistory(roomName: string): Observable<any>{
     return this.httpClient.get(this.baseURL + `/Room/${roomName}`);
   }
+
+  SendSMS(subjectId): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/SendSms/${subjectId}`);
+  }
   
 }

@@ -19,7 +19,7 @@
         <div [innerHTML]="formData.details"></div>
         <div class="card" *ngIf="role == 'instructor'">
           <p-table #dt1 [value]="lstStudentSubmit" dataKey="id" editMode="row" responsiveLayout="scroll"
-           [globalFilterFields]="['coursename', 'code', 'instructorid', 'instructionName', 'description', 'details']">
+           [globalFilterFields]="['userName','studentId']">
               <ng-template pTemplate="caption">
                 <div class="table-header">
                   Submit status

@@ -31,3 +31,4 @@ C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\
 C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.dll
 C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ref\ElearningBLL.dll
 C:\Users\Admin\Github\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.pdb
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\ElearningBLL\obj\Debug\net5.0\ElearningBLL.csproj.CopyComplete

@@ -210,7 +210,6 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
-
         #region Instructor
         public DataTable GetAllInstructor()
         {
@@ -286,7 +285,6 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
-
         #region Student
         public DataTable GetAllStudent1()
         {
@@ -337,7 +335,6 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
-
         #region CourseContent
         public DataTable GetContentByCourse(SubjectContent model)
         {
@@ -386,7 +383,6 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
-
         #region Assignment
         public void AddAssignmentBySubject(Assignment model)
         {
@@ -469,6 +465,30 @@ namespace ElearningBLL.BLL
             }
         }
         #region Discusstion
+        public DataTable GetDiscussByForum(int forumId)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetDiscussByForum(forumId);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetDiscussByForum Error: " + ex.Message);
+            }
+        }
+        public DataTable GetDiscuss(int forumId, int id)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetDiscuss(forumId,id);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetDiscuss Error: " + ex.Message);
+            }
+        }
         public void AddDiscussBySubject(Discussion model)
         {
             try
@@ -489,6 +509,17 @@ namespace ElearningBLL.BLL
             catch (Exception ex)
             {
                 throw new Exception("DeliveryLoad > DelDiscuss Error: " + ex.Message);
+            }
+        }
+        public void AddAnswer(Answer model)
+        {
+            try
+            {
+                objElDAO.AddAnswer(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddAnswer Error: " + ex.Message);
             }
         }
         #endregion
@@ -525,6 +556,20 @@ namespace ElearningBLL.BLL
             catch (Exception ex)
             {
                 throw new Exception("Elearning > UpdateVideo Error: " + ex.Message);
+            }
+        }
+        #endregion
+        #region SMS
+        public DataTable GetListSMSByCourse(int subjectId)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetListSMSByCourse(subjectId);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetListEmailByCourse Error: " + ex.Message);
             }
         }
         #endregion

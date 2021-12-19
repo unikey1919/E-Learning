@@ -19,6 +19,40 @@ namespace E_LearnignWebAPI.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ElearningBO.E_Learning.Answer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DiscussId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Reply")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isDelete")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiscussId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Answer");
+                });
+
             modelBuilder.Entity("ElearningBO.E_Learning.Assignment", b =>
                 {
                     b.Property<int>("Id")
@@ -102,8 +136,8 @@ namespace E_LearnignWebAPI.Migrations
                     b.Property<int>("ForumId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("isDelete")
                         .HasColumnType("bit");
@@ -111,6 +145,8 @@ namespace E_LearnignWebAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ForumId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Discussion");
                 });
@@ -601,6 +637,23 @@ namespace E_LearnignWebAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ElearningBO.E_Learning.Answer", b =>
+                {
+                    b.HasOne("ElearningBO.E_Learning.Discussion", "Discussion")
+                        .WithMany()
+                        .HasForeignKey("DiscussId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Discussion");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ElearningBO.E_Learning.Assignment", b =>
                 {
                     b.HasOne("ElearningBO.E_Learning.Subject", "Subject")
@@ -631,7 +684,13 @@ namespace E_LearnignWebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ElearningBO.UserAuthentication.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Forum");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ElearningBO.E_Learning.Enrollment", b =>

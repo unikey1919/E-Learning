@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CourseContent, FileModel, Video } from '../Models/course-content';
 import { Observable } from 'rxjs';
 import { Assignment, FileAssignment, FileAssignmentSubmit } from '../Models/assignment';
-import { Discussion, Forum } from '../Models/forum';
+import { Answer, AnswersModel, Discussion, Forum } from '../Models/forum';
 
 
 @Injectable({
@@ -20,6 +20,7 @@ export class ContentService {
   objectFileModel: FileModel = new FileModel();
   objectFileSubmitModel: FileAssignmentSubmit = new FileAssignmentSubmit();
   objVideoModel: Video = new Video();
+  ObjAnswerModel: AnswersModel = new AnswersModel();
   
 
   GetContentByCourse(objectModel): Observable<any>{
@@ -89,6 +90,10 @@ export class ContentService {
     return this.httpClient.post(this.baseURL + '/DelFileSubmit', this.objectFileSubmitModel);
   }
 
+  GetForum(id:number): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/GetForum/${id}`);
+  }
+
   AddForumBySubject(forumObjModel): Observable<any>{
     return this.httpClient.post(this.baseURL + '/AddForumBySubject', forumObjModel);
   }
@@ -101,12 +106,32 @@ export class ContentService {
     return this.httpClient.post(this.baseURL + '/UpdateForum', forumObjModel);
   }
 
+  GetDiscussByForum(forumId: number): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/GetDiscussByForum/${forumId}`);
+  }
+
+  GetDiscuss(forumId: number, id: number): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/GetDiscuss/${forumId}/${id}`);
+  }
+
   AddDiscussBySubjectForum(discussionObjModel): Observable<any>{
-    return this.httpClient.post(this.baseURL + '/AddDiscussBySubjectForum', discussionObjModel);
+    return this.httpClient.post(this.baseURL + '/AddDiscussBySubject', discussionObjModel);
   }
 
   DelDiscuss(discussionObjModel): Observable<any>{
     return this.httpClient.post(this.baseURL + '/DelDiscuss', discussionObjModel);
+  }
+
+  GetAnswer(discussId: number): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/GetAnswer/${discussId}`);
+  }
+
+  GetAnswerReply(id: number): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/GetAnswerReply/${id}`);
+  }
+
+  AddAnswer(ObjAnswerModel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/AddAnswer', ObjAnswerModel);
   }
 
   AddVideoBySubject(objVideoModel): Observable<any>{

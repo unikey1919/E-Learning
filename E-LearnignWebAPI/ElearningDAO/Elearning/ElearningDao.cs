@@ -34,7 +34,6 @@ namespace ElearningDAO.Elearning
             {
                 throw new Exception("ElearningDao > GetAllStudent Error: " + ex.Message);
             }
-            
             return dt;
         }
         #region Khóa học
@@ -679,7 +678,6 @@ namespace ElearningDAO.Elearning
             }
         }
         #endregion
-
         #region Forum
         public void AddForumBySubject(Forum model)
         {
@@ -741,6 +739,45 @@ namespace ElearningDAO.Elearning
             }
         }
         #region Discusstion
+        public DataTable GetDiscussByForum(int forumId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetDiscussionForum(@p_forumid)", conn);
+                cmd.Parameters.AddWithValue("@p_forumid", forumId);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetDiscuss Error: " + ex.Message);
+            }
+            return dt;
+        }
+        public DataTable GetDiscuss(int forumId, int id)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetDiscussion(@p_forumid, @p_id)", conn);
+                cmd.Parameters.AddWithValue("@p_forumid", forumId);
+                cmd.Parameters.AddWithValue("@p_id", id);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetDiscussByForum Error: " + ex.Message);
+            }
+            return dt;
+        }
         public void AddDiscussBySubject(Discussion model)
         {
             try
@@ -752,6 +789,7 @@ namespace ElearningDAO.Elearning
                 cmd.Parameters.AddWithValue("@p_forumid", model.ForumId);
                 cmd.Parameters.AddWithValue("@p_discussname", model.DiscussName);
                 cmd.Parameters.AddWithValue("@p_details", model.Details);
+                cmd.Parameters.AddWithValue("@p_user", model.User.Id);
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -779,6 +817,28 @@ namespace ElearningDAO.Elearning
             {
                 throw new Exception("ElearningDao > DelDiscuss Error: " + ex.Message);
             }
+        }
+        public void AddAnswer(Answer model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddAnswer", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_discussid", model.DiscussId);
+                cmd.Parameters.AddWithValue("@p_userid", model.User.Id.Trim());
+                cmd.Parameters.AddWithValue("@p_detail", model.Details);
+                cmd.Parameters.AddWithValue("@p_reply", model.Reply);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddAnswer Error: " + ex.Message);
+            }
+
         }
         #endregion
         #endregion
@@ -842,6 +902,27 @@ namespace ElearningDAO.Elearning
             {
                 throw new Exception("ElearningDao > UpdateVideo Error: " + ex.Message);
             }
+        }
+        #endregion
+        #region SMS
+        public DataTable GetListSMSByCourse(int subjectId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetListSMSByCourse(@p_subjectId)", conn);
+                cmd.Parameters.AddWithValue("@p_subjectId", subjectId);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetListSMSByCourse Error: " + ex.Message);
+            }
+            return dt;
         }
         #endregion
     }

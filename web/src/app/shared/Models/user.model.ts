@@ -7,4 +7,12 @@ export class User {
 export class Login {
     userName: string='';
     password: string='';
+    email: string='';
+}
+
+export class UserModel {
+    id: string='';
+    userName: string='';
+    email: string='';
+    fullName: string='';
 }

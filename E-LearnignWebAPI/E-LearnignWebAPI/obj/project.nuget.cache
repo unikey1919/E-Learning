@@ -1,12 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "1d7byyCoB2UZ9jEIB/Tj74EBp68AnNorJXmYVGDNJu977BJaX2xiUt8UvnmtJoBAiyWI6g/clD8OnsNIv3CmBg==",
+  "dgSpecHash": "44CZ3YxJPOFjliFm/QHxUfYYOWEnkGd2KHBW7/9WAZyeTAwKW6/1ojHqff/YGOG5g1D6VUgprIYf8vu0PijzXw==",
   "success": true,
   "projectFilePath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\E-LearnignWebAPI\\E-LearnignWebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\thang\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\thang\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\thang\\.nuget\\packages\\epplus\\5.8.3\\epplus.5.8.3.nupkg.sha512",
+    "C:\\Users\\thang\\.nuget\\packages\\google.apis\\1.55.0\\google.apis.1.55.0.nupkg.sha512",
+    "C:\\Users\\thang\\.nuget\\packages\\google.apis.auth\\1.55.0\\google.apis.auth.1.55.0.nupkg.sha512",
+    "C:\\Users\\thang\\.nuget\\packages\\google.apis.core\\1.55.0\\google.apis.core.1.55.0.nupkg.sha512",
     "C:\\Users\\thang\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\thang\\.nuget\\packages\\mailkit\\2.6.0\\mailkit.2.6.0.nupkg.sha512",
     "C:\\Users\\thang\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
@@ -217,7 +220,8 @@
     "C:\\Users\\thang\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\thang\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "C:\\Users\\thang\\.nuget\\packages\\system.xml.xpath\\4.3.0\\system.xml.xpath.4.3.0.nupkg.sha512",
-    "C:\\Users\\thang\\.nuget\\packages\\system.xml.xpath.xmldocument\\4.3.0\\system.xml.xpath.xmldocument.4.3.0.nupkg.sha512"
+    "C:\\Users\\thang\\.nuget\\packages\\system.xml.xpath.xmldocument\\4.3.0\\system.xml.xpath.xmldocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\thang\\.nuget\\packages\\twilio\\5.69.0\\twilio.5.69.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -49,6 +49,7 @@ namespace ElearningBO.E_Learning
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
         [RegularExpression(@"^\w+( \w+)*$", ErrorMessage = "Characters allowed: letters, numbers, and one space between words.")]
         public string Name { get; set; }
+        public int CourseId { get; set; }
     }
     public class UploadViewModel
     {
@@ -64,6 +65,15 @@ namespace ElearningBO.E_Learning
         public string Avatar { get; set; }
         public string CurrentRoom { get; set; }
         public string Device { get; set; }
+    }
+    public class SMSmodel
+    {
+        public string PhoneNumber { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string CourseName { get; set; }
+        public string Code { get; set; }
+        public string SubjectName { get; set; }
     }
 }
     
