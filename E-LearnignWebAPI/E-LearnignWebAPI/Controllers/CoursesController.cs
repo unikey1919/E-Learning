@@ -121,7 +121,8 @@ namespace E_LearnignWebAPI.Controllers
         }
 
         // GET: api/Courses/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("GetCourseInfo/{id}")]
         public async Task<ActionResult<Course>> GetCourse(int id)
         {
             var course = await _context.Courses.FindAsync(id);

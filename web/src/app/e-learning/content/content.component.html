@@ -1,66 +1,80 @@
 <p-toast></p-toast>
-
-<mat-card *ngIf="role == 'instructor'" style="margin-top: 60px;">
-<mat-card-content >
-  <i class="fas fa-briefcase" style="margin-right:10px"></i>
-  <span>Add new Subject</span>
-  <mat-icon style="float:right" (click)="openContentWithClass(content)">add_circle</mat-icon>
-</mat-card-content>
-</mat-card>
-   <mat-card style=" margin-top: 60px" *ngFor="let item of lstContent" appMaterialElevation>
-      <mat-card-title>{{item.SubjectName}}</mat-card-title>
+<div class="body-content">
+  <div class="info">
+    <mat-card style="width: 70%; height: 40%; margin-top: 80px; margin-left:40px">
+      <img mat-card-image src="https://utex.hcmute.edu.vn/pluginfile.php/1/theme_maker/defaultcourseimage/1634220818/course-banner.jpg" alt="Photo of a Shiba Inu">
+          <mat-card-content>
+            <h3>{{courseInfo.fullName}}</h3>
+            <p>{{courseInfo.code}}</p>
+            <mat-progress-bar mode="determinate" value="40" style="margin-top:20px"></mat-progress-bar>
+          </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="course">
+    <mat-card *ngIf="role == 'instructor'" style="margin-top: 60px;">
+      <mat-card-content >
+        <i class="fas fa-briefcase" style="margin-right:10px"></i>
+        <span>Add new Subject</span>
+        <mat-icon style="float:right" (click)="openContentWithClass(content)">add_circle</mat-icon>
+      </mat-card-content>
+      </mat-card>
+         <mat-card style=" margin-top: 60px" *ngFor="let item of lstContent" appMaterialElevation>
+            <mat-card-title>{{item.SubjectName}}</mat-card-title>
+            
+            <!-- Thêm mới actions -->
+            <mat-card-content style="margin-bottom: 20px">
+              <mat-card *ngIf="role == 'instructor'">
+                <i class="fas fa-briefcase" style="margin-right:10px"></i>
+                <span>Add new actions</span>
+                <mat-icon style="float:right" (click)="openModalWithClass(actions, item.Id)">add_circle</mat-icon>
+              </mat-card>
+            </mat-card-content>
+            <mat-card-content>
+              <div [innerHTML]="item.Details"></div>
+            </mat-card-content>
       
-      <!-- Thêm mới actions -->
-      <mat-card-content style="margin-bottom: 20px">
-        <mat-card *ngIf="role == 'instructor'">
-          <i class="fas fa-briefcase" style="margin-right:10px"></i>
-          <span>Add new actions</span>
-          <mat-icon style="float:right" (click)="openModalWithClass(actions, item.Id)">add_circle</mat-icon>
-        </mat-card>
-      </mat-card-content>
-      <mat-card-content>
-        <div [innerHTML]="item.Details"></div>
-      </mat-card-content>
+            <!-- Danh sách file -->
+            <mat-card-content  *ngFor="let file of item.LstFile">
+              <mat-card>
+                <i style="margin-right:10px" [class]="getIcon(file.FileType)" [style.color]="getBackgroundColor(file.FileType)"></i>
+               <span (click)="downLoadFileContent(file.Id, file.FileType)">{{file.FileName}}</span>
+                <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteFile(file)">delete</mat-icon>
+              </mat-card>
+            </mat-card-content>
+      
+             <!-- Danh sách forum -->
+             <mat-card-content style="margin-bottom: 20px"  *ngFor="let forum of item.LstForum">
+              <mat-card>
+                <i class="fas fa-user-tie" style="margin-right:10px"></i>
+                <span (click)="getForumContent(forum.Id,item.Id)">{{forum.ForumName}}</span>
+                <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteForum(forum)">delete</mat-icon>
+                <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editForum, forum)">edit</mat-icon>
+              </mat-card>
+            </mat-card-content>
+      
+            <!-- Danh sách video bài giảng -->
+            <mat-card-content style="margin-bottom: 20px"  *ngFor="let video of item.LstVideo">
+              <mat-card>
+                <i (click)="openModalWithVideo(videoContent, video.Id)" class="fas fa-play-circle" style="margin-right:10px"></i>
+                <span>{{video.Title}}</span>
+                <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteVideo(video)">delete</mat-icon>
+                <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editVideo, video)">edit</mat-icon>
+              </mat-card>
+            </mat-card-content>
+      
+            <!-- Danh sách bài tập -->
+            <mat-card-content style="margin-bottom: 20px"  *ngFor="let assignment of item.LstAssignment">
+              <mat-card>
+                <i class="fas fa-atlas" style="margin-right:10px"></i>
+                <span (click)="getAssignmentContent(assignment.Id,item.Id)">{{assignment.AssignmentName}}</span>
+                <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteAssignment(assignment)">delete</mat-icon>
+                <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editAssignment, assignment)">edit</mat-icon>
+              </mat-card>
+            </mat-card-content>
+         </mat-card>
+  </div>
+</div>
 
-      <!-- Danh sách file -->
-      <mat-card-content  *ngFor="let file of item.LstFile">
-        <mat-card>
-          <i style="margin-right:10px" [class]="getIcon(file.FileType)" [style.color]="getBackgroundColor(file.FileType)"></i>
-         <span (click)="downLoadFileContent(file.Id, file.FileType)">{{file.FileName}}</span>
-          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteFile(file)">delete</mat-icon>
-        </mat-card>
-      </mat-card-content>
-
-       <!-- Danh sách forum -->
-       <mat-card-content style="margin-bottom: 20px"  *ngFor="let forum of item.LstForum">
-        <mat-card>
-          <i class="fas fa-user-tie" style="margin-right:10px"></i>
-          <span (click)="getForumContent(forum.Id,item.Id)">{{forum.ForumName}}</span>
-          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteForum(forum)">delete</mat-icon>
-          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editForum, forum)">edit</mat-icon>
-        </mat-card>
-      </mat-card-content>
-
-      <!-- Danh sách video bài giảng -->
-      <mat-card-content style="margin-bottom: 20px"  *ngFor="let video of item.LstVideo">
-        <mat-card>
-          <i (click)="openModalWithVideo(videoContent, video.Id)" class="fas fa-play-circle" style="margin-right:10px"></i>
-          <span>{{video.Title}}</span>
-          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteVideo(video)">delete</mat-icon>
-          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editVideo, video)">edit</mat-icon>
-        </mat-card>
-      </mat-card-content>
-
-      <!-- Danh sách bài tập -->
-      <mat-card-content style="margin-bottom: 20px"  *ngFor="let assignment of item.LstAssignment">
-        <mat-card>
-          <i class="fas fa-atlas" style="margin-right:10px"></i>
-          <span (click)="getAssignmentContent(assignment.Id,item.Id)">{{assignment.AssignmentName}}</span>
-          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteAssignment(assignment)">delete</mat-icon>
-          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editAssignment, assignment)">edit</mat-icon>
-        </mat-card>
-      </mat-card-content>
-   </mat-card>
    
  <!--- Popup thêm bài tập -->  
 <ng-template #template>    

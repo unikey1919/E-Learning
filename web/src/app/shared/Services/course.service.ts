@@ -84,10 +84,13 @@ export class CourseService {
     return this.httpClient.post(this.baseURL + '/AddCourseByExcel', listExcel);
   }
 
-
   //Thêm danh sách học sinh từ khóa học
   AddStudentToCourse(addEnrollment): Observable<any>{
     
     return this.httpClient.post(this.baseURL + '/AddStudentToCourse', addEnrollment);
+  }
+
+  GetCourseInfo(id:number){
+    return this.httpClient.get(this.baseURL + `/GetCourseInfo/${id}`);
   }
 }

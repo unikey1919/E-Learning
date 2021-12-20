@@ -3,9 +3,20 @@
       <!-- <a class="navbar-brand" style="margin-left: 10px">Home</a>
       <a class="navbar-brand" style="position: absolute; margin-left: 65px; color:blue">/Content</a> -->
       <!-- <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb> -->
-      <div class="col-lg-3" style="display: flex; justify-content: center; align-items: center; margin-left:1500px">
-        <i class="fas fa-comment-dots fa-2x"  (click)="openForm()"></i>
+      <div style="display: flex; justify-content: center; align-items: center; ">
+        <div class="action-home" style="display: flex; justify-content: center; align-items: center">
+        <i class="fas fa-home fa-2x" style="margin-right:20px;"></i>
+        <button mat-stroked-button style="margin-right:20px">Tutorial for teacher</button>
+        <i class="fas fa-globe-americas fa-2x" style="margin-right:20px"></i>
+        <i class="fab fa-facebook fa-2x"></i>
+        </div>
+        <div class="action" style="display: flex; justify-content: center; align-items: center; margin-left: 1300px;">
+          <i class="fas fa-comment-dots fa-2x"  (click)="openForm()"></i>
+          <h3 style="margin-top:15px;margin-left:10px">{{username}}</h3>
+          <img mat-card-avatar src="{{avatar}}" style="margin-left:10px">     
         <button class="btn btn-danger my-2 my-sm-0" style="margin-left:10px" (click)="onLogout()">Logout</button>
+        </div>
+      
       </div>
     </nav>
     <div class="header">
@@ -18,9 +29,14 @@
           <app-ng-dynamic-breadcrumb style ="margin-bottom: 10px;" [bgColor]="'none'" [fontSize]="'16px'">
           </app-ng-dynamic-breadcrumb>
         </div>
-       <div><input type="text" style="margin-left:800px"></div>  
+       <div style="margin-left:800px; width:250px; display:flex">
+         <input type="text" class="form-control" placeholder="Search course" >
+         <i class="fas fa-search" style="margin-top: 10px; margin-left:10px"></i>
+        </div>  
     </mat-card>
 <router-outlet></router-outlet>
 </div>
+
+
 
 

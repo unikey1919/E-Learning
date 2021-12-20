@@ -14,6 +14,7 @@ import { ChatComponent } from './chat/chat.component';
 })
 export class ELearningComponent implements OnInit {
   role: string = '';
+  avatar: any;
   username: any;
   @ViewChild(ChatComponent) child;
   constructor(public service:PaymentDetailService,private router: Router, private activatedRoute: ActivatedRoute
@@ -23,6 +24,7 @@ export class ELearningComponent implements OnInit {
     console.log(this.activatedRoute);
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
     this.username = localStorage.getItem('username');
+    this.avatar = localStorage.getItem('img');
   }
 
   onLogout() {
