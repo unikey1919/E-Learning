@@ -30,6 +30,7 @@ export class ELearningComponent implements OnInit {
     localStorage.removeItem('username');
     localStorage.removeItem('userRole');
     localStorage.removeItem('email');
+    localStorage.removeItem('img');
     this.router.navigate(['/']);
   }
 

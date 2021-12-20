@@ -15,10 +15,12 @@ export class HomeComponent implements OnInit {
   formData: User = new User();
   role: string = '';
   username: any;
+  avatar: any;
   constructor(private router: Router, private courseService: CourseService, private userProfileService: UserProfileService) { }
 
   ngOnInit(): void {
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
+    this.avatar = localStorage.getItem('img');
     this.username = localStorage.getItem('username');
     this.userProfileService.getUserProfile().subscribe(
       res => {
