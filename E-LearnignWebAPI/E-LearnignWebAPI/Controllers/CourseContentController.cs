@@ -50,6 +50,9 @@ namespace E_LearnignWebAPI.Controllers
                     //Lấy danh sách bài tập thuộc chương
                     var assignment = _context.Assignment.Where(n=>n.SubjectId == obj.Id && n.isDelete == false).ToList();
                     obj.LstAssignment = assignment;
+                    //Lấy danh sách quiz thuộc chương
+                    var quiz = _context.Quiz.Where(n => n.SubjectId == obj.Id && n.isDelete == false).ToList();
+                    obj.LstQuiz = quiz;
                     //Lấy danh sách forum thuộc chương
                     var forum = _context.Forum.Where(n => n.SubjectId == obj.Id && n.isDelete == false).ToList();
                     obj.LstForum = forum;
@@ -122,7 +125,6 @@ namespace E_LearnignWebAPI.Controllers
             {
                 await stream.CopyToAsync(memory);
             }
-
             memory.Position = 0;
             var contentType = "APPLICATION/octet-stream";
             var fileName = Path.GetFileName(path);
@@ -388,7 +390,191 @@ namespace E_LearnignWebAPI.Controllers
             }
         }
         #endregion
+        #region Quiz
+        [HttpGet]
+        [Route("GetQuizBySubject/{id}")]
+        public async Task<ActionResult<Quiz>> GetQuizBySubject(int id)
+        {
+            var quiz = await _context.Quiz.FindAsync(id);
+            return Ok(quiz);
+        }
 
+        [HttpGet]
+        [Route("GetListQuestionByQuiz/{id}")]
+        public IActionResult GetListQuestionByQuiz(int id)
+        {
+            var question = _context.Question.Where(n => n.isDelete == false && n.QuizID == id).ToList();
+            var count = _context.Question.Count(n => n.isDelete == false && n.QuizID == id);
+            return Ok(question);
+        }
+
+        [HttpGet]
+        [Route("GetCountQuestion/{id}")]
+        public IActionResult GetCountQuestion(int id)
+        {
+            var count = _context.Question.Count(n => n.isDelete == false && n.QuizID == id);
+            return Ok(count);
+        }
+
+        [HttpGet]
+        [Route("GetResult/{quizid}/{courseid}/{studentid}")]
+        public IActionResult GetResult(int quizid, int courseid, int studentid)
+        {
+            var count = _context.Result.Where(n => n.QuizId == quizid && n.CourseId == courseid && n.StudentId == studentid).ToList();
+            return Ok(count);
+        }
+
+        [HttpGet]
+        [Route("GetStudentNotDoQuiz/{courseid}/{quizid}")]
+        public ApiResultMessage GetStudentNotDoQuiz(int courseid, int quizid)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetStudentNotDoQuiz(courseid, quizid);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpGet]
+        [Route("GetStudentDoQuiz/{courseid}/{quizid}")]
+        public ApiResultMessage GetStudentDoQuiz(int courseid, int quizid)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetStudentDoQuiz(courseid, quizid);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpGet]
+        [Route("GetStudentId/{username}")]
+        public ApiResultMessage GetStudentId(string username)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetStudentId(username);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("AddQuizBySubject")]
+        public ApiResultMessage AddQuizBySubject(Quiz model)
+        {
+            try
+            {
+                elearningBll.AddQuizBySubject(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("UpdateQuiz")]
+        public ApiResultMessage UpdateQuiz(Quiz model)
+        {
+            try
+            {
+                elearningBll.UpdateQuiz(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("DelQuiz")]
+        public ApiResultMessage DelQuiz(Quiz model)
+        {
+            try
+            {
+                elearningBll.DelQuiz(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("AddQuestion")]
+        public ApiResultMessage AddQuestion(Question model)
+        {
+            try
+            {
+                elearningBll.AddQuestion(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("AddResult")]
+        public ApiResultMessage AddResult(Result model)
+        {
+            try
+            {
+                elearningBll.AddResult(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("UpdateQuestion")]
+        public ApiResultMessage UpdateQuestion(Question model)
+        {
+            try
+            {
+                elearningBll.UpdateQuestion(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("DelQuestion")]
+        public ApiResultMessage Question(Question model)
+        {
+            try
+            {
+                elearningBll.DelQuestion(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        #endregion
         #region Forum
         [HttpPost]
         [Route("AddForumBySubject")]

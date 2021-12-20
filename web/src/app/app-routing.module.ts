@@ -16,6 +16,7 @@ import { StudentComponent } from './admin-panel/student/student.component';
 import { ContentComponent } from './e-learning/content/content.component';
 import { AssignmentComponent } from './e-learning/assignment/assignment.component';
 import { ELearningComponent } from './e-learning/e-learning.component';
+import { QuizComponent } from './e-learning/quiz/quiz.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user/login', pathMatch: 'full' },
@@ -82,6 +83,24 @@ const routes: Routes = [
           {
             label: 'Assignment',
             url: '/e-learning/course/assignment'
+          },
+        ]
+      }, },
+      { path: 'course/quiz/:id/:subjectId/:courseId', component: QuizComponent,
+      data: {
+        title: 'content',
+        breadcrumb: [
+          {
+            label: 'Home',
+            url: '/e-learning/home'
+          },
+          {
+            label: 'Subject',
+            url: '/e-learning/course/content/:courseId'
+          },
+          {
+            label: 'Assignment',
+            url: '/e-learning/course/quiz'
           },
         ]
       }, },

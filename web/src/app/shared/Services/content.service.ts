@@ -20,41 +20,97 @@ export class ContentService {
   objectFileModel: FileModel = new FileModel();
   objectFileSubmitModel: FileAssignmentSubmit = new FileAssignmentSubmit();
   objVideoModel: Video = new Video();
-  
 
-  GetContentByCourse(objectModel): Observable<any>{
+
+  GetContentByCourse(objectModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/GetContentByCourse', objectModel);
   }
 
-  DownLoadFileContent(id: number, contentType: string){
-    return this.httpClient.get(this.baseURL+`/${id}`, {responseType: 'blob'});
+  DownLoadFileContent(id: number, contentType: string) {
+    return this.httpClient.get(this.baseURL + `/${id}`, { responseType: 'blob' });
   }
 
-  DownLoadFileAssignment(id: number, contentType: string){
-    return this.httpClient.get(this.baseURL+`/DownloadAssignment/${id}`, {responseType: 'blob'});
+  DownLoadFileAssignment(id: number, contentType: string) {
+    return this.httpClient.get(this.baseURL + `/DownloadAssignment/${id}`, { responseType: 'blob' });
   }
 
-  AddAssignmentBySubject(assignmentObjModel): Observable<any>{
+  AddAssignmentBySubject(assignmentObjModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/AddAssignmentBySubject', assignmentObjModel);
   }
 
-  UpdateAssignment(assignmentObjModel): Observable<any>{
+  AddQuizBySubject(quizObjModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/AddQuizBySubject', quizObjModel);
+  }
+
+  UpdateAssignment(assignmentObjModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/UpdateAssignment', assignmentObjModel);
   }
 
-  DelAssignment(assignmentObjModel): Observable<any>{
+  UpdateQuiz(quizObjModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/UpdateQuiz', quizObjModel);
+  }
+
+  DelAssignment(assignmentObjModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/DelAssignment', assignmentObjModel);
   }
 
-  AddSubject(ObjModel): Observable<any>{
+  DelQuiz(quizObjModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/DelQuiz', quizObjModel);
+  }
+
+  AddSubject(ObjModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/AddSubject', ObjModel);
   }
 
-  GetAssignmentBySubject(id: number){
+  GetAssignmentBySubject(id: number) {
     return this.httpClient.get(this.baseURL + `/GetAssignmentBySubject/${id}`);
   }
 
-  UploadFile(files: File[], assignmentId:number, userSubmit: string, subjectId:number): Observable<any>{
+  GetQuizBySubject(id: number) {
+    return this.httpClient.get(this.baseURL + `/GetQuizBySubject/${id}`);
+  }
+
+  GetListQuestionByQuiz(id: number) {
+    return this.httpClient.get(this.baseURL + `/GetListQuestionByQuiz/${id}`);
+  }
+
+  GetCountQuestion(id: number) {
+    return this.httpClient.get(this.baseURL + `/GetCountQuestion/${id}`);
+  }
+
+  GetStudentId(username: string | null) {
+    return this.httpClient.get(this.baseURL + `/GetStudentId/${username}`);
+  }
+
+  GetResult(quizid:number, courseid:number, studentid:number){
+    return this.httpClient.get(this.baseURL + `/GetResult/${quizid}/${courseid}/${studentid}`);
+  }
+
+  GetStudentNotDoQuiz(courseid:number, quizid:number){
+    return this.httpClient.get(this.baseURL + `/GetStudentNotDoQuiz/${courseid}/${quizid}`);
+  }
+
+  GetStudentDoQuiz(courseid:number, quizid:number){
+    return this.httpClient.get(this.baseURL + `/GetStudentDoQuiz/${courseid}/${quizid}`);
+  }
+
+  AddQuestion(objectModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/AddQuestion', objectModel);
+  }
+
+  AddResult(objectModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/AddResult', objectModel);
+  }
+
+  UpdateQuestion(objectModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/UpdateQuestion', objectModel);
+  }
+
+  DelQuestion(objectModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/DelQuestion', objectModel);
+  }
+
+  UploadFile(files: File[], assignmentId: number, userSubmit: string, subjectId: number): Observable<any> {
     const formData = new FormData();
     files.forEach(element => formData.append('files', element));
     formData.append('assignmentId', assignmentId.toString());
@@ -63,65 +119,65 @@ export class ContentService {
     return this.httpClient.post(this.baseURL, formData);
   }
 
-  GetAssignmentSubmitStatus(id: string, assignmentId:number){
+  GetAssignmentSubmitStatus(id: string, assignmentId: number) {
     return this.httpClient.get(this.baseURL + `/GetAssignmentSubmitStatus/${id}/${assignmentId}`);
   }
 
-  GetAssignmentSubmit(id: string, assignmentId:number){
+  GetAssignmentSubmit(id: string, assignmentId: number) {
     return this.httpClient.get(this.baseURL + `/GetAssignmentSubmit/${id}/${assignmentId}`);
   }
 
-  GetLstAssignmentSubmit(assignmentId:number){
+  GetLstAssignmentSubmit(assignmentId: number) {
     return this.httpClient.get(this.baseURL + `/GetLstAssignmentSubmit/${assignmentId}`);
   }
 
-  GetAllStudentSubmit(courseId:number, assignmentId:number){
+  GetAllStudentSubmit(courseId: number, assignmentId: number) {
     return this.httpClient.get(this.baseURL + `/GetAllStudentSubmit/${courseId}/${assignmentId}`);
   }
 
-  DelFile(ObjectFileModel): Observable<any>{
+  DelFile(ObjectFileModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/DelFile', ObjectFileModel);
   }
 
-  DelFileSubmit(userSubmit: string, assignmentId:number): Observable<any>{
+  DelFileSubmit(userSubmit: string, assignmentId: number): Observable<any> {
     this.objectFileSubmitModel.AssignmentId = assignmentId;
     this.objectFileSubmitModel.UserSubmit = userSubmit;
     return this.httpClient.post(this.baseURL + '/DelFileSubmit', this.objectFileSubmitModel);
   }
 
-  AddForumBySubject(forumObjModel): Observable<any>{
+  AddForumBySubject(forumObjModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/AddForumBySubject', forumObjModel);
   }
 
-  DelForum(forumObjModel): Observable<any>{
+  DelForum(forumObjModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/DelForum', forumObjModel);
   }
 
-  UpdateForum(forumObjModel): Observable<any>{
+  UpdateForum(forumObjModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/UpdateForum', forumObjModel);
   }
 
-  AddDiscussBySubjectForum(discussionObjModel): Observable<any>{
+  AddDiscussBySubjectForum(discussionObjModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/AddDiscussBySubjectForum', discussionObjModel);
   }
 
-  DelDiscuss(discussionObjModel): Observable<any>{
+  DelDiscuss(discussionObjModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/DelDiscuss', discussionObjModel);
   }
 
-  AddVideoBySubject(objVideoModel): Observable<any>{
+  AddVideoBySubject(objVideoModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/AddVideoBySubject', objVideoModel);
   }
 
-  GetVideoInfo(Id:number){
+  GetVideoInfo(Id: number) {
     return this.httpClient.get(this.baseURL + `/GetVideoInfo/${Id}`);
   }
 
-  UpdateVideo(objVideoModel): Observable<any>{
+  UpdateVideo(objVideoModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/UpdateVideo', objVideoModel);
   }
 
-  DelVideo(objVideoModel): Observable<any>{
+  DelVideo(objVideoModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/DelVideo', objVideoModel);
   }
 

@@ -239,10 +239,10 @@
         </div>  
         <form class="form-inline">
             <div class="form-group" style="padding-left: 15px; padding-top: 5px;">
-                <label style="font-family: Helᴠetiᴄa; font-size: medium;">Date Enrollment:&nbsp;</label>
+                <label style="font-family: Helᴠetiᴄa; font-size: medium;">Ngày nhập học:&nbsp;</label>
               <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd"
-                       name="dp" [(ngModel)]="model1" ngbDatepicker #d="ngbDatepicker">
+                       name="dp" [(ngModel)]="model1" ngbDatepicker #d="ngbDatepicker" required>
                 <div class="input-group-append">
                   <button class="btn-outline-secondary" (click)="d.toggle()" type="button">
                     <mat-icon>calendar_today</mat-icon>
@@ -252,10 +252,10 @@
             </div>
 
             <div class="form-group" style="padding-left: 10px; padding-top: 5px;">
-                <label style="font-family: Helᴠetiᴄa; font-size: medium;">Date Completion:&nbsp;</label>
+                <label style="font-family: Helᴠetiᴄa; font-size: medium;">Ngày hoàn thành:&nbsp;</label>
               <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd"
-                       name="dp1" [(ngModel)]="model2" ngbDatepicker #d1="ngbDatepicker">
+                       name="dp1" [(ngModel)]="model2" ngbDatepicker #d1="ngbDatepicker" required>
                 <div class="input-group-append">
                   <button class="btn-outline-secondary" (click)="d1.toggle()" type="button">
                     <mat-icon>calendar_today</mat-icon>

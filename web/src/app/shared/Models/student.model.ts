@@ -12,3 +12,10 @@ export class User {
     email: string='';
     phonenumber: string='';
 }
+
+export class StudentResult {
+    id: number = 0;
+    studentname: string='';
+    score: string='';
+    result: string='';
+}

@@ -52,6 +52,11 @@ import {YouTubePlayerModule} from '@angular/youtube-player';
 import { ChatComponent } from './e-learning/chat/chat.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { QuizComponent } from './e-learning/quiz/quiz.component';
+import {MatRadioModule} from '@angular/material/radio';
+import { NgChartsModule } from 'ng2-charts';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,6 +77,7 @@ import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AssignmentComponent,
     ForumComponent,
     ChatComponent,
+    QuizComponent,
   ],
   imports: [
     MatCheckboxModule,
@@ -109,7 +115,9 @@ import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgDynamicBreadcrumbModule,
     YouTubePlayerModule,
     PickerModule,
-    NgbModule
+    NgbModule,
+    MatRadioModule,
+    NgChartsModule
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,

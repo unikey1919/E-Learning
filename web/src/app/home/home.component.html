@@ -4,7 +4,7 @@
       <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
       <mat-card-content>
         <h3>{{item.coursename}}</h3>
-        <p>CourseCode</p>
+        <p>{{item.code}}</p>
       </mat-card-content>
       <mat-card-actions >
         <button mat-stroked-button [routerLink]="'/e-learning/course/content/'+item.id" style="margin-left:100px">Details</button>

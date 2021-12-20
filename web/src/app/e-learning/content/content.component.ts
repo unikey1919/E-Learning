@@ -8,6 +8,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MessageService } from 'primeng/api';
 import { Forum } from 'src/app/shared/Models/forum';
+import { Quiz } from 'src/app/shared/Models/quiz';
 
 @Component({
   selector: 'app-content',
@@ -27,6 +28,7 @@ export class ContentComponent implements OnInit {
   formForumData: Forum = new Forum();
   formVideoData: Video = new Video();
   modelVideo: VideoModel = new VideoModel();
+  formQuizData: Quiz = new Quiz();
   
   constructor(private router: Router, 
     private contentService: ContentService,
@@ -35,6 +37,7 @@ export class ContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.formData.CourseId =this.activatedRoute.snapshot.params.id; 
+    // console.log(this.activatedRoute.snapshot.params.id+" test")
     this.getContentByCourse(this.formData);
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
     
@@ -54,7 +57,7 @@ export class ContentComponent implements OnInit {
     this.contentService.GetContentByCourse(this.formData).subscribe(
       (res) => {
         this.lstContent = JSON.parse(res.message) as CourseContent[];
-        console.log(this.lstContent);
+        // console.log(this.lstContent);
       },
       (error) => {}
     )
@@ -132,6 +135,12 @@ export class ContentComponent implements OnInit {
     this.router.navigate([ `/e-learning/course/assignment/${id}/${subjectId}/${courseId}` ])
   }
 
+  getQuizContent(id: number, subjectId: number){
+    let courseId: number;
+    courseId = this.activatedRoute.snapshot.params.id;
+    this.router.navigate([ `/e-learning/course/quiz/${id}/${subjectId}/${courseId}` ])
+  }
+
   getForumContent(id: number, subjectId: number){
     let courseId: number;
     courseId = this.activatedRoute.snapshot.params.id;
@@ -142,6 +151,7 @@ export class ContentComponent implements OnInit {
     this.formAddData = new Assignment(); 
     this.formForumData = new Forum();
     this.formVideoData = new Video();
+    this.formQuizData = new Quiz();
     this.modalRef = this.modalService.show(  
       template,  
       Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
@@ -149,6 +159,7 @@ export class ContentComponent implements OnInit {
     this.formAddData.SubjectId =  subjectId;
     this.formForumData.SubjectId =  subjectId;
     this.formVideoData.SubjectId =  subjectId;
+    this.formQuizData.SubjectId = subjectId;
   }
   
   openModalWithVideo(template: TemplateRef<any>, Id: number) { 
@@ -159,7 +170,7 @@ export class ContentComponent implements OnInit {
     this.contentService.GetVideoInfo(Id).subscribe(
       (res) => {
         this.modelVideo = res as VideoModel;
-        console.log(this.modelVideo.youtubeLink);
+        // console.log(this.modelVideo.youtubeLink);
       },
       (error) => {}
     )  
@@ -181,6 +192,7 @@ export class ContentComponent implements OnInit {
     this.formAddData = formAddData;
     this.formForumData = formAddData;
     this.formVideoData = formAddData;
+    this.formQuizData = formAddData
     //Đặt link video trống khi edit
     this.formVideoData.YoutubeLink = ''; 
   } 
@@ -190,6 +202,7 @@ export class ContentComponent implements OnInit {
       this.formAddData = new Assignment(); 
       this.formForumData = new Forum(); 
       this.formVideoData = new Video();
+      this.formQuizData = new Quiz();
   }
 
   closeModel(){
@@ -222,6 +235,32 @@ export class ContentComponent implements OnInit {
     );
   }
 
+  onSubmitQuiz(){
+    this.formQuizData.Opened = new Date(this.formQuizData.Opened);
+    this.formQuizData.Due = new Date(this.formQuizData.Due);
+    this.formQuizData.Title = this.formQuizData.Title;
+    this.contentService.AddQuizBySubject(this.formQuizData).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to create quiz',
+          });
+        } else {
+          this.closeAddModel();
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Quiz is created',
+          });
+        }
+      },
+      (err) => {}
+    );
+  }
+
   onSubmitContent(){
     this.formData.SubjectName = this.formData.SubjectName;
     this.contentService.AddSubject(this.formData).subscribe(
@@ -247,19 +286,19 @@ export class ContentComponent implements OnInit {
   }
 
   onSelect(event) {
-		console.log(event);
+		// console.log(event);
 		this.files.push(...event.addedFiles);
     console.log(this.files);
 	}
 
 	onRemove(event) {
-		console.log(event);
+		// console.log(event);
 		this.files.splice(this.files.indexOf(event), 1);
 	}
 
   onSubmitFile(subjectId){
     this.closeAddModel();
-    console.log(this.files);
+    // console.log(this.files);
     this.contentService.UploadFile(this.files,-1,"",subjectId).subscribe(
       (res) => {
         this.getContentByCourse(this.formData);
@@ -274,49 +313,78 @@ export class ContentComponent implements OnInit {
   }
 
   onDeleteFile(file: FileModel) {
-    this.contentService.DelFile(file).subscribe(
-      (res: any) => {
-        if (res.isError == true) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'error',
-            detail: 'Fail to delete File',
-          });
-        }
-        else{
-          this.getContentByCourse(this.formData);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'File is deleted',
-          });
-        }
-      },
-      (error) => {}
-    );
+    if(confirm("Are you sure to delete this file?")) {
+      this.contentService.DelFile(file).subscribe(
+        (res: any) => {
+          if (res.isError == true) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'error',
+              detail: 'Fail to delete File',
+            });
+          }
+          else{
+            this.getContentByCourse(this.formData);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'File is deleted',
+            });
+          }
+        },
+        (error) => {}
+      );
+    }
   }
 
   onDeleteAssignment(assignment: Assignment) {
-    this.contentService.DelAssignment(assignment).subscribe(
-      (res: any) => {
-        if (res.isError == true) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'error',
-            detail: 'Fail to delete Assignment',
-          });
-        }
-        else{
-          this.getContentByCourse(this.formData);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Assignment is deleted',
-          });
-        }
-      },
-      (error) => {}
-    );
+    if(confirm("Are you sure to delete this assignment?")) {
+      this.contentService.DelAssignment(assignment).subscribe(
+        (res: any) => {
+          if (res.isError == true) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'error',
+              detail: 'Fail to delete Assignment',
+            });
+          }
+          else{
+            this.getContentByCourse(this.formData);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Assignment is deleted',
+            });
+          }
+        },
+        (error) => {}
+      );
+    }
+  }
+
+  onDeleteQuiz(quiz: Quiz) {
+    if(confirm("Are you sure to delete this quiz?")) {
+      this.contentService.DelQuiz(quiz).subscribe(
+        (res: any) => {
+          if (res.isError == true) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'error',
+              detail: 'Fail to delete Quiz',
+            });
+          }
+          else{
+            this.getContentByCourse(this.formData);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Quiz is deleted',
+            });
+          }
+        },
+        (error) => {}
+      );
+    }
   }
 
   onEditAssignment(assignment: Assignment) {
@@ -336,6 +404,30 @@ export class ContentComponent implements OnInit {
             severity: 'success',
             summary: 'Success',
             detail: 'Assignment is edited',
+          });
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  onEditQuiz(quiz: Quiz) {
+    this.closeAddModel();
+    this.contentService.UpdateQuiz(quiz).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to edit Quiz',
+          });
+        }
+        else{
+          this.getContentByCourse(this.formData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Quiz is edited',
           });
         }
       },
@@ -368,26 +460,28 @@ export class ContentComponent implements OnInit {
   }
 
   onDeleteForum(forum: Forum) {
-    this.contentService.DelForum(forum).subscribe(
-      (res: any) => {
-        if (res.isError == true) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'error',
-            detail: 'Fail to delete Forum',
-          });
-        }
-        else{
-          this.getContentByCourse(this.formData);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Forum is deleted',
-          });
-        }
-      },
-      (error) => {}
-    );
+    if(confirm("Are you sure to delete this forum?")) {
+      this.contentService.DelForum(forum).subscribe(
+        (res: any) => {
+          if (res.isError == true) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'error',
+              detail: 'Fail to delete Forum',
+            });
+          }
+          else{
+            this.getContentByCourse(this.formData);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Forum is deleted',
+            });
+          }
+        },
+        (error) => {}
+      );
+    }
   }
 
   onEditForum(forum: Forum) {
@@ -438,26 +532,28 @@ export class ContentComponent implements OnInit {
   }
 
   onDeleteVideo(video: Video) {
-    this.contentService.DelVideo(video).subscribe(
-      (res: any) => {
-        if (res.isError == true) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'error',
-            detail: 'Fail to delete video',
-          });
-        }
-        else{
-          this.getContentByCourse(this.formData);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Video is deleted',
-          });
-        }
-      },
-      (error) => {}
-    );
+    if(confirm("Are you sure to delete this video?")) {
+      this.contentService.DelVideo(video).subscribe(
+        (res: any) => {
+          if (res.isError == true) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'error',
+              detail: 'Fail to delete video',
+            });
+          }
+          else{
+            this.getContentByCourse(this.formData);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Video is deleted',
+            });
+          }
+        },
+        (error) => {}
+      );
+    }
   }
 
   onEditVideo(video: Video) {

@@ -434,6 +434,131 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
+        #region Quiz
+
+        public DataTable GetStudentId(string username)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetStudentId(username);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetStudentId Error: " + ex.Message);
+            }
+        }
+
+        public DataTable GetStudentNotDoQuiz(int courseid, int quizid)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetStudentNotDoQuiz(courseid, quizid);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetStudentNotDoQuiz Error: " + ex.Message);
+            }
+        }
+
+        public DataTable GetStudentDoQuiz(int courseid, int quizid)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetStudentDoQuiz(courseid, quizid);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetStudentDoQuiz Error: " + ex.Message);
+            }
+        }
+
+        public void AddQuizBySubject(Quiz model)
+        {
+            try
+            {
+                objElDAO.AddQuizBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddQuizBySubject Error: " + ex.Message);
+            }
+        }
+
+        public void UpdateQuiz(Quiz model)
+        {
+            try
+            {
+                objElDAO.UpdateQuiz(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateQuiz Error: " + ex.Message);
+            }
+        }
+
+        public void DelQuiz(Quiz model)
+        {
+            try
+            {
+                objElDAO.DelQuiz(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelQuiz Error: " + ex.Message);
+            }
+        }
+
+        public void AddQuestion(Question model)
+        {
+            try
+            {
+                objElDAO.AddQuestion(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddQuestion Error: " + ex.Message);
+            }
+        }
+
+        public void AddResult(Result model)
+        {
+            try
+            {
+                objElDAO.AddResult(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddResult Error: " + ex.Message);
+            }
+        }
+
+        public void UpdateQuestion(Question model)
+        {
+            try
+            {
+                objElDAO.UpdateQuestion(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateQuestion Error: " + ex.Message);
+            }
+        }
+
+        public void DelQuestion(Question model)
+        {
+            try
+            {
+                objElDAO.DelQuestion(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelQuestion Error: " + ex.Message);
+            }
+        }
+        #endregion
         #region Forum
         public void AddForumBySubject(Forum model)
         {

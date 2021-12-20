@@ -4505,19 +4505,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\thang\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj",
       "projectName": "ElearningBO",
-      "projectPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj",
-      "packagesPath": "C:\\Users\\thang\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\obj\\",
+      "projectPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\thang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4525,7 +4525,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://nuget.thegioididong.com/v3/index.json": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4571,12 +4570,22 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[5.0.0, 5.0.0]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[5.0.0, 5.0.0]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
       }
     }
   }

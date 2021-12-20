@@ -615,7 +615,7 @@ namespace ElearningDAO.Elearning
             }
             catch (Exception ex)
             {
-                throw new Exception("ElearningDao > UpdateCourse Error: " + ex.Message);
+                throw new Exception("ElearningDao > AddAssignmentBySubject Error: " + ex.Message);
             }
 
         }
@@ -679,7 +679,233 @@ namespace ElearningDAO.Elearning
             }
         }
         #endregion
+        #region Quiz
+        public DataTable GetStudentNotDoQuiz(int courseid, int quizid)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetStudentNotDoQuiz(@p_courseid, @p_quizid)", conn);
+                cmd.Parameters.AddWithValue("@p_courseid", courseid);
+                cmd.Parameters.AddWithValue("@p_quizid", quizid);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetStudentNotDoQuiz Error: " + ex.Message);
+            }
 
+            return dt;
+        }
+
+        public DataTable GetStudentDoQuiz(int courseid, int quizid)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetStudentDoQuiz(@p_courseid, @p_quizid)", conn);
+                cmd.Parameters.AddWithValue("@p_courseid", courseid);
+                cmd.Parameters.AddWithValue("@p_quizid", quizid);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetStudentDoQuiz Error: " + ex.Message);
+            }
+
+            return dt;
+        }
+
+        public DataTable GetStudentId(string username)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetStudentId(@p_username)", conn);
+                cmd.Parameters.AddWithValue("@p_username", username);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetStudentId Error: " + ex.Message);
+            }
+
+            return dt;
+        }
+
+        public void AddQuizBySubject(Quiz model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddQuiz", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_subjectid", model.SubjectId);
+                cmd.Parameters.AddWithValue("@p_title", model.Title.Trim());
+                cmd.Parameters.AddWithValue("@p_details", model.Details);
+                cmd.Parameters.AddWithValue("@p_open", model.Opened);
+                cmd.Parameters.AddWithValue("@p_due", model.Due);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddQuizBySubject Error: " + ex.Message);
+            }
+
+        }
+
+        public void UpdateQuiz(Quiz model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_UpdateQuiz", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_quizid", model.QuizId);
+                cmd.Parameters.AddWithValue("@p_title", model.Title.Trim());
+                cmd.Parameters.AddWithValue("@p_opened", model.Opened);
+                cmd.Parameters.AddWithValue("@p_due", model.Due);
+                cmd.Parameters.AddWithValue("@p_details", model.Details);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > UpdateQuiz Error: " + ex.Message);
+            }
+        }
+
+        public void DelQuiz(Quiz model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DeleteQuiz", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@quiz_id", model.QuizId);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelQuiz Error: " + ex.Message);
+            }
+        }
+
+        public void AddQuestion(Question model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddQuestion", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_quizid", model.QuizID);
+                cmd.Parameters.AddWithValue("@p_qn", model.Qn);
+                cmd.Parameters.AddWithValue("@p_imagename", model.ImageName);
+                cmd.Parameters.AddWithValue("@p_option1", model.Option1);
+                cmd.Parameters.AddWithValue("@p_option2", model.Option2);
+                cmd.Parameters.AddWithValue("@p_option3", model.Option3);
+                cmd.Parameters.AddWithValue("@p_option4", model.Option4);
+                cmd.Parameters.AddWithValue("@p_answer", model.Answer);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddQuestion Error: " + ex.Message);
+            }
+
+        }
+
+        public void AddResult(Result model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_AddResult", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_quizid", model.QuizId);
+                cmd.Parameters.AddWithValue("@p_courseid", model.CourseId);
+                cmd.Parameters.AddWithValue("@p_studentid", model.StudentId);
+                cmd.Parameters.AddWithValue("@p_score", model.Score);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > AddQuestion Error: " + ex.Message);
+            }
+
+        }
+
+        public void UpdateQuestion(Question model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_UpdateQuestion", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_qnid", model.QnID);
+                cmd.Parameters.AddWithValue("@p_quizid", model.QuizID);
+                cmd.Parameters.AddWithValue("@p_qn", model.Qn);
+                cmd.Parameters.AddWithValue("@p_imagename", model.ImageName);
+                cmd.Parameters.AddWithValue("@p_option1", model.Option1);
+                cmd.Parameters.AddWithValue("@p_option2", model.Option2);
+                cmd.Parameters.AddWithValue("@p_option3", model.Option3);
+                cmd.Parameters.AddWithValue("@p_option4", model.Option4);
+                cmd.Parameters.AddWithValue("@p_answer", model.Answer);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > UpdateQuestion Error: " + ex.Message);
+            }
+        }
+        public void DelQuestion(Question model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_DeleteQuestion", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_qnid", model.QnID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > DelQuestion Error: " + ex.Message);
+            }
+        }
+        #endregion
         #region Forum
         public void AddForumBySubject(Forum model)
         {

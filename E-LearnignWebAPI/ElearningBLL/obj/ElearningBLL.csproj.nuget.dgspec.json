@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBLL\\ElearningBLL.csproj": {}
+    "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBLL\\ElearningBLL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBLL\\ElearningBLL.csproj": {
+    "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBLL\\ElearningBLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBLL\\ElearningBLL.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBLL\\ElearningBLL.csproj",
         "projectName": "ElearningBLL",
-        "projectPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBLL\\ElearningBLL.csproj",
-        "packagesPath": "C:\\Users\\thang\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBLL\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBLL\\ElearningBLL.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBLL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\thang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,18 +22,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "http://nuget.thegioididong.com/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj": {
-                "projectPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj"
+              "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj"
               },
-              "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\ElearningDAO.csproj": {
-                "projectPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\ElearningDAO.csproj"
+              "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\ElearningDAO.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\ElearningDAO.csproj"
               }
             }
           }
@@ -67,26 +66,36 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj": {
+    "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj",
         "projectName": "ElearningBO",
-        "projectPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj",
-        "packagesPath": "C:\\Users\\thang\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\thang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -94,7 +103,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "http://nuget.thegioididong.com/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -140,26 +148,36 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\ElearningDAO.csproj": {
+    "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\ElearningDAO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\ElearningDAO.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\ElearningDAO.csproj",
         "projectName": "ElearningDAO",
-        "projectPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\ElearningDAO.csproj",
-        "packagesPath": "C:\\Users\\thang\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\ElearningDAO.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningDAO\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\thang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -167,15 +185,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "http://nuget.thegioididong.com/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj": {
-                "projectPath": "C:\\Users\\thang\\Desktop\\Git\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj"
+              "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Github\\E-Learning\\E-LearnignWebAPI\\ElearningBO\\ElearningBO.csproj"
               }
             }
           }
@@ -221,12 +238,22 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }
