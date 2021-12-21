@@ -111,7 +111,6 @@ export class LoginComponent implements OnInit {
   }
   
   onGetUserProfile(){
-    this.username = localStorage.getItem('username');
     this.userProfileService.getUserProfile().subscribe(
       res => {
         localStorage.setItem('username', res.userName);

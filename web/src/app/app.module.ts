@@ -56,6 +56,7 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatProgressBarModule} from '@angular/material/progress-bar'; 
+import { ScrollingModule } from '@angular/cdk/scrolling';
 @NgModule({
   declarations: [
     AppComponent,
@@ -116,7 +117,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     PickerModule,
     SocialLoginModule,
     NgbModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ScrollingModule 
   ],
   providers: [UserProfileService,{
     provide:  HTTP_INTERCEPTORS,

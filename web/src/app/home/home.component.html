@@ -1,7 +1,7 @@
 
   <div class="body-content">
     <div class="course">
-      <div class="row" style="display:flex; flex-direction: row; margin-top:40px">
+      <div class="row" style="display:flex; flex-direction: row; margin-top:40px; margin-left:40px">
         <mat-card class="course-card" *ngFor="let item of lstCourse" style=" margin: 40px">
           <img mat-card-image src="https://utex.hcmute.edu.vn/pluginfile.php/1/theme_maker/defaultcourseimage/1634220818/course-banner.jpg" alt="Photo of a Shiba Inu">
           <mat-card-content>
@@ -16,20 +16,22 @@
     </div>
     
      <div class="info">
-       <mat-card style="width: 70%; height: 40%; margin-top: 80px;">
-         <mat-card-header style="border-bottom: 1px solid #010a13;margin-bottom: 10px;">
-          <div mat-card-avatar class="header-image"></div>
-          <mat-card-title>{{formData.fullName}}</mat-card-title>
-          <mat-card-subtitle>{{formData.email}}</mat-card-subtitle>
-        </mat-card-header>
-         <mat-card-content style="display:flex; justify-content:center">
-          <img mat-card-avatar src="{{avatar}}" style="width:150px;height:150px;margin-top: 40px;">
-         </mat-card-content>
-         <mat-card-actions style="display:flex; justify-content:center">
-           <button mat-stroked-button>Danh sách bài tập cần nộp</button>
-         </mat-card-actions>
-       </mat-card>
-     </div>
+         <div class="sticky">
+          <mat-card style="width: 70%; height: 40%; margin-top: 80px; margin-left:90px">
+            <mat-card-header style="border-bottom: 1px solid #010a13;margin-bottom: 10px;">
+             <div mat-card-avatar class="header-image"></div>
+             <mat-card-title>{{formData.fullName}}</mat-card-title>
+             <mat-card-subtitle>{{formData.email}}</mat-card-subtitle>
+           </mat-card-header>
+            <mat-card-content style="display:flex; justify-content:center">
+             <img mat-card-avatar src="{{avatar}}" style="width:150px;height:150px;margin-top: 40px;">
+            </mat-card-content>
+            <mat-card-actions style="display:flex; justify-content:center">
+              <button mat-stroked-button>Danh sách bài tập cần nộp</button>
+            </mat-card-actions>
+          </mat-card>
+         </div>
+       </div>
   </div>
 
   

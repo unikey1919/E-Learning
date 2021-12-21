@@ -21,7 +21,7 @@ mat-card-content:hover {
 
 .info {
   width: 30%;
-  height: 1000px;
+  height: auto;
   display: flex;
   justify-content: center
 }
@@ -33,4 +33,10 @@ mat-card-content:hover {
 .course {
     display:inline;
     width: 70%;
+}
+
+div.sticky {
+  position: sticky;
+  top: 0;
+  padding: 5px;
 }

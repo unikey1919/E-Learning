@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Room } from '../shared/Models/chat';
 import { ChatService } from '../shared/Services/chat.service';
 import { PaymentDetailService } from '../shared/Services/payment-detail.service';
+import { UserProfileService } from '../shared/Services/user-profile.service';
 import { ChatComponent } from './chat/chat.component';
 
 @Component({
@@ -18,12 +19,18 @@ export class ELearningComponent implements OnInit {
   username: any;
   @ViewChild(ChatComponent) child;
   constructor(public service:PaymentDetailService,private router: Router, private activatedRoute: ActivatedRoute
-    ,private chatService: ChatService) { }
+    ,private chatService: ChatService, private userProfileService: UserProfileService) { }
 
   ngOnInit(): void {
-    console.log(this.activatedRoute);
+    this.userProfileService.getUserProfile().subscribe(
+      res => {
+        this.username = res.userName;
+      },
+      err => {
+        console.log(err);
+      },
+    ); 
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
-    this.username = localStorage.getItem('username');
     this.avatar = localStorage.getItem('img');
   }
 
