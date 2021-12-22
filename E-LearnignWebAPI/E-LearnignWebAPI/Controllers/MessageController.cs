@@ -235,7 +235,7 @@ namespace E_LearnignWebAPI.Controllers
                 model.SubjectName = dataSMS.Rows[i]["SubjectName"].ToString();
                 lstSMS.Add(model);
                 var accountSid = "AC8a44777b5fb8d6a7973734c5405ad95e";
-                var authToken = "7a0e5c98ea27bace8b7fd0c3565323cf";
+                var authToken = "78dedc5d2a9ab6c954fa4747c8dfcc6b";
                 TwilioClient.Init(accountSid, authToken);
 
                 var to = new PhoneNumber(dataSMS.Rows[i]["PhoneNumber"].ToString());
