@@ -119,12 +119,24 @@ namespace E_LearnignWebAPI.Controllers
         }
         #region Room
         [HttpGet]
-        [Route("GetRoomMessage")]
-        public async Task<ActionResult<IEnumerable<RoomViewModel>>> GetRoomMessage()
+        [Route("GetRoomMessage/{username}/{role}")]
+        public async Task<ActionResult<IEnumerable<RoomViewModel>>> GetRoomMessage(string username, string role)
         {
+            DataTable roomdata = new DataTable();
+            if(role == "student")
+                roomdata = elearningBll.GetRoomByStudent(username);
+            if(role == "instructor")
+                roomdata = elearningBll.GetRoomByInstructor(username);
 
-            var rooms = await _context.Room.ToListAsync();
-
+            List<Room> rooms = new List<Room>();
+            for (int i = 0; i < roomdata.Rows.Count; i++)
+            {
+                Room room = new Room();
+                room.Id = Convert.ToInt32(roomdata.Rows[i]["Id"]);
+                room.Name = roomdata.Rows[i]["Name"].ToString();
+                room.CourseCode = roomdata.Rows[i]["CourseCode"].ToString();
+                rooms.Add(room);
+            }
             var roomsViewModel = _mapper.Map<IEnumerable<Room>, IEnumerable<RoomViewModel>>(rooms);
 
             return Ok(roomsViewModel);
@@ -152,7 +164,7 @@ namespace E_LearnignWebAPI.Controllers
             {
                 Name = roomViewModel.Name,
                 Admin = user,
-                CourseId = roomViewModel.CourseId
+                CourseCode = roomViewModel.CourseCode
             };
 
             _context.Room.Add(room);
@@ -223,7 +235,7 @@ namespace E_LearnignWebAPI.Controllers
                 model.SubjectName = dataSMS.Rows[i]["SubjectName"].ToString();
                 lstSMS.Add(model);
                 var accountSid = "AC8a44777b5fb8d6a7973734c5405ad95e";
-                var authToken = "7a0e5c98ea27bace8b7fd0c3565323cf";
+                var authToken = "78dedc5d2a9ab6c954fa4747c8dfcc6b";
                 TwilioClient.Init(accountSid, authToken);
 
                 var to = new PhoneNumber(dataSMS.Rows[i]["PhoneNumber"].ToString());

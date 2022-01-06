@@ -16,3 +16,13 @@ export class CourseExcel {
     Description: string='';
     Details: string='';
 }
+
+export class CourseModel {
+    id: number = 0;
+    instructorId: number = 0;
+    code: string='';
+    fullName: string='';
+    instructionName: string='';
+    description: string='';
+    details: string='';
+}

@@ -26,11 +26,9 @@ namespace ElearningBO.E_Learning
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        [ForeignKey("Course")]
-        public int CourseId { get; set; }
+        public string CourseCode { get; set; }
         public ApplicationUser Admin { get; set; }
         public ICollection<Message> Messages { get; set; }
-        public virtual Course Course { get; set; }
     }
     public class MessageViewModel
     {
@@ -49,7 +47,7 @@ namespace ElearningBO.E_Learning
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
         [RegularExpression(@"^\w+( \w+)*$", ErrorMessage = "Characters allowed: letters, numbers, and one space between words.")]
         public string Name { get; set; }
-        public int CourseId { get; set; }
+        public string CourseCode { get; set; }
     }
     public class UploadViewModel
     {

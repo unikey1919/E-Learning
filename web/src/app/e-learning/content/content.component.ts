@@ -9,6 +9,8 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MessageService } from 'primeng/api';
 import { Forum } from 'src/app/shared/Models/forum';
 import { ChatService } from 'src/app/shared/Services/chat.service';
+import { Course, CourseModel } from 'src/app/shared/Models/course.model';
+import { CourseService } from 'src/app/shared/Services/course.service';
 
 @Component({
   selector: 'app-content',
@@ -28,15 +30,18 @@ export class ContentComponent implements OnInit {
   formForumData: Forum = new Forum();
   formVideoData: Video = new Video();
   modelVideo: VideoModel = new VideoModel();
+  courseInfo: CourseModel = new CourseModel();
   
   constructor(private router: Router, 
     private contentService: ContentService,
     private activatedRoute: ActivatedRoute, private modalService: BsModalService, 
-    private messageService: MessageService,private chatService: ChatService,) { }
+    private messageService: MessageService,private chatService: ChatService,
+    private courseService: CourseService) { }
 
   ngOnInit(): void {
     this.formData.CourseId =this.activatedRoute.snapshot.params.id; 
     this.getContentByCourse(this.formData);
+    this.getCourseInfo();
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
     
     const tag = document.createElement('script');
@@ -485,5 +490,14 @@ export class ContentComponent implements OnInit {
       },
       (error) => {}
     );
+  }
+
+  getCourseInfo(){
+    this.courseService.GetCourseInfo(this.formData.CourseId).subscribe(
+      (res:any) => {
+        this.courseInfo = res;
+      },
+      (error) => {}
+    )
   }
 }

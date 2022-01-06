@@ -1,12 +1,31 @@
 .container {
-    margin-top: 20px;  
-  }
+  margin-top: 20px;
+}
 
 .navbar {
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
-    border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
 }
 
 .course-card {
-    width: 400px;
+  width: 400px;
 }
+
+mat-card {
+margin-top: 108px;
+  width: 90%;
+  height: 50px;
+  position: absolute;
+  top: calc(30% - 20px);
+  margin: 0px auto;
+  left: 0px;
+  right: 0px;
+  z-index: 1;
+  display:flex;
+}
+
+.fa-2x:hover {
+  color:blue;
+}
+
+
