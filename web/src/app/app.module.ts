@@ -129,7 +129,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatRadioModule,
     NgChartsModule,
     MatSlideToggleModule,
-    CountdownModule
+    CountdownModule,
     SocialLoginModule,
     NgbModule,
     MatProgressBarModule,
