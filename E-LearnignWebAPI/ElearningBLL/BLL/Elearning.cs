@@ -134,6 +134,19 @@ namespace ElearningBLL.BLL
             }
         }
 
+        public DataTable GetStatisticByCourse(int courseid)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetStatisticByCourse(courseid);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetStatisticByCourse Error: " + ex.Message);
+            }
+        }
+
         //Lấy danh sách học sinh theo khóa học
         public DataTable GetStudentNotInCourse(int courseid)
         {
@@ -499,6 +512,18 @@ namespace ElearningBLL.BLL
             }
         }
 
+        public void UpdateQuizShowScore(Quiz model)
+        {
+            try
+            {
+                objElDAO.UpdateQuizShowScore(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateQuizShowScore Error: " + ex.Message);
+            }
+        }
+
         public void DelQuiz(Quiz model)
         {
             try
@@ -523,6 +548,30 @@ namespace ElearningBLL.BLL
             }
         }
 
+        //Thêm câu hỏi bằng excel
+        public void AddQuestionByExcel(List<QuestionModelExcel> listExcel)
+        {
+            try
+            {
+                for (int i = 0; i < listExcel.Count; i++)
+                {
+                    Question question = new Question();
+                    question.QuizID = listExcel[i].QuizID;
+                    question.Qn = listExcel[i].Qn;
+                    question.Option1 = listExcel[i].Option1;
+                    question.Option2 = listExcel[i].Option2;
+                    question.Option3 = listExcel[i].Option3;
+                    question.Option4 = listExcel[i].Option4;
+                    question.ImageName = listExcel[i].ImageName;
+                    question.Answer = listExcel[i].Answer;
+                    objElDAO.AddQuestion(question);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > AddStudentToCourse Error: " + ex.Message);
+            }
+        }
         public void AddResult(Result model)
         {
             try

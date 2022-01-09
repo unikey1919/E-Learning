@@ -98,12 +98,21 @@ export class ContentService {
     return this.httpClient.post(this.baseURL + '/AddQuestion', objectModel);
   }
 
+  //Thêm câu hỏi bằng excel
+  AddQuestionByExcel(listExcel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/AddQuestionByExcel', listExcel);
+  }
+
   AddResult(objectModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/AddResult', objectModel);
   }
 
   UpdateQuestion(objectModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/UpdateQuestion', objectModel);
+  }
+
+  UpdateQuizShowScore(objectModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/UpdateQuizShowScore', objectModel);
   }
 
   DelQuestion(objectModel): Observable<any> {

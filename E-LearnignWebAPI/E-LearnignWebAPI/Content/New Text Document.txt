@@ -1,0 +1,109 @@
+CREATE procedure [dbo].[EL_AddQuestion](@p_quizid int, @p_qn nvarchar(max), @p_imagename varchar(50), @p_option1 nvarchar(250), @p_option2 nvarchar(250), @p_option3 nvarchar(250), @p_option4 nvarchar(250), @p_answer nvarchar(250))
+
+as
+Begin
+   insert into Question(
+   QuizID,
+   Qn,
+   ImageName,
+   Option1,
+   Option2,
+   Option3,
+   Option4,
+   Answer,
+   isDelete
+   )
+   values(
+   @p_quizid,
+   RTRIM(@p_qn),
+   RTRIM(@p_imagename),
+   RTRIM(@p_option1),
+   RTRIM(@p_option2),
+   RTRIM(@p_option3),
+   RTRIM(@p_option4),
+   RTRIM(@p_answer),
+   0
+   )
+end
+
+-------------------------------------------------------------------------------------------
+CREATE procedure [dbo].[EL_UpdateQuestion](@p_qnid int, @p_quizid int, @p_qn nvarchar(max), @p_imagename varchar(50), @p_option1 nvarchar(250), @p_option2 nvarchar(250), @p_option3 nvarchar(250), @p_option4 nvarchar(250), @p_answer nvarchar(250))
+
+as
+Begin
+   update Question 
+   set QuizID = @p_quizid, Qn = RTRIM(@p_qn), ImageName = RTRIM(@p_imagename), Option1 = RTRIM(@p_option1), Option2 = RTRIM(@p_option2), Option3 = RTRIM(@p_option3), Option4 = RTRIM(@p_option4), Answer = RTRIM(@p_answer)
+   where  QnID = @p_qnid
+end
+GO
+
+--------------------------------------------------------------------------------------------
+create procedure [dbo].[EL_DeleteQuestion](@p_qnid int)
+as
+Begin
+   update Question set isDelete = 1 where QnID = @p_qnid
+end
+
+--------------------------------------------------------------------------------------------
+CREATE function [dbo].[EL_GetStudentId](@p_username nvarchar(256))
+returns table
+as return SELECT
+          s.Id
+          FROM Students s
+		  join AspNetUsers au on au.UserName = @p_username and s.UserId = au.Id
+
+--------------------------------------------------------------------------------------------
+CREATE procedure [dbo].[EL_AddResult](@p_quizid int, @p_courseid int, @p_studentid int, @p_score decimal(18,2))
+as
+Begin
+   insert into Result(
+   QuizId,
+   CourseId,
+   StudentId,
+   Score
+   )
+   values(
+   @p_quizid,
+   @p_courseid,
+   @p_studentid,
+   @p_score
+   )
+end
+
+-------------------------------------------------------------------------------------------
+create function [dbo].[EL_GetStudentNotDoQuiz](@p_courseid int, @p_quizid int)
+returns table
+as return SELECT
+          ist.Id as id,
+		  au.FullName as studentname
+          FROM Enrollments enr
+		  join Students ist on ist.Id = enr.StudentId
+		  join AspNetUsers au on ist.UserId = au.Id
+where enr.CourseId = @p_courseid and enr.isDelete=0
+	  and ist.Id not in (Select StudentId
+						 From Result
+						 Where CourseId = @p_courseid and QuizId = @p_quizid)
+
+--------------------------------------------------------------------------------------------
+create function [dbo].[EL_GetStudentDoQuiz](@p_courseid int, @p_quizid int)
+returns table
+as return SELECT
+          rs.StudentId as id,
+		  au.FullName as studentname,
+		  rs.Score as score
+          FROM Result rs
+		  join Students ist on ist.Id = rs.StudentId
+		  join AspNetUsers au on ist.UserId = au.Id
+where rs.CourseId = @p_courseid and rs.QuizId = @p_quizid
+
+--------------------------------------------------------------------------------------------
+ng add ng2-charts
+-----------------------------------------------------
+CREATE function [dbo].[EL_GetStatisticByCourse](@p_courseid int)
+returns table
+as return select 
+		  StudentId as studentid,
+	      AVG(Score) as avgscore
+          from Result
+          where CourseId = @p_courseid
+          group by StudentId

@@ -141,6 +141,13 @@ export class ContentComponent implements OnInit {
     this.router.navigate([ `/e-learning/course/quiz/${id}/${subjectId}/${courseId}` ])
   }
 
+  openThongke(){
+    let courseId: number;
+    courseId = this.activatedRoute.snapshot.params.id;
+    console.log(courseId)
+    this.router.navigate([ `/e-learning/course/statistic/${courseId}` ])
+  }
+
   getForumContent(id: number, subjectId: number){
     let courseId: number;
     courseId = this.activatedRoute.snapshot.params.id;
@@ -193,6 +200,7 @@ export class ContentComponent implements OnInit {
     this.formForumData = formAddData;
     this.formVideoData = formAddData;
     this.formQuizData = formAddData
+    this.formQuizData.Time = this.formQuizData.Time/60
     //Đặt link video trống khi edit
     this.formVideoData.YoutubeLink = ''; 
   } 
@@ -239,6 +247,7 @@ export class ContentComponent implements OnInit {
     this.formQuizData.Opened = new Date(this.formQuizData.Opened);
     this.formQuizData.Due = new Date(this.formQuizData.Due);
     this.formQuizData.Title = this.formQuizData.Title;
+    this.formQuizData.Time = this.formQuizData.Time*60
     this.contentService.AddQuizBySubject(this.formQuizData).subscribe(
       (res: any) => {
         if (res.isError == true) {
@@ -413,6 +422,7 @@ export class ContentComponent implements OnInit {
 
   onEditQuiz(quiz: Quiz) {
     this.closeAddModel();
+    quiz.Time = quiz.Time*60
     this.contentService.UpdateQuiz(quiz).subscribe(
       (res: any) => {
         if (res.isError == true) {

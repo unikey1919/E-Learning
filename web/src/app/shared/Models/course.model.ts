@@ -16,3 +16,13 @@ export class CourseExcel {
     Description: string='';
     Details: string='';
 }
+
+export class CourseStatistic {
+    id: number = 0;
+    slxuatsac = 0;
+    slgioi: number = 0;
+    slkha: number = 0;
+    sltrungbinh: number = 0;
+    slyeu: number = 0;
+    slkem: number = 0;
+}

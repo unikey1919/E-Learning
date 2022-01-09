@@ -2,12 +2,16 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { MessageService } from 'primeng/api';
-import { Question, QuestionAnswer, QuestionModel } from 'src/app/shared/Models/question';
-import { Quiz, QuizModel } from 'src/app/shared/Models/quiz';
+import { Question, QuestionAnswer, QuestionExcel, QuestionModel } from 'src/app/shared/Models/question';
+import { Quiz, QuizModel, QuizModelShowScore } from 'src/app/shared/Models/quiz';
 import { ContentService } from 'src/app/shared/Services/content.service';
 import { MatRadioModule } from '@angular/material/radio';
 import { Result } from 'src/app/shared/Models/result';
 import { StudentResult } from 'src/app/shared/Models/student.model';
+import * as XLSX from 'xlsx';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { CdkConnectedOverlay } from '@angular/cdk/overlay';
+import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 
 @Component({
   selector: 'app-quiz',
@@ -25,6 +29,7 @@ export class QuizComponent implements OnInit {
   showMe1: boolean = false;
   showMe2: boolean = false;
   showMe3: boolean = false;
+  showMe4: boolean = false;
   countQuestion: number = 0;
   clonedItem: { [s: string]: QuestionModel } = {};
   quizId: number = 0;
@@ -33,7 +38,6 @@ export class QuizComponent implements OnInit {
   question: QuestionAnswer = new QuestionAnswer();
   listQuestion: QuestionAnswer[] = [];
   seconds: number;
-  timer;
   hide: boolean = true;
   hide1: boolean = false
   choose: string;
@@ -52,6 +56,21 @@ export class QuizComponent implements OnInit {
   listStudentNotDoQuiz: StudentResult[] = []
   listStudentDoQuiz: StudentResult[] = []
   listStudentResult: StudentResult[] = []
+  listExcel: QuestionExcel[] = [];
+  checkFile: boolean;
+  today: number = Date.now();
+  opened: number;
+  due: number;
+  checkDate1: boolean
+  checkDate2: boolean
+  updateQuizShowScore: QuizModelShowScore = new QuizModelShowScore();
+  checkShowScore: boolean
+  second: number = 100
+  config: CountdownConfig = {
+    // leftTime: 15,
+    // demand: true
+  }
+  demTimer: number = 0
 
 
   constructor(private router: Router,
@@ -61,11 +80,13 @@ export class QuizComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.checkFile = true
     this.seconds = 0;
     this.formData.quizId = this.activatedRoute.snapshot.params.id;
     this.quizId = this.formData.quizId
     this.courseId = this.activatedRoute.snapshot.params.courseId
     this.getQuizBySubject(this.formData.quizId);
+    console.log(this.today)
     this.getListQuestionByQuiz(this.formData.quizId)
     this.getCountQuestion(this.formData.quizId)
     // console.log(localStorage)
@@ -75,7 +96,6 @@ export class QuizComponent implements OnInit {
     else {
       this.getListStudentResult()
     }
-
     console.log(this.courseId)
     this.addQuestion.QuizId = this.quizId
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
@@ -86,6 +106,91 @@ export class QuizComponent implements OnInit {
     localStorage.removeItem('username');
     localStorage.removeItem('userRole');
     this.router.navigate(['/user/login']);
+  }
+
+  public toggle(event: MatSlideToggleChange) {
+    console.log(event.checked);
+    this.updateQuizShowScore.quizId = this.quizId
+    this.updateQuizShowScore.showScore = event.checked
+    this.contentService.UpdateQuizShowScore(this.updateQuizShowScore).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to update quiz',
+          });
+        }
+        else {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Quiz is updated',
+          });
+        }
+      },
+      (error) => { }
+    );
+    // this.useDefault = event.checked;
+  }
+
+  chooseFile(evt) {
+    /* wire up file reader */
+    const target: DataTransfer = <DataTransfer>(evt.target);
+    if (target.files.length !== 1) {
+      throw new Error('Cannot use multiple files');
+    }
+    const reader: FileReader = new FileReader();
+    reader.readAsBinaryString(target.files[0]);
+    reader.onload = (e: any) => {
+      /* create workbook */
+      const binarystr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
+
+      /* selected the first sheet */
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+      /* save data */
+      const data = XLSX.utils.sheet_to_json(ws); // to get 2d array pass 2nd parameter as object {header: 1}
+      this.listExcel = XLSX.utils.sheet_to_json(ws);
+    };
+    this.checkFile = false
+  }
+
+  upload() {
+    for (let i = 0; i < this.listExcel.length; i++) {
+      this.listExcel[i].QuizId = this.quizId
+      this.listExcel[i].ImageName = ''
+      this.listExcel[i].Qn = this.listExcel[i].Qn.toString()
+      this.listExcel[i].Option1 = this.listExcel[i].Option1.toString()
+      this.listExcel[i].Option2 = this.listExcel[i].Option2.toString()
+      this.listExcel[i].Option3 = this.listExcel[i].Option3.toString()
+      this.listExcel[i].Option4 = this.listExcel[i].Option4.toString()
+      this.listExcel[i].Answer = this.listExcel[i].Answer.toString()
+    }
+
+    // console.log(this.listExcel)
+    this.contentService.AddQuestionByExcel(this.listExcel).subscribe(
+      (res: any) => {
+        if (res.isError == true) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'Fail to upload file',
+          });
+        } else {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Nạp file thành công',
+          });
+          location.reload()
+        }
+        this.getListQuestionByQuiz(this.quizId);
+      },
+      (err) => { }
+    );
   }
 
   getListStudentResult() {
@@ -133,9 +238,18 @@ export class QuizComponent implements OnInit {
           console.log("Bắt đầu làm bài được")
         }
         else {
-          this.score1 = res[0].score
-          this.hide = false
-          this.showMe3 = true
+          if (this.checkShowScore == true) {
+            this.score1 = res[0].score
+            this.hide = false
+            this.showMe3 = true
+            this.showMe4 = false
+          }
+          else {
+            this.showMe2 = false
+            this.showMe3 = false
+            this.hide = false
+            this.showMe4 = true
+          }
         }
       },
       (error) => { }
@@ -159,11 +273,79 @@ export class QuizComponent implements OnInit {
   }
 
   finish(listFinish: QuestionAnswer[]) {
+    if (confirm("Are you sure to submit this quiz?")) {
+      if (this.checkShowScore == false) {
+        this.showMe1 = false
+        this.showMe2 = false
+        this.hide1 = false
+        this.showMe4 = true
+      }
+      else {
+        this.showMe1 = false
+        this.showMe2 = true
+        this.hide1 = false
+      }
+      this.listCheck = listFinish
+      // console.log(this.listCheck)
+
+      for (let i = 0; i < this.countQuestion; i++) {
+        this.listSelected.push(this.listCheck[i].selected)
+        // console.log(listFinish[i].answer)
+      }
+      this.countCorrectAnswer = 0
+      this.dem = 0
+      for (let i = 0; i < this.countQuestion; i++) {
+        if (this.listSelected[i] == this.listAnswer[i]) {
+          this.dem = this.dem + 1
+        }
+      }
+      this.score = Math.round((this.dem * 10) / this.countQuestion * 100) / 100
+      this.countCorrectAnswer = this.dem
+      console.log(this.listAnswer)
+      console.log(this.listSelected)
+
+      this.result.QuizId = this.quizId
+      this.result.Score = this.score
+      this.result.CourseId = this.courseId
+      this.result.StudentId = this.studentId
+      console.log(this.result)
+
+      this.contentService.AddResult(this.result).subscribe(
+        (res: any) => {
+          if (res.isError == true) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'error',
+              detail: 'Fail to add result',
+            });
+          } else {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Add success',
+            });
+          }
+        },
+        (err) => { }
+      );
+    }
+  }
+
+  finish1(listFinish: QuestionAnswer[]) {
+    if (this.checkShowScore == false) {
+      this.showMe1 = false
+      this.showMe2 = false
+      this.hide1 = false
+      this.showMe4 = true
+    }
+    else {
+      this.showMe1 = false
+      this.showMe2 = true
+      this.hide1 = false
+    }
     this.listCheck = listFinish
     // console.log(this.listCheck)
-    this.showMe1 = false
-    this.showMe2 = true
-    this.hide1 = false
+
     for (let i = 0; i < this.countQuestion; i++) {
       this.listSelected.push(this.listCheck[i].selected)
       // console.log(listFinish[i].answer)
@@ -206,19 +388,24 @@ export class QuizComponent implements OnInit {
     );
   }
 
-
   start() {
+    
     this.showMe1 = true
     this.hide = false;
     this.hide1 = true;
     // console.log(localStorage.getItem('username'))
   }
 
-
-  startTimer() {
-    this.timer = setInterval(() => {
-      this.seconds++;
-    }, 1000)
+  //Xử lý khi hết giờ
+  onTimerFinished(e: CountdownEvent, listFinish: QuestionAnswer[]) {
+    console.log(e)
+    if (e.action == 'done') {
+      this.demTimer = this.demTimer + 1
+    }
+    if (this.demTimer == 2){
+      console.log("hết giờ")
+      this.finish1(listFinish)
+    }
   }
 
   showAddQuestion() {
@@ -240,11 +427,37 @@ export class QuizComponent implements OnInit {
         this.formData = res as QuizModel;
         // this.Opened = new Date(this.formData.opened);
         console.log(this.formData);
+        this.checkShowScore = this.formData.showScore
+        this.config  = {
+          leftTime: this.formData.time,
+          demand: true
+        }
+        console.log(this.config)
+        // console.log(this.checkShowScore)
 
+        // chuyển ngày opened thành number
+        this.opened = Date.parse(this.formData.opened.toString())
+
+        // chuyển ngày due thành number
+        this.due = Date.parse(this.formData.due.toString())
+
+        this.compareTwoDate()
       },
       (error) => { }
     )
 
+  }
+
+  compareTwoDate() {
+    if (this.due < this.today) {
+      this.checkDate1 = false
+      this.checkDate2 = true
+      this.hide = false
+    }
+    else {
+      this.checkDate1 = true
+      this.checkDate2 = false
+    }
   }
 
   getListQuestionByQuiz(id: number) {

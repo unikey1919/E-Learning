@@ -1,0 +1,12 @@
+
+<div>
+    <button mat-button mat-raised-button color="primary" (click)="showStatisticByCourse()">Thống kê theo khóa học</button>
+</div>
+
+<br>
+<div style="width: 300px; height: 300px;" *ngIf="show">
+    <div class="chart">
+        <canvas baseChart [data]="pieChartData" [type]="pieChartType" [options]="pieChartOptions">
+        </canvas>
+    </div>
+</div>

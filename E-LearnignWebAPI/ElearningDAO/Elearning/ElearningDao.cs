@@ -34,7 +34,6 @@ namespace ElearningDAO.Elearning
             {
                 throw new Exception("ElearningDao > GetAllStudent Error: " + ex.Message);
             }
-            
             return dt;
         }
         #region Khóa học
@@ -198,6 +197,27 @@ namespace ElearningDAO.Elearning
             catch (Exception ex)
             {
                 throw new Exception("ElearningDao > GetStudentByCourse Error: " + ex.Message);
+            }
+
+            return dt;
+        }
+
+        public DataTable GetStatisticByCourse(int courseid)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetStatisticByCourse(@p_courseid)", conn);
+                cmd.Parameters.AddWithValue("@p_courseid", courseid);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetStatisticByCourse Error: " + ex.Message);
             }
 
             return dt;
@@ -758,6 +778,7 @@ namespace ElearningDAO.Elearning
                 cmd.Parameters.AddWithValue("@p_details", model.Details);
                 cmd.Parameters.AddWithValue("@p_open", model.Opened);
                 cmd.Parameters.AddWithValue("@p_due", model.Due);
+                cmd.Parameters.AddWithValue("@p_time", model.Time);
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -782,6 +803,27 @@ namespace ElearningDAO.Elearning
                 cmd.Parameters.AddWithValue("@p_opened", model.Opened);
                 cmd.Parameters.AddWithValue("@p_due", model.Due);
                 cmd.Parameters.AddWithValue("@p_details", model.Details);
+                cmd.Parameters.AddWithValue("@p_time", model.Time);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > UpdateQuiz Error: " + ex.Message);
+            }
+        }
+
+        public void UpdateQuizShowScore(Quiz model)
+        {
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("EL_UpdateQuizShowScore", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_quizid", model.QuizId);
+                cmd.Parameters.AddWithValue("@p_showscore", model.showScore);
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();

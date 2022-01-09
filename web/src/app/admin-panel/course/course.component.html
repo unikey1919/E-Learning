@@ -45,13 +45,13 @@
                         <input type="checkbox" class="checkAll" id="checkAll1"/>
                     </th>
                     <th>No.</th>
-                    <th>Khóa học</th>
-                    <th>Mã khóa học</th>
-                    <th>Id giảng viên</th>
-                    <th>Tên giảng viên </th>
-                    <th>Mô tả</th>
-                    <th>Chi tiết</th>
-                    <th>Danh sách học sinh</th>
+                    <th>Course</th>
+                    <th>Course Code</th>
+                    <th>Instructor ID</th>
+                    <th>Instructor Name </th>
+                    <th>Description</th>
+                    <th>Details</th>
+                    <th>Student List</th>
                     <th style="width:12rem">
                         <button (click)="showHide()" style="background: rgb(173, 224, 173)"  mat-raised-button>
                             <mat-icon >add</mat-icon>
@@ -175,9 +175,9 @@
                           <th>
       
                           </th>
-                          <th>Họ và tên/th>
+                          <th>Full Name </th>
                           <th>Email</th>
-                          <th>Số điện thoại</th>
+                          <th>Phone Number</th>
                           <th style="width:12rem">
                             <button (click)="openModalWithClass1(template1)" style="background: rgb(173, 224, 173)"  mat-raised-button>
                                 <mat-icon >add</mat-icon>
@@ -223,7 +223,7 @@
         </div>   
         <div class="modal-footer">  
             <div [hidden]="checkList">
-                <button mat-raised-button color="warn" (click)="onDeleteListStudentFromCourse()">Xóa các mục đã chọn</button>
+                <button mat-raised-button color="warn" (click)="onDeleteListStudentFromCourse()">Delete selected items</button>
             </div>
           <i (click)="modalRef1()" class="far fa-times-circle fa-2x" style="color:red"></i>
         </div>  
@@ -239,7 +239,7 @@
         </div>  
         <form class="form-inline">
             <div class="form-group" style="padding-left: 15px; padding-top: 5px;">
-                <label style="font-family: Helᴠetiᴄa; font-size: medium;">Ngày nhập học:&nbsp;</label>
+                <label style="font-family: Helᴠetiᴄa; font-size: medium;">Date Enrollment:&nbsp;</label>
               <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd"
                        name="dp" [(ngModel)]="model1" ngbDatepicker #d="ngbDatepicker" required>
@@ -252,7 +252,7 @@
             </div>
 
             <div class="form-group" style="padding-left: 10px; padding-top: 5px;">
-                <label style="font-family: Helᴠetiᴄa; font-size: medium;">Ngày hoàn thành:&nbsp;</label>
+                <label style="font-family: Helᴠetiᴄa; font-size: medium;">Date Completion:&nbsp;</label>
               <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd"
                        name="dp1" [(ngModel)]="model2" ngbDatepicker #d1="ngbDatepicker" required>
@@ -282,9 +282,9 @@
                           <th>
       
                           </th>
-                          <th>Họ và tên</th>
+                          <th>Full Name</th>
                           <th>Email</th>
-                          <th>Số điện thoại</th>
+                          <th>Phone Number</th>
                       </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">

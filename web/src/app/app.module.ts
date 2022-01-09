@@ -55,7 +55,10 @@ import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QuizComponent } from './e-learning/quiz/quiz.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { NgChartsModule } from 'ng2-charts';
-
+import { ThongkeComponent } from './admin-panel/thongke/thongke.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { CountdownModule } from 'ngx-countdown';
+import { GiaovienthongkeComponent } from './e-learning/giaovienthongke/giaovienthongke.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +81,8 @@ import { NgChartsModule } from 'ng2-charts';
     ForumComponent,
     ChatComponent,
     QuizComponent,
+    ThongkeComponent,
+    GiaovienthongkeComponent,
   ],
   imports: [
     MatCheckboxModule,
@@ -117,7 +122,9 @@ import { NgChartsModule } from 'ng2-charts';
     PickerModule,
     NgbModule,
     MatRadioModule,
-    NgChartsModule
+    NgChartsModule,
+    MatSlideToggleModule,
+    CountdownModule
   ],
   providers: [UserProfileService,{
     provide: HTTP_INTERCEPTORS,

@@ -202,7 +202,6 @@ namespace E_LearnignWebAPI.Controllers
                     }
                     else
                         SaveToAssignmentDB(filerc, files.submitUser, files.assignmentId);
-
                 }
                 return new HttpResponseMessage(HttpStatusCode.OK);
 
@@ -529,6 +528,24 @@ namespace E_LearnignWebAPI.Controllers
             }
         }
 
+
+        //Import file excel Question
+        //Thêm câu hỏi vào bài Quiz
+        [HttpPost]
+        [Route("AddQuestionByExcel")]
+        public ApiResultMessage AddQuestionByExcel(List<QuestionModelExcel> listExcel)
+        {
+            try
+            {
+                elearningBll.AddQuestionByExcel(listExcel);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
         [HttpPost]
         [Route("AddResult")]
         public ApiResultMessage AddResult(Result model)
@@ -551,6 +568,21 @@ namespace E_LearnignWebAPI.Controllers
             try
             {
                 elearningBll.UpdateQuestion(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        [HttpPost]
+        [Route("UpdateQuizShowScore")]
+        public ApiResultMessage UpdateQuizShowScore(Quiz model)
+        {
+            try
+            {
+                elearningBll.UpdateQuizShowScore(model);
                 return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
             }
             catch (Exception ex)

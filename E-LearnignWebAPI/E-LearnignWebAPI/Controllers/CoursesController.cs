@@ -167,7 +167,22 @@ namespace E_LearnignWebAPI.Controllers
             }
         }
 
-        //Lấy danh sách học sinh theo khóa học
+        [HttpGet]
+        [Route("GetStatisticByCourse/{courseid}")]
+        public ApiResultMessage GetStatisticByCourse(int courseid)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetStatisticByCourse(courseid);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        //Lấy danh sách học sinh không ở trong khóa học
         [HttpGet]
         [Route("GetStudentNotInCourse/{courseid}")]
         public ApiResultMessage GetStudentNotInCourse(int courseid)

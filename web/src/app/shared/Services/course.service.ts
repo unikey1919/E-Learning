@@ -56,6 +56,11 @@ export class CourseService {
     return this.httpClient.get(this.baseURL + '/GetStudentByCourse/' + courseid);
   }
 
+  GetStatisticByCourse(courseid): Observable<any> {
+    return this.httpClient.get(this.baseURL + '/GetStatisticByCourse/' + courseid);
+  }
+
+
   //Lấy danh sách học sinh không ở trong khóa học
   GetStudentNotInCourse(courseid): Observable<any> {
     return this.httpClient.get(this.baseURL + '/GetStudentNotInCourse/' + courseid);

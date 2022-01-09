@@ -17,6 +17,8 @@ import { ContentComponent } from './e-learning/content/content.component';
 import { AssignmentComponent } from './e-learning/assignment/assignment.component';
 import { ELearningComponent } from './e-learning/e-learning.component';
 import { QuizComponent } from './e-learning/quiz/quiz.component';
+import { ThongkeComponent } from './admin-panel/thongke/thongke.component';
+import { GiaovienthongkeComponent } from './e-learning/giaovienthongke/giaovienthongke.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user/login', pathMatch: 'full' },
@@ -67,62 +69,89 @@ const routes: Routes = [
           ],
         },
       },
-      
-      { path: 'course/assignment/:id/:subjectId/:courseId', component: AssignmentComponent,
-      data: {
-        title: 'content',
-        breadcrumb: [
-          {
-            label: 'Home',
-            url: '/e-learning/home'
-          },
-          {
-            label: 'Subject',
-            url: '/e-learning/course/content/:courseId'
-          },
-          {
-            label: 'Assignment',
-            url: '/e-learning/course/assignment'
-          },
-        ]
-      }, },
-      { path: 'course/quiz/:id/:subjectId/:courseId', component: QuizComponent,
-      data: {
-        title: 'content',
-        breadcrumb: [
-          {
-            label: 'Home',
-            url: '/e-learning/home'
-          },
-          {
-            label: 'Subject',
-            url: '/e-learning/course/content/:courseId'
-          },
-          {
-            label: 'Assignment',
-            url: '/e-learning/course/quiz'
-          },
-        ]
-      }, },
 
-      { path: 'course/forum/:id/:subjectId/:courseId', component: ForumComponent,
-      data: {
-        title: 'content',
-        breadcrumb: [
-          {
-            label: 'Home',
-            url: '/e-learning/home'
-          },
-          {
-            label: 'Subject',
-            url: '/e-learning/course/content/:courseId'
-          },
-          {
-            label: 'Forum',
-            url: '/e-learning/course/forum'
-          },
-        ]
-      }, },
+      {
+        path: 'course/assignment/:id/:subjectId/:courseId', component: AssignmentComponent,
+        data: {
+          title: 'content',
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/e-learning/home'
+            },
+            {
+              label: 'Subject',
+              url: '/e-learning/course/content/:courseId'
+            },
+            {
+              label: 'Assignment',
+              url: '/e-learning/course/assignment'
+            },
+          ]
+        },
+      },
+      {
+        path: 'course/quiz/:id/:subjectId/:courseId', component: QuizComponent,
+        data: {
+          title: 'content',
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/e-learning/home'
+            },
+            {
+              label: 'Subject',
+              url: '/e-learning/course/content/:courseId'
+            },
+            {
+              label: 'Quiz',
+              url: '/e-learning/course/quiz'
+            },
+          ]
+        },
+      },
+
+      {
+        path: 'course/statistic/:courseId', component: GiaovienthongkeComponent,
+        data: {
+          title: 'content',
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/e-learning/home'
+            },
+            {
+              label: 'Subject',
+              url: '/e-learning/course/content/:courseId'
+            },
+            {
+              label: 'Thống kê',
+              url: '/e-learning/course/quiz'
+            },
+          ]
+        },
+      },
+
+      {
+        path: 'course/forum/:id/:subjectId/:courseId', component: ForumComponent,
+        data: {
+          title: 'content',
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/e-learning/home'
+            },
+            {
+              label: 'Subject',
+              url: '/e-learning/course/content/:courseId'
+            },
+            {
+              label: 'Forum',
+              url: '/e-learning/course/forum'
+            },
+          ]
+        },
+      },
     ],
   },
 
@@ -138,6 +167,7 @@ const routes: Routes = [
       { path: 'course/test', component: TestComponent },
       { path: 'instructor', component: InstructorComponent },
       { path: 'student', component: StudentComponent },
+      { path: 'statistic', component: ThongkeComponent }
     ],
   },
 ];
@@ -146,4 +176,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

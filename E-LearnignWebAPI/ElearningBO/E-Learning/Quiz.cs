@@ -20,6 +20,8 @@ namespace ElearningBO.E_Learning
         public DateTime Opened { get; set; }
         public DateTime Due { get; set; }
         public bool isDelete { get; set; }
+        public bool showScore { get; set; }
+        public int Time { get; set; }
         public virtual Subject Subject { get; set; }
     }
 }
