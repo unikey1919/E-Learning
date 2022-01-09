@@ -1,5 +1,68 @@
+<p-toast></p-toast>
+<mat-card style=" margin-top: 60px" appMaterialElevation>
+  <mat-card-title>
+    {{formData.forumName}}
+  </mat-card-title>
+  <mat-card-content style="margin-bottom: 20px">
+    <div [innerHTML]="formData.details"></div>
+    <button class="btn btn-primary" style="margin-top:60px" (click)="openModalWithClass(addDiscussion)">Thêm một chủ đề thảo luận mới</button>
+    <table class="table" style="margin-top:20px">
+      <thead style="background: white">
+        <tr>
+          <th style="width:50%; text-align:left;;">Discussion</th>
+          <th style='width:17%; text-align:left;'>User create</th>
+          <th style='width:17%; text-align:left;'>Recent post</th>
+          <th style='width:8%; text-align:center;'>Answers</th>
+          <th style='width:8%; text-align:center;'>Likes</th>
+        </tr>  
+      </thead>
+      <tbody id="tbForum">
+        <tr *ngFor="let item of lstDiscussion">
+            <td style="text-align:left; color:blue" class="discuss" (click)="getDiscussionContent(item.Id)">{{item.DiscussName}}</td>
+            <td style="text-align:left">
+              <div style="display: flex;flex-direction: column;">
+                <span>{{item.FullName}}</span>
+                <span>{{item.CreateDate | date:'short'}}</span>
+              </div>
+            </td>
+            <td style="text-align:left">
+              <div style="display: flex;flex-direction: column;">
+                <span>Nguyen Dang Thang</span>
+                <span>23 Sep 2021</span>
+              </div>
+            </td>
+            <td style="text-align:center">2</td>
+            <td style="text-align:center;">
+              <i class="fas fa-thumbs-up"></i>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+  </mat-card-content>
+</mat-card>
 
-<p>
-  Start editing to see some magic happen :)
-</p>
-<youtube-player videoId="PRQCAL_RMVo" >
+<!-- Popup thêm thảo luận  --> 
+<ng-template #addDiscussion>   
+  <div class="modal-body">
+    <div class="form-group">
+      <div class="row" style="margin-top:20px">
+        <div class="col-lg-3">
+          <span style="font-weight: bold; position: absolute; top:25%">Discussion Name</span>
+        </div>
+        <div class="col-lg-4">
+         <input type ="text" class="form-control" #discussName = "ngModel" name= "discussName" [(ngModel)] = "formDiscussion.discussName">
+        </div>
+      </div>
+    </div>  
+    
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formDiscussion.details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitDiscussion()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template>

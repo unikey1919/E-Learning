@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElearningBO.UserAuthentication;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,11 +30,25 @@ namespace ElearningBO.E_Learning
 
         [ForeignKey("Forum")]
         public int ForumId { get; set; }
-        public string UserName { get; set; }
+        public ApplicationUser User { get; set; }
         public string DiscussName { get; set; }
         public string Details { get; set; }
         public DateTime CreateDate { get; set; }
         public bool isDelete { get; set; }
         public virtual Forum Forum { get; set; }
+    }
+    public class Answer
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey("Discussion")]
+        public int DiscussId { get; set; }
+        public ApplicationUser User { get; set; }
+        public string Details { get; set; }
+        public DateTime CreateDate { get; set; }
+        public bool isDelete { get; set; }
+        public int Reply { get; set; }
+        public virtual Discussion Discussion { get; set; }
     }
 }

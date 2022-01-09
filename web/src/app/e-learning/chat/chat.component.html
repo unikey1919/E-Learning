@@ -1,6 +1,7 @@
 <p-toast></p-toast>
 <div class="chat-popup" id="myForm">
   <form class="form-container">
+    <i class="fas fa-times" style="display: flex; position: inherit; margin-left: 880px; margin-bottom: 10px;" (click)="closeForm()"></i>
     <div class="app">
       <div class="sidebar">
         <div class="header">
@@ -17,14 +18,14 @@
         </ul>
         <div class="profile">
           <div>
-            <img src="#" class="user-avartar"/>
+            <img src="{{avatar}}" class="user-avatar"/>
             <a>
               <span>Tên đăng nhập</span>
             </a>
           </div>
         </div>
       </div>
-
+      
       <div class="main-content" *ngIf= "!joinedRoom">
         <span class="m-auto" >
           Please select room to join
@@ -47,9 +48,9 @@
           <ul class="list-unstyled" *ngFor="let message of chatMessages">
             <li>
               <div class="chat-message d-flex" [ngClass]="message.isMine === true? 'ismine':'isorder'">
-                <div class="left-side">
-                  <img src="/assets/img/" class="message-avatar" />
-                </div>
+                <!-- <div class="left-side">
+                  <img src="{{avatar}}" class="message-avatar" />
+                </div> -->
                 <div class="message-content d-flex flex-column">
                   <div class="d-flex justify-content-between">
                     <span class="author">{{message.from}}</span>
@@ -68,7 +69,7 @@
           <input matInput id="chat-message" #content = "ngModel" name= "content" [(ngModel)] = "formChatMessage.content" (keyup.enter)="sendNewMessage()"/>
           <!-- <textarea matInput placeholder="What's on your mind?"></textarea> -->
           <div class="actions d-flex align-items-center" style="margin-right: 10px;"> 
-            <form>
+            <!-- <form>
               <label for="UploadFile" class="custom-file-upload">
                 <i class="fas fa-image"></i>
               </label>
@@ -76,7 +77,7 @@
             </form>
             <a id="emojibtn">
               <i class="fas fa-smile" (click)="toggled = !toggled"></i>
-            </a>
+            </a> -->
             <!-- <emoji-mart *ngIf="toggled" (click)="handleSelection($event)"></emoji-mart>
             <i class="fas fa-paper-plane" id="btn-send-message"></i> -->
           </div>
@@ -90,7 +91,7 @@
           <ul id="user-list" class="list-unstyled" *ngFor="let user of lstUser">
               <li (click)="onPrivateChat(user)">
                   <div class="user">
-                      <img src="#" class="user-avatar" />
+                      <img src="{{avatar}}" class="user-avatar" />
                       <div class="right-side">
                           <input type="hidden" value ="user.username" />
                           <span class="author">{{user.username}}</span>

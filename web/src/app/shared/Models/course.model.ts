@@ -26,3 +26,12 @@ export class CourseStatistic {
     slyeu: number = 0;
     slkem: number = 0;
 }
+export class CourseModel {
+    id: number = 0;
+    instructorId: number = 0;
+    code: string='';
+    fullName: string='';
+    instructionName: string='';
+    description: string='';
+    details: string='';
+}

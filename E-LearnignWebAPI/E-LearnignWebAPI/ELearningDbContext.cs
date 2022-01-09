@@ -33,5 +33,7 @@ namespace ElearningBO
         public DbSet<Quiz> Quiz { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<Result> Result { get; set; }
+        public DbSet<Answer> Answer { get; set; }
+
     }
 }

@@ -1,9 +1,8 @@
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
-
 
 
 @Component({
@@ -15,7 +14,6 @@ import { Router } from '@angular/router';
 
 
 export class NavigationComponent {
-
   events: string[] = [];
   opened: boolean;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -26,10 +24,8 @@ export class NavigationComponent {
 
   constructor(private breakpointObserver: BreakpointObserver,private router: Router) {}
   onLogout() {
-    if(confirm("Are you sure to log out?")) {
-      localStorage.removeItem('token');
-      this.router.navigate(['/user/login']);
-    }
+    localStorage.removeItem('token');
+    this.router.navigate(['/']);
   }
-  
+
 }

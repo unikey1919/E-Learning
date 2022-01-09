@@ -23,3 +23,15 @@ mat-card-title {
     display: flex;
     justify-content: space-between;
 }
+
+p-table {
+    margin-top: 20px;
+}
+
+.fa-thumbs-up:hover{
+    color:blue
+}
+
+.discuss:hover{
+    text-decoration: underline;
+}

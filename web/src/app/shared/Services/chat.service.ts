@@ -17,8 +17,8 @@ export class ChatService {
     return this.httpClient.post(this.baseURL + '/CreateRoom', objectRoomModel);
   }
 
-  GetRoomMessage(): Observable<any>{
-    return this.httpClient.get(this.baseURL + '/GetRoomMessage');
+  GetRoomMessage(username: string, role: string): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/GetRoomMessage/${username}/${role}`);
   }
 
   EditRoom(id: number,objectRoomModel): Observable<any>{
@@ -35,6 +35,10 @@ export class ChatService {
 
   MessageHistory(roomName: string): Observable<any>{
     return this.httpClient.get(this.baseURL + `/Room/${roomName}`);
+  }
+
+  SendSMS(subjectId): Observable<any>{
+    return this.httpClient.get(this.baseURL + `/SendSms/${subjectId}`);
   }
   
 }

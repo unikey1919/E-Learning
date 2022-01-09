@@ -1,0 +1,73 @@
+<p-toast></p-toast>
+<mat-card style=" margin-top: 60px" appMaterialElevation>
+    <mat-card-content style="margin-bottom: 20px" *ngFor="let item of formData">
+     <div class="p-body-header">
+         <div class="p-title">
+             <h1 class="p-title-value">
+                 <span class="label label--royalBlue">
+                    {{formForumData.forumName}}            
+                 </span>
+                 <span class="label-append">&nbsp;</span>[Dịch] Hướng dẫn OC DDR4
+             </h1>
+         </div>
+         <div class="p-description">
+             <ul class="listInline listInline--bulleted">
+                 <li>
+                     <i class="fas fa-user" aria-hidden="true" title="Thread starter"> 
+                     </i>
+                     <a class="username u-concealed">{{item.FullName}}</a>
+                 </li>
+                 <li style="margin-left: 10px;">
+                     <i class="fas fa-clock" aria-hidden="true" title="Start date"></i>
+                     <a class="u-concealed">
+                         <time class="u-dt">{{item.CreateDate | date:'short'}}</time>
+                    </a>
+                 </li>
+             </ul>
+
+         </div>
+     </div>
+     <div class="p-body-content"> 
+          <div class="card-container">
+              <div class="header">
+                  <h2>{{item.FullName}}</h2>
+              </div>
+              <div class="description">
+                  <div class="header-timeline">{{item.CreateDate | date:'short'}}</div>
+                  <span [innerHTML]="item.Details"></span>
+                  <div class="social">
+                    <i class="fas fa-reply" style="float:right"(click)="onReply(1,1)" > Reply</i>
+                </div>
+                <div class="reply" style="margin-top:40px" *ngIf="isReply">
+                    <ckeditor [editor]="Editor" [(ngModel)] = "formReply.details"></ckeditor>
+                    <button mat-stroked-button style="float:right; margin-top:10px; margin-left:10px" (click)="onSubmit(-1)">Post reply</button>
+                    <button mat-stroked-button style="float:right; margin-top:10px" (click)="onReply(0,1)">Cancel</button>
+                </div>
+              </div>
+          </div>
+          <div class="card-container" style="margin-top:20px" *ngFor ="let answers of lstAnswer">
+            <div class="header">
+                <h2>{{answers.user.fullName}}</h2>
+                <h3><i class="fas fa-user-graduate" style="margin-right:10px"></i>{{answers.user.email}}</h3>
+            </div>
+            <div class="description">
+                <div class="header-timeline">{{answers.createDate | date:'short'}}</div>
+                <mat-card style="background: #e7e8e9; margin-bottom:10px" *ngFor ="let reply of answers.answer">
+                    <div class="header-timeline" style="color: orange">{{reply.user.fullName}} said:</div>
+                    <div [innerHTML]="reply.details"></div>
+                </mat-card>
+                <span [innerHTML]="answers.details"></span>
+                <div class="social">
+                    <i class="fas fa-reply" style="float:right" (click)="onReply(1,answers.id)"> Reply</i>
+                </div>
+                <div class="reply" style="margin-top:40px" *ngIf="isReply && mapReply == answers.id">
+                    <ckeditor [editor]="Editor" [(ngModel)] = "formReply.details"></ckeditor>
+                    <button mat-stroked-button style="float:right; margin-top:10px; margin-left:10px" (click)="onSubmit(answers.id)">Post reply</button>
+                    <button mat-stroked-button style="float:right; margin-top:10px" (click)="onReply(0,answers.id)">Cancel</button>
+                </div>
+            </div>
+            
+        </div>
+     </div>
+    </mat-card-content>
+  </mat-card>

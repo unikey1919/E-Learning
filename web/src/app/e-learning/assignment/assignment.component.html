@@ -1,161 +1,156 @@
 <p-toast></p-toast>
-<mat-card style=" margin-top: 20px" appMaterialElevation>
-  <mat-card-title>
-    {{formData.assignmentName}}
-  </mat-card-title>
-  <mat-card-content style="margin-bottom: 20px">
-    <mat-card style="background: lightgreen">
-      <div>
-        <strong>Opened: </strong>
-        <span>&nbsp;{{formData.opened | date: 'full'}}</span>
+   <mat-card style=" margin-top: 60px" appMaterialElevation>
+       <mat-card-title>
+         {{formData.assignmentName}} 
+        </mat-card-title>
+       <mat-card-content style="margin-bottom: 20px">
+         <mat-card style="background: lightgreen">
+           <div>
+             <strong>Opened:  </strong>
+             <span>&nbsp;{{formData.opened | date: 'full'}}</span>
+           </div>
+           <div>
+            <strong>Closed:  </strong>
+            <span>&nbsp;{{formData.due | date: 'full'}}</span>
+          </div>
+        </mat-card>
+      </mat-card-content>
+       <mat-card-content style="margin-bottom: 20px">
+        <div [innerHTML]="formData.details"></div>
+        <div class="card" *ngIf="role == 'instructor'">
+          <p-table #dt1 [value]="lstStudentSubmit" dataKey="id" editMode="row" responsiveLayout="scroll"
+           [globalFilterFields]="['userName','studentId']">
+              <ng-template pTemplate="caption">
+                <div class="table-header">
+                  Submit status
+                  <span class="p-input-icon-left">
+                    <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search" />
+                </span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>No.</th>
+                      <th>StudentId</th>
+                      <th>Student Name</th>
+                      <th>AssignmentSubmit</th>
+                      <th>Submit time</th>
+                      <th>Status</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                  <tr [pEditableRow]="item">
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="output">
+                                  {{ri}}
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="output">
+                                {{item.studentId}}
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="output">
+                                {{item.userName}}
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="output">
+                                    <div *ngFor="let file of item.lstAssignmentSubmit" style="margin-top:10px">
+                                      <span class="download" (click)="downLoadFileContent(file.id, file.fileType)">
+                                        <i style="margin-right:10px" [class]="getIcon(file.fileType)" [style.color]="getBackgroundColor(file.fileType)"></i>
+                                        {{file.fileName}}
+                                      </span>
+                                    </div>
+                                
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                          <p-cellEditor>
+                              <ng-template pTemplate="output">
+                                    <div *ngFor="let file of item.lstAssignmentSubmit" style="margin-top:10px">
+                                      <span>{{file.submitDate | date: 'full'}}</span>
+                                    </div>
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                              <button *ngIf="item.status == 0" mat-raised-button style="font-size:15px; margin-bottom: 10px;height:35px;margin-left:20px; background:red">
+                                <div><span>Not Submitted</span></div>
+                                </button>
+                                <button *ngIf="item.status == 1" mat-raised-button style="font-size:15px; margin-bottom: 10px;height:35px;margin-left:20px; background:yellow">
+                                  <div><span>Submitted lately</span></div>
+                                  </button>
+                                <button *ngIf="item.status == 2" mat-raised-button style="font-size:15px; margin-bottom: 10px;height:35px;margin-left:20px; background:aqua">
+                                  <div><span>Submitted</span></div>
+                                  </button>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                  </tr>
+              </ng-template>
+          </p-table>
       </div>
-      <div>
-        <strong>Closed: </strong>
-        <span>&nbsp;{{formData.due | date: 'full'}}</span>
-      </div>
-    </mat-card>
-  </mat-card-content>
-  <mat-card-content style="margin-bottom: 20px">
-    <div [innerHTML]="formData.details"></div>
-    <div class="card" *ngIf="role == 'instructor'">
-      <p-table #dt1 [value]="lstStudentSubmit" dataKey="id" editMode="row" responsiveLayout="scroll"
-        [globalFilterFields]="['coursename', 'code', 'instructorid', 'instructionName', 'description', 'details']">
-        <ng-template pTemplate="caption">
-          <div class="table-header">
-            Submit status
-            <span class="p-input-icon-left">
-              <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
-                placeholder="Search" />
+        <mat-card *ngIf="formStatus.ticks != 0">
+          <div>
+            <strong>Status: </strong>
+            <button mat-raised-button style="font-size:15px; margin-bottom: 10px;height:35px;margin-left:20px; background:aqua">
+              <div><span>Submitted</span></div>
+              </button>
+          </div>
+          <div>
+            <strong>Remaining: </strong>
+            <span>&nbsp;The assignment was sent early
+               <span *ngIf="formStatus.days > 0"> {{formStatus.days}} days </span>
+               <span *ngIf="formStatus.hours > 0"> {{formStatus.hours}} hours </span>  
+               <span *ngIf="formStatus.minutes > 0"> {{formStatus.minutes}} minutes </span>  
+               <span *ngIf="formStatus.seconds > 0"> {{formStatus.seconds}} seconds </span>    
             </span>
           </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th>No.</th>
-            <th>StudentId</th>
-            <th>Student Name</th>
-            <th>AssignmentSubmit</th>
-            <th>Submit time</th>
-            <th>Status</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
-          <tr [pEditableRow]="item">
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="output">
-                  {{ri}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="output">
-                  {{item.studentId}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="output">
-                  {{item.userName}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="output">
-                  <div *ngFor="let file of item.lstAssignmentSubmit" style="margin-top:10px">
-                    <span class="download" (click)="downLoadFileContent(file.id, file.fileType)">
-                      <i style="margin-right:10px" [class]="getIcon(file.fileType)"
-                        [style.color]="getBackgroundColor(file.fileType)"></i>
-                      {{file.fileName}}
-                    </span>
-                  </div>
-
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="output">
-                  <div *ngFor="let file of item.lstAssignmentSubmit" style="margin-top:10px">
-                    <span>{{file.submitDate | date: 'full'}}</span>
-                  </div>
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="output">
-                  <button *ngIf="item.status == 0" mat-raised-button
-                    style="font-size:15px; margin-bottom: 10px;height:35px;margin-left:20px; background:red">
-                    <div><span>Not Submitted</span></div>
-                  </button>
-                  <button *ngIf="item.status == 1" mat-raised-button
-                    style="font-size:15px; margin-bottom: 10px;height:35px;margin-left:20px; background:yellow">
-                    <div><span>Submitted lately</span></div>
-                  </button>
-                  <button *ngIf="item.status == 2" mat-raised-button
-                    style="font-size:15px; margin-bottom: 10px;height:35px;margin-left:20px; background:aqua">
-                    <div><span>Submitted</span></div>
-                  </button>
-                </ng-template>
-              </p-cellEditor>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
-    <mat-card *ngIf="formStatus.ticks != 0">
-      <div>
-        <strong>Status: </strong>
-        <button mat-raised-button
-          style="font-size:15px; margin-bottom: 10px;height:35px;margin-left:20px; background:aqua">
-          <div><span>Submitted</span></div>
-        </button>
-      </div>
-      <div>
-        <strong>Remaining: </strong>
-        <span>&nbsp;The assignment was sent early
-          <span *ngIf="formStatus.days > 0"> {{formStatus.days}} days </span>
-          <span *ngIf="formStatus.hours > 0"> {{formStatus.hours}} hours </span>
-          <span *ngIf="formStatus.minutes > 0"> {{formStatus.minutes}} minutes </span>
-          <span *ngIf="formStatus.seconds > 0"> {{formStatus.seconds}} seconds </span>
-        </span>
-      </div>
-      <div style="margin-top:15px">
-        <strong>File Submit: </strong>
-        <mat-card>
-          <mat-card-content *ngFor="let file of formFile">
-            <div>
-              <span class="download" (click)="downLoadFileContent(file.id, file.fileType)">
-                <i style="margin-right:10px" [class]="getIcon(file.fileType)"
-                  [style.color]="getBackgroundColor(file.fileType)"></i>
-                {{file.fileName}}
-              </span>
-              <span style="float:right">&nbsp;&nbsp;&nbsp;{{file.submitDate | date: 'full'}}</span>
-            </div>
-
-          </mat-card-content>
+          <div style="margin-top:15px">
+            <strong>File Submit: </strong>
+            <mat-card>
+              <mat-card-content *ngFor="let file of formFile">
+                <div>
+                  <span class="download" (click)="downLoadFileContent(file.id, file.fileType)">
+                    <i style="margin-right:10px" [class]="getIcon(file.fileType)" [style.color]="getBackgroundColor(file.fileType)"></i>
+                    {{file.fileName}}
+                  </span>
+                  <span style="float:right">&nbsp;&nbsp;&nbsp;{{file.submitDate | date: 'full'}}</span>
+                </div>
+                
+              </mat-card-content>
+            </mat-card>
+          </div>
         </mat-card>
-      </div>
-    </mat-card>
-  </mat-card-content>
+      </mat-card-content>
+   </mat-card>
+
+   <mat-card *ngIf="role == 'student'" style=" margin-top: 20px" appMaterialElevation>
+    <mat-card-title>Nộp tập tin</mat-card-title>
+    <mat-card-content style="margin-bottom: 20px">
+      <ngx-dropzone (change)="onSelect($event)">
+        <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+          <ngx-dropzone-label>{{ f.name}}</ngx-dropzone-label>
+        </ngx-dropzone-preview>
+      </ngx-dropzone>
+   </mat-card-content>
+   <mat-card-actions>
+    <button *ngIf="formStatus.ticks == 0" mat-raised-button (click) = "onSubmit()">Nộp bài tập</button>
+    <button *ngIf="formStatus.ticks != 0" mat-raised-button (click) = "onSubmitEdit()">Sửa bài nộp</button>
+   </mat-card-actions>
 </mat-card>
 
-<mat-card *ngIf="role == 'student'" style=" margin-top: 20px" appMaterialElevation>
-  <mat-card-title>Nộp tập tin</mat-card-title>
-  <mat-card-content style="margin-bottom: 20px">
-    <ngx-dropzone (change)="onSelect($event)">
-      <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
-      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-        <ngx-dropzone-label>{{ f.name}}</ngx-dropzone-label>
-      </ngx-dropzone-preview>
-    </ngx-dropzone>
-  </mat-card-content>
-  <mat-card-actions>
-    <button *ngIf="formStatus.ticks == 0" mat-raised-button (click)="onSubmit()">Nộp bài tập</button>
-    <button *ngIf="formStatus.ticks != 0" mat-raised-button (click)="onSubmitEdit()">Sửa bài nộp</button>
-  </mat-card-actions>
-</mat-card>
+

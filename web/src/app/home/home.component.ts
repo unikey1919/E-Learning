@@ -13,14 +13,21 @@ import { UserProfileService } from '../shared/Services/user-profile.service';
 export class HomeComponent implements OnInit {
   lstCourse: Course[];
   formData: User = new User();
+  role: string = '';
+  username: any;
+  avatar: any;
   constructor(private router: Router, private courseService: CourseService, private userProfileService: UserProfileService) { }
 
   ngOnInit(): void {
+    localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
+    this.avatar = localStorage.getItem('img');
+    this.username = localStorage.getItem('username');
     this.userProfileService.getUserProfile().subscribe(
       res => {
         this.formData.userName = res.userName;
         this.formData.fullName = res.fullName;
         this.formData.email = res.email;
+        this.formData.avatarUrl = res.avatar;
         this.getListCourseByStudent(res);
         localStorage.setItem('username', res.userName);
         localStorage.setItem('email', res.email);
@@ -57,5 +64,6 @@ export class HomeComponent implements OnInit {
       );
     }
   }
+
 
 }

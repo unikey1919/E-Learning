@@ -330,7 +330,7 @@ namespace E_LearnignWebAPI.Controllers
                     obj.Email = (dt.Rows[i]["Email"]).ToString();
                     obj.StudentId = Convert.ToInt32(dt.Rows[i]["StudentId"]);
                 //Lấy danh sách bài tập đã nộp theo từng user
-                    var assignmentSubmit = _context.FileAssignment.Where(n => n.UserSubmit == obj.UserName && n.AssignmentId == assingmentId).ToList();
+                    var assignmentSubmit = _context.FileAssignment.Where(n => n.UserSubmit == obj.UserName && n.AssignmentId == assingmentId && n.isDelete == false).ToList();
                     obj.LstAssignmentSubmit = assignmentSubmit;
 
                 //check deadline
@@ -373,7 +373,6 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
-
         [HttpPost]
         [Route("UpdateAssignment")]
         public ApiResultMessage UpdateAssignment(Assignment model)
@@ -608,6 +607,19 @@ namespace E_LearnignWebAPI.Controllers
 
         #endregion
         #region Forum
+        [HttpGet]
+        [Route("GetForum/{id}")]
+        public async Task<ActionResult<Forum>> GetForum(int id)
+        {
+            var forum = await _context.Forum.FindAsync(id);
+
+            if (forum == null)
+            {
+                return NotFound();
+            }
+
+            return forum;
+        }
         [HttpPost]
         [Route("AddForumBySubject")]
         public ApiResultMessage AddForumBySubject(Forum model)
@@ -651,12 +663,41 @@ namespace E_LearnignWebAPI.Controllers
             }
         }
         #region Discusstion
+        [HttpGet]
+        [Route("GetDiscussByForum/{forumId}")]
+        public ApiResultMessage GetDiscussByForum(int forumId)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetDiscussByForum(forumId);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        [HttpGet]
+        [Route("GetDiscuss/{forumId}/{id}")]
+        public ApiResultMessage GetDiscuss(int forumId,int id)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetDiscuss(forumId,id);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
         [HttpPost]
         [Route("AddDiscussBySubject")]
         public ApiResultMessage AddDiscussBySubjectForum(Discussion model)
         {
             try
             {
+                model.User = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
                 elearningBll.AddDiscussBySubject(model);
                 return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
             }
@@ -678,6 +719,42 @@ namespace E_LearnignWebAPI.Controllers
             {
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
+        }
+        [HttpPost]
+        [Route("AddAnswer")]
+        public ApiResultMessage AddAnswer(Answer model)
+        {
+            try
+            {
+                model.User = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                elearningBll.AddAnswer(model);
+                return new ApiResultMessage { IsError = false, Message = "", MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+        #endregion
+        #region Answer
+        [HttpGet]
+        [Route("GetAnswer/{discussId}")]
+        public IActionResult GetAnswer(int discussId)
+        {
+            var answer = _context.Answer
+                .Include(n => n.User)
+                .Where(n => n.isDelete == false && n.DiscussId == discussId)
+                .OrderBy(m => m.CreateDate)
+                .ToList();
+
+            return Ok(answer);
+        }
+        [HttpGet]
+        [Route("GetAnswerReply/{id}")]
+        public IActionResult GetAnswerReply(int id)
+        {
+            var reply = _context.Answer.Include(n => n.User).Where(n=> n.Id == id).ToList();
+            return Ok(reply);
         }
         #endregion
         #endregion

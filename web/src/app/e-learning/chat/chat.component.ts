@@ -32,14 +32,19 @@ export class ChatComponent implements OnInit {
   isEditRoom: Boolean = false;
   serverInfoMessage: string = '';
   toggled: boolean = false;
+  role: string='';
+  username: any;
+  avatar: any;
 
   constructor(
     private modalService: BsModalService,
     private chatService: ChatService,
     private messageService: MessageService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
+    localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
     this.token = localStorage.getItem('token');
     this.connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
@@ -47,9 +52,12 @@ export class ChatComponent implements OnInit {
         accessTokenFactory: () => this.token,
       })
       .build();
+    // this.getRoom();
 
     this.connection.start().then(() => {
       console.log('SignalR Started....');
+      this.avatar = localStorage.getItem('img');
+      this.username = localStorage.getItem('username');
       this.getRoom();
       this.userList();
     });
@@ -152,7 +160,7 @@ export class ChatComponent implements OnInit {
   }
 
   getRoom() {
-    this.chatService.GetRoomMessage().subscribe(
+    this.chatService.GetRoomMessage(this.username,this.role).subscribe(
       (res) => {
         this.lstRoom = [];
         this.lstRoom = res as Room[];

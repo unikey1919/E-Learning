@@ -310,6 +310,14 @@ body {
   border-radius: 21px;
 }
 
+.list-unstyled .user-avatar{
+  width: 40px;
+  height: 40px;
+  float: left;
+  margin-right: 10px;
+  border-radius: 21px;
+}
+
 .users-container{
   display: flex;
   flex-direction: column;
@@ -411,4 +419,8 @@ input[type="radio"] {
   .ismine .message-avatar {
       margin-right: 0;
       margin-left: 10px;
+  }
+
+  .fa-times:hover {
+    color: red;
   }
