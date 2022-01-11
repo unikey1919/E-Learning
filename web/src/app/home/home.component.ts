@@ -4,46 +4,29 @@ import { Course } from '../shared/Models/course.model';
 import { User } from '../shared/Models/user.model';
 import { CourseService } from '../shared/Services/course.service';
 import { UserProfileService } from '../shared/Services/user-profile.service';
-import { EventSettingsModel, DayService, WeekService, WorkWeekService, MonthService, AgendaService } from '@syncfusion/ej2-angular-schedule';
+import { Assignment, AssignmentByEmail } from '../shared/Models/assignment';
+import { ContentService } from '../shared/Services/content.service';
+import { CalendarOptions } from '@fullcalendar/angular';
+
 @Component({
   selector: 'app-home',
-  providers: [DayService, WeekService, WorkWeekService, MonthService, AgendaService],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
 
 export class HomeComponent implements OnInit {
-public selectedDate: Date = new Date(2018, 1, 15);
-public eventSettings: EventSettingsModel = {
-    dataSource: [
-    {
-        Id: 1,
-        Subject: 'Explosion of Betelgeuse Star',
-        StartTime: new Date(2018, 1, 15, 9, 30),
-        EndTime: new Date(2018, 1, 15, 11, 0)
-    }, {
-        Id: 2,
-        Subject: 'Thule Air Crash Report',
-        StartTime: new Date(2018, 1, 12, 12, 0),
-        EndTime: new Date(2018, 1, 12, 14, 0)
-    }, {
-        Id: 3,
-        Subject: 'Blue Moon Eclipse',
-        StartTime: new Date(2018, 1, 13, 9, 30),
-        EndTime: new Date(2018, 1, 13, 11, 0)
-    }, {
-        Id: 4,
-        Subject: 'Meteor Showers in 2018',
-        StartTime: new Date(2018, 1, 14, 13, 0),
-        EndTime: new Date(2018, 1, 14, 14, 30)
-    }]
-};
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth',
+  };
   lstCourse: Course[];
   formData: User = new User();
+  formCalendar: AssignmentByEmail [];
   role: string = '';
   username: any;
   avatar: any;
-  constructor(private router: Router, private courseService: CourseService, private userProfileService: UserProfileService) { }
+  constructor(private router: Router, private courseService: CourseService, 
+    private userProfileService: UserProfileService, private contentService: ContentService) {
+     }
 
   ngOnInit(): void {
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
@@ -62,7 +45,16 @@ public eventSettings: EventSettingsModel = {
       err => {
         console.log(err);
       },
-    ); 
+    );
+    this.contentService.GetAssignmentByEmail(this.username).subscribe(
+      res => {
+        this.calendarOptions.events = res as AssignmentByEmail[];
+        console.log(this.formCalendar);
+      },
+      err => {
+        console.log(err);
+      },
+    )
   }
 
   onLogout() {
@@ -90,6 +82,10 @@ public eventSettings: EventSettingsModel = {
         (error) => {}
       );
     }
+  }
+
+  onCalendar() {
+    this.router.navigate(['/e-learning/calendar']);
   }
 
 

@@ -61,3 +61,11 @@ export class FileAssignmentSubmit {
   UserSubmit: string='';
   SubmitDate: Date = new Date();
 }
+
+export class AssignmentByEmail {
+  Id: number = 0;
+  Subject: string = '';
+  StartTime: Date = new Date();
+  EndTime: Date = new Date();
+  
+}
