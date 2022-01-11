@@ -150,4 +150,8 @@ export class ContentService {
     return this.httpClient.post(this.baseURL + '/DelVideo', objVideoModel);
   }
 
+  GetAssignmentByEmail(username: string){
+    return this.httpClient.get(this.baseURL + `/GetAssignmentByEmail/${username}`);
+  }
+
 }

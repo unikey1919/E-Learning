@@ -17,6 +17,7 @@ import { ContentComponent } from './e-learning/content/content.component';
 import { AssignmentComponent } from './e-learning/assignment/assignment.component';
 import { ELearningComponent } from './e-learning/e-learning.component';
 import { DiscussionComponent } from './e-learning/chat/discussion/discussion.component';
+import { CalendarComponent } from './e-learning/calendar/calendar.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent,
@@ -40,6 +41,24 @@ const routes: Routes = [
             {
               label: 'Home',
               url: '/e-learning/home',
+            }
+          ],
+        },
+      },
+      {
+        path: 'calendar',
+        component: CalendarComponent,
+        canActivate: [AuthGuard],
+        data: {
+          title: 'content',
+          breadcrumb: [
+            {
+              label: 'Home',
+              url: '/e-learning/home',
+            },
+            {
+              label: 'Calendar',
+              url: '/e-learning/calendar',
             }
           ],
         },

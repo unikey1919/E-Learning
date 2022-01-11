@@ -963,6 +963,24 @@ namespace ElearningDAO.Elearning
             return dt;
         }
         #endregion
-
+        public DataTable GetAssignmentByEmail(string username)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string a = ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString;
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DevConnection"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM EL_GetAssignmentByEmail(@p_username)", conn);
+                cmd.Parameters.AddWithValue("@p_username", username);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ElearningDao > GetAssignmentByEmail Error: " + ex.Message);
+            }
+            return dt;
+        }
     }
 }

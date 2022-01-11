@@ -57,6 +57,13 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatProgressBarModule} from '@angular/material/progress-bar'; 
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { CalendarComponent } from './e-learning/calendar/calendar.component';
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin
+]);
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +85,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ForumComponent,
     ChatComponent,
     DiscussionComponent,
+    CalendarComponent
   ],
   imports: [
     MatCheckboxModule,
@@ -118,7 +126,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     SocialLoginModule,
     NgbModule,
     MatProgressBarModule,
-    ScrollingModule 
+    ScrollingModule,
+    ScheduleModule ,
+    FullCalendarModule
   ],
   providers: [UserProfileService,{
     provide:  HTTP_INTERCEPTORS,

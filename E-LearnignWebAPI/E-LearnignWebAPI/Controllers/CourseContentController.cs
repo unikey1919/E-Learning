@@ -617,5 +617,22 @@ namespace E_LearnignWebAPI.Controllers
             }
         }
         #endregion
+        [HttpGet]
+        [Route("GetAssignmentByEmail/{username}")]
+        public IEnumerable<AssignmentByEmail> GetAssignmentByEmail(string username)
+        {
+            DataTable table = new DataTable();
+            table = elearningBll.GetAssignmentByEmail(username);
+            List<AssignmentByEmail> lstAssignment = new List<AssignmentByEmail>();
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                AssignmentByEmail obj = new AssignmentByEmail();
+                obj.Title = table.Rows[i]["AssignmentName"].ToString().Trim() + " - " + table.Rows[i]["Code"].ToString();
+                obj.Date = (DateTime)table.Rows[i]["Due"];
+                lstAssignment.Add(obj);
+            }
+            return lstAssignment;
+        }
+
     }
 }

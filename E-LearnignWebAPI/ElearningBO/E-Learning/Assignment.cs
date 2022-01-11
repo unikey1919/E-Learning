@@ -1,4 +1,6 @@
-﻿using System;
+﻿using javax.xml.bind.annotation;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,5 +23,12 @@ namespace ElearningBO.E_Learning
         public DateTime Due { get; set; }
         public bool isDelete { get; set; }
         public virtual Subject Subject { get; set; }
+    }
+
+ 
+    public class AssignmentByEmail
+    {
+        public string Title { get; set; }
+        public DateTime Date { get; set; }
     }
 }

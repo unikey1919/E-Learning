@@ -4,19 +4,29 @@ import { Course } from '../shared/Models/course.model';
 import { User } from '../shared/Models/user.model';
 import { CourseService } from '../shared/Services/course.service';
 import { UserProfileService } from '../shared/Services/user-profile.service';
+import { Assignment, AssignmentByEmail } from '../shared/Models/assignment';
+import { ContentService } from '../shared/Services/content.service';
+import { CalendarOptions } from '@fullcalendar/angular';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 
 export class HomeComponent implements OnInit {
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth',
+  };
   lstCourse: Course[];
   formData: User = new User();
+  formCalendar: AssignmentByEmail [];
   role: string = '';
   username: any;
   avatar: any;
-  constructor(private router: Router, private courseService: CourseService, private userProfileService: UserProfileService) { }
+  constructor(private router: Router, private courseService: CourseService, 
+    private userProfileService: UserProfileService, private contentService: ContentService) {
+     }
 
   ngOnInit(): void {
     localStorage.getItem('userRole') == "Instructor" ? this.role = "instructor" : this.role = "student";
@@ -35,7 +45,16 @@ export class HomeComponent implements OnInit {
       err => {
         console.log(err);
       },
-    ); 
+    );
+    this.contentService.GetAssignmentByEmail(this.username).subscribe(
+      res => {
+        this.calendarOptions.events = res as AssignmentByEmail[];
+        console.log(this.formCalendar);
+      },
+      err => {
+        console.log(err);
+      },
+    )
   }
 
   onLogout() {
@@ -63,6 +82,10 @@ export class HomeComponent implements OnInit {
         (error) => {}
       );
     }
+  }
+
+  onCalendar() {
+    this.router.navigate(['/e-learning/calendar']);
   }
 
 
