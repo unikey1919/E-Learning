@@ -57,6 +57,7 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatProgressBarModule} from '@angular/material/progress-bar'; 
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,7 +119,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     SocialLoginModule,
     NgbModule,
     MatProgressBarModule,
-    ScrollingModule 
+    ScrollingModule,
+    ScheduleModule 
   ],
   providers: [UserProfileService,{
     provide:  HTTP_INTERCEPTORS,
