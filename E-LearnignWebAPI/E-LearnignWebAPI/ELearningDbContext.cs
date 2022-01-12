@@ -30,6 +30,10 @@ namespace ElearningBO
         public DbSet<Video> Video { get; set; }
         public DbSet<Message> Message { get; set; }
         public DbSet<Room> Room { get; set; }
+        public DbSet<Quiz> Quiz { get; set; }
+        public DbSet<Question> Question { get; set; }
+        public DbSet<Result> Result { get; set; }
         public DbSet<Answer> Answer { get; set; }
+
     }
 }

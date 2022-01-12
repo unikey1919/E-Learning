@@ -4,5 +4,6 @@
     ],
     "cSpell.enableFiletypes": [
         "html"
-    ]
+    ],
+    "git.ignoreLimitWarning": true
 }

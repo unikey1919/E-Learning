@@ -184,7 +184,22 @@ namespace E_LearnignWebAPI.Controllers
             }
         }
 
-        //Lấy danh sách học sinh theo khóa học
+        [HttpGet]
+        [Route("GetStatisticByCourse/{courseid}")]
+        public ApiResultMessage GetStatisticByCourse(int courseid)
+        {
+            try
+            {
+                DataTable dt = elearningBll.GetStatisticByCourse(courseid);
+                return new ApiResultMessage { IsError = false, Message = JsonConvert.SerializeObject(dt), MessageDetail = "" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
+            }
+        }
+
+        //Lấy danh sách học sinh không ở trong khóa học
         [HttpGet]
         [Route("GetStudentNotInCourse/{courseid}")]
         public ApiResultMessage GetStudentNotInCourse(int courseid)
@@ -264,6 +279,15 @@ namespace E_LearnignWebAPI.Controllers
             {
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
+        }
+
+        //Đếm số học sinh của lớp
+        [HttpGet]
+        [Route("GetTotalStudent/{id}")]
+        public IActionResult GetTotalStudent(int id)
+        {
+            var count = _context.Enrollments.Count(n => n.isDelete == false && n.CourseId == id);
+            return Ok(count);
         }
     }
 }

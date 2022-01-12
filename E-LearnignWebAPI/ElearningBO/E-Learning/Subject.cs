@@ -35,6 +35,7 @@ namespace ElearningBO.E_Learning
         public List<Assignment> LstAssignment { get; set; }
         public List<Forum> LstForum { get; set; }
         public List<Video> LstVideo { get; set; }
+        public List<Quiz> LstQuiz { get; set; }
     }
 
     public class StudentSubmit

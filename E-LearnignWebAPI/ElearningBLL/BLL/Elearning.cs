@@ -134,6 +134,19 @@ namespace ElearningBLL.BLL
             }
         }
 
+        public DataTable GetStatisticByCourse(int courseid)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetStatisticByCourse(courseid);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetStatisticByCourse Error: " + ex.Message);
+            }
+        }
+
         //Lấy danh sách học sinh theo khóa học
         public DataTable GetStudentNotInCourse(int courseid)
         {
@@ -427,6 +440,167 @@ namespace ElearningBLL.BLL
             catch (Exception ex)
             {
                 throw new Exception("Elearning > UpdateAssignment Error: " + ex.Message);
+            }
+        }
+        #endregion
+        #region Quiz
+
+        public DataTable GetStudentId(string username)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetStudentId(username);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetStudentId Error: " + ex.Message);
+            }
+        }
+
+        public DataTable GetStudentNotDoQuiz(int courseid, int quizid)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetStudentNotDoQuiz(courseid, quizid);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetStudentNotDoQuiz Error: " + ex.Message);
+            }
+        }
+
+        public DataTable GetStudentDoQuiz(int courseid, int quizid)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetStudentDoQuiz(courseid, quizid);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetStudentDoQuiz Error: " + ex.Message);
+            }
+        }
+
+        public void AddQuizBySubject(Quiz model)
+        {
+            try
+            {
+                objElDAO.AddQuizBySubject(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddQuizBySubject Error: " + ex.Message);
+            }
+        }
+
+        public void UpdateQuiz(Quiz model)
+        {
+            try
+            {
+                objElDAO.UpdateQuiz(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateQuiz Error: " + ex.Message);
+            }
+        }
+
+        public void UpdateQuizShowScore(Quiz model)
+        {
+            try
+            {
+                objElDAO.UpdateQuizShowScore(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateQuizShowScore Error: " + ex.Message);
+            }
+        }
+
+        public void DelQuiz(Quiz model)
+        {
+            try
+            {
+                objElDAO.DelQuiz(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelQuiz Error: " + ex.Message);
+            }
+        }
+
+        public void AddQuestion(Question model)
+        {
+            try
+            {
+                objElDAO.AddQuestion(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddQuestion Error: " + ex.Message);
+            }
+        }
+
+        //Thêm câu hỏi bằng excel
+        public void AddQuestionByExcel(List<QuestionModelExcel> listExcel)
+        {
+            try
+            {
+                for (int i = 0; i < listExcel.Count; i++)
+                {
+                    Question question = new Question();
+                    question.QuizID = listExcel[i].QuizID;
+                    question.Qn = listExcel[i].Qn;
+                    question.Option1 = listExcel[i].Option1;
+                    question.Option2 = listExcel[i].Option2;
+                    question.Option3 = listExcel[i].Option3;
+                    question.Option4 = listExcel[i].Option4;
+                    question.ImageName = listExcel[i].ImageName;
+                    question.Answer = listExcel[i].Answer;
+                    objElDAO.AddQuestion(question);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > AddStudentToCourse Error: " + ex.Message);
+            }
+        }
+        public void AddResult(Result model)
+        {
+            try
+            {
+                objElDAO.AddResult(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > AddResult Error: " + ex.Message);
+            }
+        }
+
+        public void UpdateQuestion(Question model)
+        {
+            try
+            {
+                objElDAO.UpdateQuestion(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > UpdateQuestion Error: " + ex.Message);
+            }
+        }
+
+        public void DelQuestion(Question model)
+        {
+            try
+            {
+                objElDAO.DelQuestion(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("DeliveryLoad > DelQuestion Error: " + ex.Message);
             }
         }
         #endregion

@@ -1,9 +1,5 @@
 
 <p-toast></p-toast>
-
-<a routerLink="test">Continue</a>
-
-
 <div class="card">
         <p-table #dt1 [value]="lstInstructor" dataKey="id" editMode="row" responsiveLayout="scroll"
          [globalFilterFields]="['instructionname', 'email', 'phonenumber']">
@@ -21,9 +17,9 @@
                         <input type="checkbox" class="checkAll" id="checkAll1"/>
                     </th>
                     <th>No.</th>
-                    <th>Tên giảng viên</th>
+                    <th>Instructor Name</th>
                     <th>Email</th>
-                    <th>Số điện thoại</th>
+                    <th>Phone Number</th>
                     <th style="width:8rem">
                         <button (click)="openModalWithClass(template)" style="background: rgb(173, 224, 173)"  mat-raised-button>
                             <mat-icon >add</mat-icon>
@@ -39,7 +35,7 @@
                     <td>
                         <p-cellEditor>
                             <ng-template pTemplate="output">
-                                {{ri}}
+                                {{ri+1}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -117,9 +113,9 @@
                     <th>
 
                     </th>
-                    <th>Họ và tên</th>
+                    <th>Full Name</th>
                     <th>Email</th>
-                    <th>Số điện thoại</th>
+                    <th>Phone Number</th>
 
                 </tr>
             </ng-template>

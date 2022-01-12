@@ -35,12 +35,14 @@ export class ELearningComponent implements OnInit {
   }
 
   onLogout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('email');
-    localStorage.removeItem('img');
-    this.router.navigate(['/']);
+    if (confirm("Are you sure to log out?")) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('email');
+      localStorage.removeItem('img');
+      this.router.navigate(['/']);
+    }
   }
 
   openForm() {

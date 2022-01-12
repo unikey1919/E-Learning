@@ -1,0 +1,400 @@
+<mat-card style=" margin-top: 20px" *ngIf="role == 'instructor'">
+
+    <mat-card-title>{{formData.title}}</mat-card-title>
+    <mat-slide-toggle [checked]="checkShowScore" (change)="toggle($event)">
+        Show score and answers
+    </mat-slide-toggle>
+    <mat-card-content style="margin-bottom: 20px;margin-top: 10px;" *ngIf="checkDate1">
+        <mat-card style="background: lightgreen">
+            <div>
+                <strong>Opened: </strong>
+                <span>&nbsp;{{formData.opened | date: 'full'}}</span>
+            </div>
+            <div>
+                <strong>Closed: </strong>
+                <span>&nbsp;{{formData.due | date: 'full'}}</span>
+            </div>
+
+        </mat-card>
+    </mat-card-content>
+    <mat-card-content style="margin-bottom: 20px;margin-top: 10px;" *ngIf="checkDate2">
+        <mat-card style="background: rgb(240, 79, 79)">
+            <div>
+                <strong>Opened: </strong>
+                <span>&nbsp;{{formData.opened | date: 'full'}}</span>
+            </div>
+            <div>
+                <strong>Closed: </strong>
+                <span>&nbsp;{{formData.due | date: 'full'}}</span>
+            </div>
+
+        </mat-card>
+    </mat-card-content>
+    <mat-card-actions>
+        <button style="margin-left: 7px;" mat-flat-button color="primary" (click)="showAddQuestion()">Add new question</button>
+        <button mat-flat-button color="accent" style="margin-left: 10px;" (click)="ShowListResult()">Show list of results</button>
+    </mat-card-actions>
+    <div *ngIf="showMe">
+        <div>
+            <label style="font-family: Helᴠetiᴄa; font-size: medium; margin-right: 5px;">Nạp file excel:</label>
+            <input type="file" name="files" accept=".xlsx" (change)="chooseFile($event)" />
+            <button (click)="upload()" style="margin-left: 5px;" [hidden]="checkFile" mat-stroked-button
+                color="primary">Nạp</button>
+        </div>
+        <br>
+        <p>
+            <mat-form-field appearance="legacy">
+                <mat-label>Question</mat-label>
+                <input style="color: black;" matInput placeholder="Câu hỏi" [(ngModel)]="addQuestion.Qn" required
+                    minlength="1">
+                <mat-icon matSuffix style="color: black;">create</mat-icon>
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="legacy">
+                <mat-label>Option 1</mat-label>
+                <input style="color: black;" matInput placeholder="Đáp án 1" [(ngModel)]="addQuestion.Option1" required
+                    minlength="1">
+                <mat-icon matSuffix style="color: black;">create</mat-icon>
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy" style="margin-left: 10px;">
+                <mat-label>Option 2</mat-label>
+                <input style="color: black;" matInput placeholder="Đáp án 2" [(ngModel)]="addQuestion.Option2" required
+                    minlength="1">
+                <mat-icon matSuffix style="color: black;">create</mat-icon>
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy" style="margin-left: 10px;">
+                <mat-label>Option 3</mat-label>
+                <input style="color: black;" matInput placeholder="Đáp án 3" [(ngModel)]="addQuestion.Option3" required
+                    minlength="1">
+                <mat-icon matSuffix style="color: black;">create</mat-icon>
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy" style="margin-left: 10px;">
+                <mat-label>Option 4</mat-label>
+                <input style="color: black;" matInput placeholder="Đáp án 4" [(ngModel)]="addQuestion.Option4" required
+                    minlength="1">
+                <mat-icon matSuffix style="color: black;">create</mat-icon>
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="legacy">
+                <mat-label>Answer</mat-label>
+                <input style="color: black;" matInput placeholder="Đáp án đúng" [(ngModel)]="addQuestion.Answer"
+                    required>
+                <mat-icon matSuffix style="color: black;">create</mat-icon>
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </p>
+        <button mat-flat-button color="primary" (click)="onSubmit()">Tạo</button>
+    </div>
+</mat-card>
+<div *ngIf="role == 'instructor'" style=" margin-top: 20px">
+    <mat-card *ngIf="showListQuiz">
+        <h2 style="color: red;">List of questions</h2>
+        <p-table #dt1 [value]="formListQuestion" dataKey="id" editMode="row" responsiveLayout="scroll"
+            [globalFilterFields]="['qn', 'option1', 'option2', 'option3', 'option4', 'answer']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <span class="p-input-icon-left p-ml-auto">
+                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Search" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>No.</th>
+                    <th>Question</th>
+                    <th>Option 1</th>
+                    <th>Option 2 </th>
+                    <th>Option 3</th>
+                    <th>Option 4</th>
+                    <th>Answer</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="item">
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{ri+1}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="item.qn">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.qn}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" required [(ngModel)]="item.option1">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.option1}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" required [(ngModel)]="item.option2">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.option2}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" required [(ngModel)]="item.option3">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.option3}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="item.option4">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.option4}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="item.answer">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{item.answer}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <button pInitEditableRow *ngIf="!editing" mat-icon-button (click)="onRowEditInit(item)">
+                            <mat-icon>launch</mat-icon>
+                        </button>
+                        <button *ngIf="!editing" mat-icon-button (click)="onDelete(item)" color="warn">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button pSaveEditableRow *ngIf="editing" mat-icon-button color="primary"
+                            (click)="onRowEditSave(item)">
+                            <mat-icon>done</mat-icon>
+                        </button>
+                        <button pCancelEditableRow (click)="onRowEditCancel(item, ri)" *ngIf="editing" mat-icon-button
+                            color="warn">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <label style="margin-top: 10px; color: blue;">Total number of questions: {{countQuestion}} </label>
+    </mat-card>
+
+    <mat-card *ngIf="showListResult">
+        <h2 style="color: red;">List of results</h2>
+        <p-table #dt1 [value]="listStudentResult" dataKey="id" editMode="row" responsiveLayout="scroll"
+            [globalFilterFields]="['studentname', 'score', 'result']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <span class="p-input-icon-left p-ml-auto">
+                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Search" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>No.</th>
+                    <th>Student ID</th>
+                    <th>Full Name</th>
+                    <th>Score</th>
+                    <th>Result</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="item">
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{ri+1}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{item.id}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{item.studentname}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                {{item.score}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="output" *ngIf="item.result == 'Đạt'">
+                                <label style="color: green;">{{item.result}}</label>
+                            </ng-template>
+                            <ng-template pTemplate="output" *ngIf="item.result == 'Chưa đạt'">
+                                <label style="color: red">{{item.result}}</label>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </mat-card>
+</div>
+
+<div style="display:flex;justify-content: center;" *ngIf="role == 'student'">
+    <mat-card style=" margin-top: 20px; width: 60%;">
+        <mat-card-title>{{formData.title}}</mat-card-title>
+        <mat-card-content style="margin-bottom: 20px;margin-top: 10px;" *ngIf="checkDate1">
+            <mat-card style="background: lightgreen">
+                <div>
+                    <strong>Opened: </strong>
+                    <span>&nbsp;{{formData.opened | date: 'full'}}</span>
+                </div>
+                <div>
+                    <strong>Closed: </strong>
+                    <span>&nbsp;{{formData.due | date: 'full'}}</span>
+                </div>
+
+            </mat-card>
+        </mat-card-content>
+        <mat-card-content style="margin-bottom: 20px;margin-top: 10px;" *ngIf="checkDate2">
+            <mat-card style="background: rgb(240, 79, 79)">
+                <div>
+                    <strong>Opened: </strong>
+                    <span>&nbsp;{{formData.opened | date: 'full'}}</span>
+                </div>
+                <div>
+                    <strong>Closed: </strong>
+                    <span>&nbsp;{{formData.due | date: 'full'}}</span>
+                </div>
+
+            </mat-card>
+            <mat-card style="margin-top: 5px;">
+                <label style="color: blue;">Đã hết hạn làm bài</label>
+            </mat-card>
+        </mat-card-content>
+        <mat-card-actions>
+            <button style="margin-left: 5px;" mat-flat-button color="primary" (click)="start();cd.restart();cd.begin()"
+                *ngIf="hide">Bắt đầu làm bài</button>
+        </mat-card-actions>
+        <div [hidden]="showMe1==false" style="background-color: antiquewhite;display:flex;justify-content: center;">
+            <countdown #cd [config]="config" (event)="onTimerFinished($event, listQuestion)"></countdown>
+        </div>
+        <div *ngIf="showMe1==true">
+            <div *ngFor="let item of listQuestion">
+                <mat-card style=" margin-top: 20px; background-color: rgb(22, 175, 202);">
+                    <label style="color: aliceblue; font-size: medium;">Câu {{item.stt}}</label>
+                    <h2 style="color: aliceblue;">{{item.qn}}</h2>
+                    <mat-card-actions style="background-color: azure;">
+                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                            [(ngModel)]="item.selected">
+                            <div *ngFor="let option of item.options">
+                                <mat-radio-button style="margin-left: 5px;" class="example-radio-button"
+                                    [value]="option">
+                                    {{option}}
+                                </mat-radio-button>
+                                <br>
+                            </div>
+                            <!-- {{item.selected}} -->
+                        </mat-radio-group>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+            <button style="margin-top: 10px;" mat-flat-button color="primary" (click)="finish(listQuestion)"
+                *ngIf="hide1">Nộp
+                bài</button>
+        </div>
+
+        <div *ngIf="showMe2==true">
+            <div style="display:flex;justify-content: center;">
+                <mat-card class="example-card" style="width: 50%; background-color: rgb(120, 192, 12)">
+                    <img mat-card-sm-image src="/assets/img/cup.png" alt="Image" class="img-fluid"
+                        style="float: right;">
+                    <h2 style="color: blue;">Điểm: {{score}}</h2>
+                    <label style="color: red;">
+                        Số câu đúng: {{countCorrectAnswer}}/{{countQuestion}} câu
+                    </label>
+                </mat-card>
+            </div>
+            <div *ngFor="let item of listCheck">
+                <mat-card style=" margin-top: 20px; background-color: rgb(22, 175, 202);">
+                    <label style="color: aliceblue; font-size: medium;">Câu {{item.stt}}</label>
+                    <h2 style="color: aliceblue;">{{item.qn}}</h2>
+                    <mat-card-actions style="background-color: azure;">
+                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+                            <div *ngFor="let option of item.options">
+                                <mat-radio-button style="margin-left: 5px;" class="example-radio-button"
+                                    [value]="option" disabled *ngIf="option==item.selected;" checked>
+                                    {{option}}
+                                </mat-radio-button>
+                                <mat-radio-button #elseBlock style="margin-left: 5px;" class="example-radio-button"
+                                    [value]="option" disabled *ngIf="option!=item.selected;">
+                                    {{option}}
+                                </mat-radio-button>
+                                <span style="color: red; float: right; margin-right: 10px;"
+                                    *ngIf="option==item.selected && item.selected!=item.answer">Incorrect</span>
+                                <span style="float: right; margin-right: 10px;"
+                                    *ngIf="(option==item.selected && item.selected==item.answer)||(option!=item.selected && option==item.answer)">
+                                    <mat-icon style="color: green;">check_circle_outline</mat-icon>
+                                </span>
+                                <br>
+                            </div>
+                            <!-- {{item.selected}} -->
+                        </mat-radio-group>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+            <!-- <button style="margin-top: 10px;" mat-flat-button color="primary" (click)="finish(listQuestion)">Nộp bài</button> -->
+        </div>
+        <div *ngIf="showMe3" style="display:flex;justify-content: center;">
+            <mat-card class="example-card" style="width: 80%; background-color: rgb(120, 192, 12)">
+                <img mat-card-sm-image src="/assets/img/cup.png" alt="Image" class="img-fluid" style="float: right;">
+                <h2 style="color: blue;">Bạn đã đạt được {{score1}} điểm ở bài kiểm tra này </h2>
+            </mat-card>
+        </div>
+        <div *ngIf="showMe4" style="display:flex;justify-content: center;">
+            <mat-card class="example-card" style="width: 80%;">
+                <h2 style="color: blue;">Bạn đã hoàn thành bài kiểm tra này </h2>
+            </mat-card>
+        </div>
+    </mat-card>
+</div>

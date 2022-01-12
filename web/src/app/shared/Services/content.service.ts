@@ -150,8 +150,69 @@ export class ContentService {
     return this.httpClient.post(this.baseURL + '/DelVideo', objVideoModel);
   }
 
+  AddQuizBySubject(quizObjModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/AddQuizBySubject', quizObjModel);
+  }
+
+  UpdateQuiz(quizObjModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/UpdateQuiz', quizObjModel);
+  }
+
+  DelQuiz(quizObjModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/DelQuiz', quizObjModel);
+  }
+  GetQuizBySubject(id: number) {
+    return this.httpClient.get(this.baseURL + `/GetQuizBySubject/${id}`);
+  }
+
+  GetListQuestionByQuiz(id: number) {
+    return this.httpClient.get(this.baseURL + `/GetListQuestionByQuiz/${id}`);
+  }
+
+  GetCountQuestion(id: number) {
+    return this.httpClient.get(this.baseURL + `/GetCountQuestion/${id}`);
+  }
+
+  GetStudentId(username: string | null) {
+    return this.httpClient.get(this.baseURL + `/GetStudentId/${username}`);
+  }
+
+  GetResult(quizid:number, courseid:number, studentid:number){
+    return this.httpClient.get(this.baseURL + `/GetResult/${quizid}/${courseid}/${studentid}`);
+  }
+
+  GetStudentNotDoQuiz(courseid:number, quizid:number){
+    return this.httpClient.get(this.baseURL + `/GetStudentNotDoQuiz/${courseid}/${quizid}`);
+  }
+
+  GetStudentDoQuiz(courseid:number, quizid:number){
+    return this.httpClient.get(this.baseURL + `/GetStudentDoQuiz/${courseid}/${quizid}`);
+  }
+  AddQuestion(objectModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/AddQuestion', objectModel);
+  }
+
+  //Thêm câu hỏi bằng excel
+  AddQuestionByExcel(listExcel): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/AddQuestionByExcel', listExcel);
+  }
+
+  AddResult(objectModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/AddResult', objectModel);
+  }
+
+  UpdateQuestion(objectModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/UpdateQuestion', objectModel);
+  }
+
+  UpdateQuizShowScore(objectModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/UpdateQuizShowScore', objectModel);
+  }
+
+  DelQuestion(objectModel): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/DelQuestion', objectModel);
+  }
   GetAssignmentByEmail(username: string){
     return this.httpClient.get(this.baseURL + `/GetAssignmentByEmail/${username}`);
   }
-
 }

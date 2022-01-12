@@ -6,11 +6,11 @@ import { CourseService } from 'src/app/shared/Services/course.service';
 import { SelectItem } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';  
-import { FormBuilder, FormGroup, FormArray, FormControl,AbstractControl } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { FormBuilder, FormGroup, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { AddEnrollment, Enrollment } from 'src/app/shared/Models/enrollment.model';
 import { Student } from 'src/app/shared/Models/student.model';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule } from '@angular/forms';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as XLSX from 'xlsx';
@@ -44,9 +44,9 @@ export class CourseComponent implements OnInit {
   checkList: boolean;
   checkFile: boolean;
   addEnrollment: AddEnrollment = new AddEnrollment();
-  listStudent: number[]=[];
+  listStudent: number[] = [];
   selectedFile: File;
-  listExcel: CourseExcel[]=[];
+  listExcel: CourseExcel[] = [];
   dem: number = 0;
 
   config = {
@@ -65,7 +65,7 @@ export class CourseComponent implements OnInit {
     private dialog: MatDialog,
     private modalService: BsModalService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getListCourse();
@@ -93,10 +93,11 @@ export class CourseComponent implements OnInit {
       /* save data */
       const data = XLSX.utils.sheet_to_json(ws); // to get 2d array pass 2nd parameter as object {header: 1}
       this.listExcel = XLSX.utils.sheet_to_json(ws);
+      console.log(this.listExcel)
     };
     this.checkFile = false
   }
-  
+
   upload() {
     // console.log(this.selectedFile.name);
     // console.log(this.selectedFile);
@@ -117,7 +118,7 @@ export class CourseComponent implements OnInit {
         }
         this.getListCourse();
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -146,7 +147,7 @@ export class CourseComponent implements OnInit {
       this.list2.controls.forEach((item: AbstractControl) => {
         if (item.value == e.target.value) {
           this.list2.removeAt(i);
-          this.listStudent.splice(i,1)
+          this.listStudent.splice(i, 1)
           return;
         }
         i++;
@@ -154,12 +155,12 @@ export class CourseComponent implements OnInit {
     }
   }
 
-  modalRef1(){
+  modalRef1() {
     this.list1.clear()
     this.modalRef.hide()
   }
 
-  modalRef2(){
+  modalRef2() {
     this.listStudent = []
     location.reload()
     this.modalReff.hide()
@@ -206,54 +207,54 @@ export class CourseComponent implements OnInit {
           location.reload()
           this.modalReff.hide();
         },
-        (err) => {}
+        (err) => { }
       );
     }
   }
-  
-  openModalWithClass(template: TemplateRef<any>, courseid: number) {  
+
+  openModalWithClass(template: TemplateRef<any>, courseid: number) {
     this.modalRef = this.modalService.show(template, this.config);
     this.courseid = courseid;
     this.getStudentByCourse();
     this.checkList = true;
-  }  
+  }
 
-  openModalWithClass1(template1: TemplateRef<any>) {  
-    this.modalReff = this.modalService.show(  
-      template1,  
-      Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })  
-    );  
+  openModalWithClass1(template1: TemplateRef<any>) {
+    this.modalReff = this.modalService.show(
+      template1,
+      Object.assign({}, { class: 'gray modal-lg', ignoreBackdropClick: true })
+    );
     this.getStudentNotInCourse();
     this.modalRef.hide();
-  }  
+  }
 
-  checkCheckBox(){
+  checkCheckBox() {
     if (this.list1.value.length == 0) {
       this.checkList = true;
     }
     else this.checkList = false;
   }
 
-  getStudentByCourse(){
+  getStudentByCourse() {
     this.courseService.GetStudentByCourse(this.courseid).subscribe(
       (res) => {
         this.listStudentByCourse = JSON.parse(res.message) as Enrollment[];
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
-  getStudentNotInCourse(){
+  getStudentNotInCourse() {
     this.courseService.GetStudentNotInCourse(this.courseid).subscribe(
       (res) => {
         this.listStudentNotInCourse = JSON.parse(res.message) as Enrollment[];
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
   onDeleteStudentFromCourse(enrollment: Enrollment) {
-    if(confirm("Are you sure to delete this student?")) {
+    if (confirm("Are you sure to delete this student from the course?")) {
       this.courseService.DeleteStudentFromCourse(enrollment).subscribe(
         (res: any) => {
           if (res.isError == true) {
@@ -263,7 +264,7 @@ export class CourseComponent implements OnInit {
               detail: 'Fail to delete student from course',
             });
           }
-          else{
+          else {
             this.getListCourse();
             this.messageService.add({
               severity: 'success',
@@ -272,14 +273,14 @@ export class CourseComponent implements OnInit {
             });
           }
         },
-        (error) => {}
+        (error) => { }
       );
       this.modalRef.hide();
     }
   }
 
-  onDeleteListStudentFromCourse(){
-    if(confirm("Are you sure to delete this list of student?")) {
+  onDeleteListStudentFromCourse() {
+    if (confirm("Are you sure to delete this student list from the course?")) {
       if (this.list1.value.length == 0) {
         this.messageService.add({
           severity: 'error',
@@ -308,12 +309,12 @@ export class CourseComponent implements OnInit {
             this.list1.clear();
             this.modalRef.hide();
           },
-          (err) => {}
+          (err) => { }
         );
-        
+
       }
     }
-    
+
   }
 
   getListCourse() {
@@ -321,7 +322,7 @@ export class CourseComponent implements OnInit {
       (res) => {
         this.lstCourse = JSON.parse(res.message) as Course[];
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -330,19 +331,19 @@ export class CourseComponent implements OnInit {
       (res) => {
         this.listCode = JSON.parse(res.message) as string[];
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
   onSubmit() {
     console.log(this.listCode)
     this.dem = 0
-    for (let i = 0;i<this.listCode.length;i++){
-      if (this.listCode[i] == this.formData.code){
-       this.dem = this.dem + 1;
+    for (let i = 0; i < this.listCode.length; i++) {
+      if (this.listCode[i] == this.formData.code) {
+        this.dem = this.dem + 1;
       }
     }
-    if (this.dem == 0){
+    if (this.dem == 0) {
       this.courseService.AddCourse(this.formData).subscribe(
         (res: any) => {
           if (res.isError == true) {
@@ -361,17 +362,17 @@ export class CourseComponent implements OnInit {
           }
           this.getListCourse();
         },
-        (err) => {}
+        (err) => { }
       );
     }
-    else{
+    else {
       this.messageService.add({
         severity: 'error',
         summary: 'error',
         detail: 'Mã khóa học bị trùng',
       });
     }
-    
+
   }
 
   showHide() {
@@ -385,7 +386,7 @@ export class CourseComponent implements OnInit {
   onRowEditCancel(course: Course, index: number) {
     this.lstCourse[index] = this.clonedItem[course.id];
     delete this.clonedItem[course.id];
-    
+
   }
 
   onRowEditSave(course: Course) {
@@ -398,7 +399,7 @@ export class CourseComponent implements OnInit {
             detail: 'Fail to update course',
           });
         }
-        else{
+        else {
           delete this.clonedItem[course.id];
           this.messageService.add({
             severity: 'success',
@@ -407,12 +408,12 @@ export class CourseComponent implements OnInit {
           });
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
   onDelete(course: Course) {
-    if(confirm("Are you sure to delete this course?")) {
+    if (confirm("Are you sure to delete this course?")) {
       this.courseService.DelCourse(course).subscribe(
         (res: any) => {
           if (res.isError == true) {
@@ -422,7 +423,7 @@ export class CourseComponent implements OnInit {
               detail: 'Fail to delete course',
             });
           }
-          else{
+          else {
             this.getListCourse();
             this.messageService.add({
               severity: 'success',
@@ -431,7 +432,7 @@ export class CourseComponent implements OnInit {
             });
           }
         },
-        (error) => {}
+        (error) => { }
       );
     }
   }

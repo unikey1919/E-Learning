@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserComponent } from '../user/user.component';
 import { RouterModule } from '@angular/router';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
   imports: [
     CommonModule,
     RouterModule,
-    MatSidenavModule
+    MatSidenavModule,
+    NgChartsModule
   ]
 })
 export class NavigationModule { }

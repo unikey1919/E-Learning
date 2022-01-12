@@ -55,6 +55,13 @@ import { DiscussionComponent } from './e-learning/chat/discussion/discussion.com
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { QuizComponent } from './e-learning/quiz/quiz.component';
+import {MatRadioModule} from '@angular/material/radio';
+import { NgChartsModule } from 'ng2-charts';
+import { ThongkeComponent } from './admin-panel/thongke/thongke.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { CountdownModule } from 'ngx-countdown';
+import { GiaovienthongkeComponent } from './e-learning/giaovienthongke/giaovienthongke.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar'; 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
@@ -84,6 +91,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AssignmentComponent,
     ForumComponent,
     ChatComponent,
+    QuizComponent,
+    ThongkeComponent,
+    GiaovienthongkeComponent,
     DiscussionComponent,
     CalendarComponent
   ],
@@ -123,6 +133,11 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NgDynamicBreadcrumbModule,
     YouTubePlayerModule,
     PickerModule,
+    NgbModule,
+    MatRadioModule,
+    NgChartsModule,
+    MatSlideToggleModule,
+    CountdownModule,
     SocialLoginModule,
     NgbModule,
     MatProgressBarModule,
