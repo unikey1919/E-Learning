@@ -1,12 +1,156 @@
-
-<div>
-    <button mat-button mat-raised-button color="primary" (click)="showStatisticByCourse()">Thống kê theo khóa học</button>
+<div *ngIf="showBtn">
+    <button mat-button mat-raised-button color="primary" (click)="showStatisticByCourse()">Statistics by course</button>
+</div>
+<br>
+<div style="margin-bottom: 10px;">
+    <button mat-button mat-raised-button color="primary" [hidden]="normal" (click)="showNormal()">Normal</button>
+    <button mat-button mat-raised-button color="primary" style="margin-left: 10px;" [hidden]="chart1" (click)="showChart()">Chart</button>
+</div>
+<div class="card" *ngIf="normal1">
+    <p-table #dt1 [value]="lstCourse" dataKey="id" editMode="row" responsiveLayout="scroll"
+        [globalFilterFields]="['coursename','instructionName','totalstudent']">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                    <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>No.</th>
+                <th>Course</th>
+                <th>Instructor Name </th>
+                <th>Total Student</th>
+                <th>Statistic</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="item">
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="output">
+                            {{ri+1}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="output">
+                            {{item.coursename}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="output">
+                            {{item.instructionname}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="output">
+                            {{item.totalstudent}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="output" *ngIf="item.show == 'show'">
+                            <div>
+                                <li>Số học sinh xuất sắc: {{item.slxuatsac}}</li>
+                                <li>Số học sinh giỏi: {{item.slgioi}}</li>
+                                <li>Số học sinh khá: {{item.slkha}}</li>
+                                <li>Số học sinh trung bình: {{item.sltrungbinh}}</li>
+                                <li>Số học sinh yếu: {{item.slyeu}}</li>
+                                <li>Số học sinh kém: {{item.slkem}}</li>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="output" *ngIf="item.show == 'notshow'" style="text-align: center;">
+                            Không có thông tin
+                        </ng-template>
+                        <ng-template pTemplate="output" *ngIf="item.show == 'showlittle'" style="text-align: center;">
+                            Chưa có kết quả
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>
 
-<br>
-<div style="width: 300px; height: 300px;" *ngIf="show">
-    <div class="chart">
-        <canvas baseChart [data]="pieChartData" [type]="pieChartType" [options]="pieChartOptions">
-        </canvas>
-    </div>
+<div class="card" *ngIf="chart2">
+    <p-table #dt1 [value]="lstCourse" dataKey="id" editMode="row" responsiveLayout="scroll"
+        [globalFilterFields]="['coursename','instructionName','totalstudent']">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                    <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>No.</th>
+                <th>Course</th>
+                <th>Instructor Name </th>
+                <th>Total Student</th>
+                <th>Statistic</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="item">
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="output">
+                            {{ri}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="output">
+                            {{item.coursename}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="output">
+                            {{item.instructionname}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="output">
+                            {{item.totalstudent}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="output" *ngIf="item.show == 'show'">
+                            <div style="width: 250px; height: 250px;">
+                                <div class="chart">
+                                    <canvas baseChart [data]="item.piechartdata" [type]="pieChartType"
+                                        [options]="pieChartOptions">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="output" *ngIf="item.show == 'notshow'" style="text-align: center;">
+                            Không có thông tin
+                        </ng-template>
+                        <ng-template pTemplate="output" *ngIf="item.show == 'showlittle'" style="text-align: center;">
+                            Chưa có kết quả
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

@@ -98,4 +98,8 @@ export class CourseService {
   GetCourseInfo(id:number){
     return this.httpClient.get(this.baseURL + `/GetCourseInfo/${id}`);
   }
+
+  GetTotalStudent(id: number) {
+    return this.httpClient.get(this.baseURL + `/GetTotalStudent/${id}`);
+  }
 }

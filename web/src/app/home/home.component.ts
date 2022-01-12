@@ -35,32 +35,32 @@ export class HomeComponent implements OnInit {
       err => {
         console.log(err);
       },
-    ); 
+    );
   }
 
   onLogout() {
     localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('userRole');
-    this.router.navigate(['/user/login']);
+      localStorage.removeItem('username');
+      localStorage.removeItem('userRole');
+      this.router.navigate(['/user/login']);
   }
 
   getListCourseByStudent(formData) {
-    if(localStorage.getItem('userRole') == "Instructor"){
+    if (localStorage.getItem('userRole') == "Instructor") {
       this.courseService.GetCourseByTeacher(formData).subscribe(
         (res) => {
           this.lstCourse = JSON.parse(res.message) as Course[];
           console.log(this.lstCourse);
         },
-        (error) => {}
+        (error) => { }
       );
     }
-    else{
+    else {
       this.courseService.GetCourseByStudent(formData).subscribe(
         (res) => {
           this.lstCourse = JSON.parse(res.message) as Course[];
         },
-        (error) => {}
+        (error) => { }
       );
     }
   }

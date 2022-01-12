@@ -61,7 +61,7 @@ export class GiaovienthongkeComponent implements OnInit {
           }
           this.listStudentResult.push(this.listStudentDoQuiz[i])
         }
-        console.log(this.listStudentDoQuiz)
+        // console.log(this.listStudentDoQuiz)
       },
       (error) => { }
     );
@@ -76,7 +76,7 @@ export class GiaovienthongkeComponent implements OnInit {
         // for (let i = 0; i < this.listStudentNotDoQuiz.length; i++) {
         //   this.listStudentResult.push(this.listStudentNotDoQuiz[i])
         // }
-        console.log(this.listStudentNotDoQuiz)
+        // console.log(this.listStudentNotDoQuiz)
       },
       (error) => { }
     );

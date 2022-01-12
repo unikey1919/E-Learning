@@ -280,5 +280,14 @@ namespace E_LearnignWebAPI.Controllers
                 return new ApiResultMessage { IsError = true, Message = ex.Message, MessageDetail = ex.StackTrace };
             }
         }
+
+        //Đếm số học sinh của lớp
+        [HttpGet]
+        [Route("GetTotalStudent/{id}")]
+        public IActionResult GetTotalStudent(int id)
+        {
+            var count = _context.Enrollments.Count(n => n.isDelete == false && n.CourseId == id);
+            return Ok(count);
+        }
     }
 }

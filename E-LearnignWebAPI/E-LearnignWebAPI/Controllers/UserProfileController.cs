@@ -34,7 +34,6 @@ namespace E_LearnignWebAPI.Controllers
                 user.FullName,
                 user.Email,
                 user.UserName,
-                user.Avatar,
                 user.PhoneNumber
             };
         }

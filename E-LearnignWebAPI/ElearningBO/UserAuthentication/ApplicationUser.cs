@@ -12,6 +12,6 @@ namespace ElearningBO.UserAuthentication
     {
         [Column(TypeName = "nvarchar(150)")]
         public string FullName { get; set; }
-        public string Avatar { get; set; }
+       
     }
 }
