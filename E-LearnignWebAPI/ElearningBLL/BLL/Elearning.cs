@@ -771,5 +771,17 @@ namespace ElearningBLL.BLL
             }
         }
         #endregion
+        public DataTable GetAssignmentByEmail(string username)
+        {
+            try
+            {
+                DataTable dt = objElDAO.GetAssignmentByEmail(username);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Elearning > GetAssignmentByEmail Error: " + ex.Message);
+            }
+        }
     }
 }

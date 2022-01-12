@@ -212,6 +212,7 @@ export class ContentService {
   DelQuestion(objectModel): Observable<any> {
     return this.httpClient.post(this.baseURL + '/DelQuestion', objectModel);
   }
-
-
+  GetAssignmentByEmail(username: string){
+    return this.httpClient.get(this.baseURL + `/GetAssignmentByEmail/${username}`);
+  }
 }
