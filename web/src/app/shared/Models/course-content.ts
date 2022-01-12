@@ -1,5 +1,6 @@
 import { Assignment } from "./assignment";
 import { Forum } from "./forum";
+import { Quiz } from "./quiz";
 
 export class CourseContent {
     Id: number = 0;
@@ -10,6 +11,7 @@ export class CourseContent {
     LstAssignment: Assignment[]
     LstForum: Forum[];
     LstVideo: Video[];
+    LstQuiz: Quiz[];
 }
 
 export class FileModel {

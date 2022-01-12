@@ -332,6 +332,115 @@ namespace E_LearnignWebAPI.Migrations
                     b.ToTable("Message");
                 });
 
+            modelBuilder.Entity("ElearningBO.E_Learning.Question", b =>
+                {
+                    b.Property<int>("QnID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Answer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Qn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuizID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDelete")
+                        .HasColumnType("bit");
+
+                    b.HasKey("QnID");
+
+                    b.HasIndex("QuizID");
+
+                    b.ToTable("Question");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Quiz", b =>
+                {
+                    b.Property<int>("QuizId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Due")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Opened")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Time")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("showScore")
+                        .HasColumnType("bit");
+
+                    b.HasKey("QuizId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Quiz");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Result", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Score")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("QuizId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Result");
+                });
+
             modelBuilder.Entity("ElearningBO.E_Learning.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -443,9 +552,6 @@ namespace E_LearnignWebAPI.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("Avatar")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -770,6 +876,55 @@ namespace E_LearnignWebAPI.Migrations
                     b.Navigation("FromUser");
 
                     b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Question", b =>
+                {
+                    b.HasOne("ElearningBO.E_Learning.Quiz", "Quiz")
+                        .WithMany()
+                        .HasForeignKey("QuizID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quiz");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Quiz", b =>
+                {
+                    b.HasOne("ElearningBO.E_Learning.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("ElearningBO.E_Learning.Result", b =>
+                {
+                    b.HasOne("ElearningBO.E_Learning.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElearningBO.E_Learning.Quiz", "Quiz")
+                        .WithMany()
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElearningBO.E_Learning.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Quiz");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("ElearningBO.E_Learning.Room", b =>

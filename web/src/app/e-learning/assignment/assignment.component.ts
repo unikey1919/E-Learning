@@ -31,7 +31,8 @@ export class AssignmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.formData.id = this.activatedRoute.snapshot.params.id;
-    console.log(this.activatedRoute.snapshot.params.subjectId);
+    // console.log(this.activatedRoute.snapshot.params.subjectId);
+    console.log(this.formData)
     this.getAssignmentBySubject(this.formData.id);
     this.checkStatusSubmit();
     this.getLstAssignmentSubmit();

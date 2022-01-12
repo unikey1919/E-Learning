@@ -77,7 +77,7 @@
       <!-- Danh sách bài tập -->
       <mat-card-content style="margin-bottom: 20px" *ngFor="let assignment of item.LstAssignment">
         <mat-card>
-          <i class="fas fa-atlas" style="margin-right:10px"></i>
+          <i class="fas fa-atlas" style="margin-right:10px"></i>    
           <span (click)="getAssignmentContent(assignment.Id,item.Id)">{{assignment.AssignmentName}}</span>
           <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteAssignment(assignment)">delete
           </mat-icon>
@@ -85,7 +85,17 @@
             (click)="openModelWithItem(editAssignment, assignment)">edit</mat-icon>
         </mat-card>
       </mat-card-content>
-    </mat-card>
+
+      <!-- Danh sách quiz -->
+      <mat-card-content style="margin-bottom: 20px"  *ngFor="let quiz of item.LstQuiz">
+        <mat-card>
+          <i class="fas fa-question" style="margin-right:10px"></i>
+          <span (click)="getQuizContent(quiz.QuizId,item.Id)">{{quiz.Title}}</span>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="onDeleteQuiz(quiz)">delete</mat-icon>
+          <mat-icon *ngIf="role == 'instructor'" style="float:right" (click)="openModelWithItem(editQuiz, quiz)">edit</mat-icon>
+        </mat-card>
+      </mat-card-content>
+   </mat-card>  
   </div>
 </div>
 
@@ -130,6 +140,50 @@
   </div>
 </ng-template>
 
+<!--- Popup thêm quiz -->  
+<ng-template #quiz>    
+  <div class="modal-body">  
+    <div class="row">
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Open</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" #Opened = "ngModel" name="Opened" class="form-control" [ngModel]="formQuizData.Opened | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formQuizData.Opened = $event">
+      </div>
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Close</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" class="form-control" #Due = "ngModel" name="Due" [ngModel]="formQuizData.Due | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formQuizData.Due = $event">
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Title</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="text" class="form-control" #Title = "ngModel" name= "Title" [(ngModel)] = "formQuizData.Title">
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Time (phút)</span>
+      </div>
+      <div class="col-lg-4">
+       <input min="1" max="180" type ="number" class="form-control" #Time = "ngModel" name= "Time" [(ngModel)] = "formQuizData.Time" required>
+      </div>
+    </div>
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formQuizData.Details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onSubmitQuiz()"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template>
 <!--- Popup sửa bài tập -->
 <ng-template #editAssignment>
   <div class="modal-body">
@@ -170,6 +224,51 @@
     <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
   </div>
 </ng-template>
+
+<!--- Popup sửa quiz -->  
+<ng-template #editQuiz>    
+  <div class="modal-body">  
+    <div class="row">
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Open</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" #Opened = "ngModel" name="Opened" class="form-control" [ngModel]="formQuizData.Opened | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formQuizData.Opened = $event">
+      </div>
+      <div class="col-lg-1">
+        <span style="font-weight: bold; position: absolute; top:25%">Close</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="datetime-local" class="form-control" #Due = "ngModel" name="Due" [ngModel]="formQuizData.Due | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="formQuizData.Due = $event">
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Title</span>
+      </div>
+      <div class="col-lg-4">
+       <input type ="text" class="form-control" #Title = "ngModel" name= "Title" [(ngModel)] = "formQuizData.Title">
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+      <div class="col-lg-3">
+        <span style="font-weight: bold; position: absolute; top:25%">Time (phút))</span>
+      </div>
+      <div class="col-lg-4">
+       <input min="1" max="180" type ="number" class="form-control" #Title = "ngModel" name= "Title" [(ngModel)] = "formQuizData.Time">
+      </div>
+    </div>
+    <div class="form-group" style ="margin-top:20px">
+      <span style="font-weight: bold">Details</span>
+      <ckeditor [editor]="Editor" [(ngModel)] = "formQuizData.Details"></ckeditor>
+    </div>
+      
+  </div>   
+  <div class="modal-footer">  
+    <i class="far fa-check-circle fa-2x" style="padding: 5px 10px 5px 155px ; color:green" (click)="onEditQuiz(formQuizData)"></i>
+    <i class="far fa-times-circle fa-2x" style="color:red" (click)="closeAddModel()"></i>
+  </div>  
+</ng-template> 
 
 <!--- Popup thêm nội dung chương -->
 <ng-template #content>
@@ -225,6 +324,12 @@
         <div class="row" style="margin:10px">
           <i class="fas fa-user-tie fa-5x"></i>
           <span>Forum</span>
+        </div>
+      </button>
+      <button mat-stroked-button style="width: 230px; height: 150px; margin-left: 25px; margin-top:10px" (click)=" closeModel();openModalWithClass(quiz, formQuizData.SubjectId)">
+        <div class="row" style="margin:10px">
+          <i class="fas fa-question fa-5x"></i>
+          <span>Quiz</span>
         </div>
       </button>
     </div>

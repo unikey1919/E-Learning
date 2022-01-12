@@ -24,8 +24,9 @@ export class NavigationComponent {
 
   constructor(private breakpointObserver: BreakpointObserver,private router: Router) {}
   onLogout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/']);
+    if (confirm("Are you sure to log out?")) {
+      localStorage.removeItem('token');
+      this.router.navigate(['/']);
+    }
   }
-
 }

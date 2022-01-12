@@ -56,6 +56,11 @@ export class CourseService {
     return this.httpClient.get(this.baseURL + '/GetStudentByCourse/' + courseid);
   }
 
+  GetStatisticByCourse(courseid): Observable<any> {
+    return this.httpClient.get(this.baseURL + '/GetStatisticByCourse/' + courseid);
+  }
+
+
   //Lấy danh sách học sinh không ở trong khóa học
   GetStudentNotInCourse(courseid): Observable<any> {
     return this.httpClient.get(this.baseURL + '/GetStudentNotInCourse/' + courseid);
@@ -92,5 +97,9 @@ export class CourseService {
 
   GetCourseInfo(id:number){
     return this.httpClient.get(this.baseURL + `/GetCourseInfo/${id}`);
+  }
+
+  GetTotalStudent(id: number) {
+    return this.httpClient.get(this.baseURL + `/GetTotalStudent/${id}`);
   }
 }
