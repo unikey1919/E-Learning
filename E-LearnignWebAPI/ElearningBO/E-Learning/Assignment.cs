@@ -1,5 +1,4 @@
-﻿using javax.xml.bind.annotation;
-using Newtonsoft.Json;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

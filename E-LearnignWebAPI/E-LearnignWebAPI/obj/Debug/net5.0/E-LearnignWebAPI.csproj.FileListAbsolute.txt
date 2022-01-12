@@ -635,3 +635,15 @@ C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debu
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\IKVM.OpenJDK.XML.XPath.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\IKVM.Runtime.JNI.dll
 C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\IKVM.Runtime.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\EntityFramework.SqlServer.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\EntityFramework.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.AspNet.Identity.Core.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.Extensions.Logging.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+C:\Users\thang\Desktop\Git\E-Learning\E-LearnignWebAPI\E-LearnignWebAPI\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
